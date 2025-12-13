@@ -82,6 +82,7 @@ class StorySeeder extends Seeder
             Story::create(array_merge($story, [
                 'slug' => Str::slug($story['title_en']),
                 'view_count' => rand(100, 5000),
+                'published_at' => $story['is_published'] ? now() : null,
             ]));
         }
     }

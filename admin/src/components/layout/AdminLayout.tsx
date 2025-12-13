@@ -16,7 +16,9 @@ import {
     ChevronRight as ChevronRightIcon,
     DarkMode as DarkModeIcon,
     LightMode as LightModeIcon,
-    Settings as SettingsIcon
+    Settings as SettingsIcon,
+    Handshake as HandshakeIcon,
+    ContactMail as ContactIcon
 } from '@mui/icons-material';
 import { Link, Outlet, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
@@ -52,6 +54,8 @@ export const AdminLayout = () => {
         { text: 'Gallery', icon: <DashboardIcon />, path: '/admin/gallery' },
         { text: 'Testimonials', icon: <RateReviewIcon />, path: '/admin/testimonials' },
         { text: 'Team', icon: <PeopleIcon />, path: '/admin/team' },
+        { text: 'Volunteers', icon: <HandshakeIcon />, path: '/admin/volunteers' },
+        { text: 'Contacts', icon: <ContactIcon />, path: '/admin/contacts' },
         { text: 'Settings', icon: <SettingsIcon />, path: '/admin/settings' },
     ];
 

@@ -3,7 +3,8 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
 // https://vite.dev/config/
-export default defineConfig({
+export default defineConfig(({ command }) => ({
+  base: command === 'build' ? '/BANCAT---Bangladesh-Cancer-Aid-Trust/' : '/',
   plugins: [react()],
   test: {
     globals: true,
@@ -22,4 +23,4 @@ export default defineConfig({
       },
     },
   },
-})
+}));

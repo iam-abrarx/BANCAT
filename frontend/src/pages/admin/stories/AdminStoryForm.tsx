@@ -8,12 +8,17 @@ import { LoadingSpinner } from '../../../components/common/LoadingSpinner';
 interface StoryFormData {
     name_en: string;
     name_bn: string;
+    subject_name_en: string;
+    subject_name_bn: string;
     type: string;
     content_en: string;
     content_bn: string;
+    excerpt_en: string;
+    excerpt_bn: string;
     featured_image: string;
     video_url: string;
     is_published: boolean;
+    is_featured: boolean;
 }
 
 export const AdminStoryForm = () => {
@@ -26,12 +31,17 @@ export const AdminStoryForm = () => {
         defaultValues: {
             name_en: '',
             name_bn: '',
+            subject_name_en: '',
+            subject_name_bn: '',
             type: 'survivor',
             content_en: '',
             content_bn: '',
+            excerpt_en: '',
+            excerpt_bn: '',
             featured_image: '',
             video_url: '',
             is_published: true,
+            is_featured: false,
         }
     });
 
@@ -91,6 +101,26 @@ export const AdminStoryForm = () => {
 
                         <Grid item xs={12} md={6}>
                             <Controller
+                                name="subject_name_en"
+                                control={control}
+                                rules={{ required: 'Subject Name (English) is required' }}
+                                render={({ field }) => (
+                                    <TextField {...field} label="Subject Name (English)" fullWidth required error={!!errors.subject_name_en} helperText={errors.subject_name_en?.message} />
+                                )}
+                            />
+                        </Grid>
+                        <Grid item xs={12} md={6}>
+                            <Controller
+                                name="subject_name_bn"
+                                control={control}
+                                render={({ field }) => (
+                                    <TextField {...field} label="Subject Name (Bangla)" fullWidth />
+                                )}
+                            />
+                        </Grid>
+
+                        <Grid item xs={12} md={6}>
+                            <Controller
                                 name="type"
                                 control={control}
                                 rules={{ required: 'Type is required' }}
@@ -135,6 +165,25 @@ export const AdminStoryForm = () => {
 
                         <Grid item xs={12}>
                             <Controller
+                                name="excerpt_en"
+                                control={control}
+                                render={({ field }) => (
+                                    <TextField {...field} label="Excerpt (English) - Short Summary" multiline rows={2} fullWidth />
+                                )}
+                            />
+                        </Grid>
+                        <Grid item xs={12}>
+                            <Controller
+                                name="excerpt_bn"
+                                control={control}
+                                render={({ field }) => (
+                                    <TextField {...field} label="Excerpt (Bangla)" multiline rows={2} fullWidth />
+                                )}
+                            />
+                        </Grid>
+
+                        <Grid item xs={12}>
+                            <Controller
                                 name="video_url"
                                 control={control}
                                 render={({ field }) => (
@@ -151,6 +200,16 @@ export const AdminStoryForm = () => {
                                     <FormControlLabel
                                         control={<Switch checked={field.value} onChange={field.onChange} />}
                                         label="Published (Visible to public)"
+                                    />
+                                )}
+                            />
+                            <Controller
+                                name="is_featured"
+                                control={control}
+                                render={({ field }) => (
+                                    <FormControlLabel
+                                        control={<Switch checked={field.value} onChange={field.onChange} />}
+                                        label="Featured Story"
                                     />
                                 )}
                             />

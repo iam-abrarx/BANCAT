@@ -9,7 +9,13 @@ import {
     Article as ArticleIcon,
     Campaign as CampaignIcon,
     Logout as LogoutIcon,
-    Settings as SettingsIcon
+    Campaign as CampaignIcon,
+    Logout as LogoutIcon,
+    Settings as SettingsIcon,
+    Handshake as HandshakeIcon,
+    Category as CategoryIcon,
+    Groups as GroupsIcon,
+    ContactMail as ContactIcon
 } from '@mui/icons-material';
 import { Link, Outlet, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
@@ -31,8 +37,12 @@ export const AdminLayout = () => {
         { text: 'Patients', icon: <PeopleIcon />, path: '/admin/patients' },
         { text: 'Stories', icon: <ArticleIcon />, path: '/admin/stories' },
         { text: 'Campaigns', icon: <CampaignIcon />, path: '/admin/campaigns' },
+        { text: 'Campaigns', icon: <CampaignIcon />, path: '/admin/campaigns' },
+        { text: 'Programs', icon: <CategoryIcon />, path: '/admin/programs' },
         { text: 'Donations', icon: <VolunteerIcon />, path: '/admin/donations' },
-        // { text: 'Volunteers', icon: <HandshakeIcon />, path: '/admin/volunteers' }, // Future
+        { text: 'Team', icon: <GroupsIcon />, path: '/admin/team' },
+        { text: 'Volunteers', icon: <HandshakeIcon />, path: '/admin/volunteers' },
+        { text: 'Contacts', icon: <ContactIcon />, path: '/admin/contacts' },
     ];
 
     return (

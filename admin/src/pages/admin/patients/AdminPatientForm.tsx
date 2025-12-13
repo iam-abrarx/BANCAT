@@ -1,10 +1,10 @@
 import { useForm, Controller } from 'react-hook-form';
-import { Box, Paper, TextField, Button, Grid, Typography, FormControlLabel, Switch, Alert, Input } from '@mui/material';
+import { Box, Paper, TextField, Button, Grid, Typography, FormControlLabel, Switch, Alert } from '@mui/material';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useNavigate, useParams } from 'react-router-dom';
 import { patientService } from '../../../services/patientService';
 import { LoadingSpinner } from '../../../components/common/LoadingSpinner';
-import { useState, ChangeEvent, useEffect } from 'react';
+import { useState, useEffect, type ChangeEvent } from 'react';
 
 interface PatientFormData {
     name_en: string;
@@ -13,6 +13,7 @@ interface PatientFormData {
     age: number;
     phone?: string;
     email?: string;
+    gender?: string;
     donor_name?: string;
     location: string;
     cancer_type: string;
@@ -40,6 +41,7 @@ export const AdminPatientForm = () => {
             age: 0,
             phone: '',
             email: '',
+            gender: 'male',
             donor_name: '',
             location: '',
             cancer_type: '',
@@ -71,6 +73,7 @@ export const AdminPatientForm = () => {
                 age: patient.age,
                 phone: patient.phone || '',
                 email: patient.email || '',
+                gender: patient.gender || 'male',
                 donor_name: patient.donor_name || '',
                 location: patient.location,
                 cancer_type: patient.cancer_type,
@@ -158,6 +161,16 @@ export const AdminPatientForm = () => {
                         </Grid>
                         <Grid item xs={12} md={6}>
                             <Controller
+                                name="name_bn"
+                                control={control}
+                                rules={{ required: 'Name (Bangla) is required' }}
+                                render={({ field }) => (
+                                    <TextField {...field} label="Name (Bangla) *" fullWidth required error={!!errors.name_bn} helperText={errors.name_bn?.message} />
+                                )}
+                            />
+                        </Grid>
+                        <Grid item xs={12} md={6}>
+                            <Controller
                                 name="code"
                                 control={control}
                                 rules={!isEditMode ? { required: 'Patient Code is required' } : {}}
@@ -202,6 +215,20 @@ export const AdminPatientForm = () => {
                                 rules={{ required: 'Cancer Type is required' }}
                                 render={({ field }) => (
                                     <TextField {...field} label="Cancer Type *" fullWidth required error={!!errors.cancer_type} helperText={errors.cancer_type?.message} />
+                                )}
+                            />
+                        </Grid>
+                        <Grid item xs={12} md={6}>
+                            <Controller
+                                name="gender"
+                                control={control}
+                                rules={{ required: 'Gender is required' }}
+                                render={({ field }) => (
+                                    <TextField {...field} select label="Gender *" fullWidth required SelectProps={{ native: true }}>
+                                        <option value="male">Male</option>
+                                        <option value="female">Female</option>
+                                        <option value="other">Other</option>
+                                    </TextField>
                                 )}
                             />
                         </Grid>

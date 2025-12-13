@@ -26,13 +26,31 @@ export const storyService = {
         return response.data;
     },
 
+    getStoryById: async (id: number) => {
+        const response = await api.get<Story>(`/admin/stories/${id}`);
+        return response.data;
+    },
+
+    // Admin Methods
     // Admin Methods
     createStory: async (data: any) => {
-        const response = await api.post('/admin/stories', data);
+        const response = await api.post('/admin/stories', data, {
+            headers: { 'Content-Type': 'multipart/form-data' }
+        });
         return response.data;
     },
 
     updateStory: async (id: number, data: any) => {
+        // If data is FormData, we must use POST with _method: PUT because PHP has trouble with PUT/PATCH and multipart/form-data
+        if (data instanceof FormData) {
+            data.append('_method', 'PUT');
+            const response = await api.post(`/admin/stories/${id}`, data, {
+                headers: { 'Content-Type': 'multipart/form-data' }
+            });
+            return response.data;
+        }
+
+        // Basic JSON update
         const response = await api.put(`/admin/stories/${id}`, data);
         return response.data;
     },

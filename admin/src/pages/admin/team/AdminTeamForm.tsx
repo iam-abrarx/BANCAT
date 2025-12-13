@@ -131,8 +131,9 @@ export const AdminTeamForm = () => {
                             <Controller
                                 name="name_bn"
                                 control={control}
+                                rules={{ required: 'Name (Bangla) is required' }}
                                 render={({ field }) => (
-                                    <TextField {...field} label="Name (Bangla)" fullWidth />
+                                    <TextField {...field} label="Name (Bangla) *" fullWidth required error={!!errors.name_bn} helperText={errors.name_bn?.message} />
                                 )}
                             />
                         </Grid>
@@ -151,8 +152,9 @@ export const AdminTeamForm = () => {
                             <Controller
                                 name="role_bn"
                                 control={control}
+                                rules={{ required: 'Role (Bangla) is required' }}
                                 render={({ field }) => (
-                                    <TextField {...field} label="Role (Bangla)" fullWidth />
+                                    <TextField {...field} label="Role (Bangla) *" fullWidth required error={!!errors.role_bn} helperText={errors.role_bn?.message} />
                                 )}
                             />
                         </Grid>

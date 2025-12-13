@@ -54,6 +54,7 @@ class CampaignController extends Controller
 
         $data['slug'] = Str::slug($data['name_en']) . '-' . Str::random(6);
         $data['raised_amount'] = 0;
+        $data['status'] = 'approved';
 
         $campaign = Campaign::create($data);
 

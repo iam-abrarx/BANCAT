@@ -23,7 +23,9 @@ import { AdminPartnerList } from './pages/admin/partners/AdminPartnerList';
 import Testimonials from './pages/Testimonials';
 import AdminGalleryList from './pages/admin/gallery/AdminGalleryList';
 import AdminGalleryForm from './pages/admin/gallery/AdminGalleryForm';
+
 import { AdminSettings } from './pages/admin/settings/AdminSettings';
+import { AdminContactList } from './pages/admin/contacts/AdminContactList';
 
 function App() {
   return (
@@ -71,6 +73,7 @@ function App() {
         <Route path="gallery/:id" element={<AdminGalleryForm />} />
 
         <Route path="partners" element={<AdminPartnerList />} />
+        <Route path="contacts" element={<AdminContactList />} />
 
         <Route path="settings" element={<AdminSettings />} />
         <Route path="users" element={<Navigate to="/admin/settings" replace />} />

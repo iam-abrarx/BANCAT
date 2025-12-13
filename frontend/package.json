@@ -1,5 +1,6 @@
 {
     "name": "bancat-frontend",
+    "homepage": "https://rootmacts.github.io/BANCAT---Bangladesh-Cancer-Aid-Trust/",
     "version": "1.0.0",
     "description": "BANcat Frontend - React SPA for cancer awareness and patient support platform",
     "type": "module",
@@ -11,7 +12,9 @@
         "format": "prettier --write \"src/**/*.{ts,tsx,css}\"",
         "test": "vitest",
         "test:ui": "vitest --ui",
-        "test:coverage": "vitest --coverage"
+        "test:coverage": "vitest --coverage",
+        "predeploy": "npm run build && cd ../admin && npm install && npm run build",
+        "deploy": "gh-pages -d dist"
     },
     "dependencies": {
         "@emotion/react": "^11.11.1",
@@ -55,6 +58,7 @@
         "eslint": "^8.55.0",
         "eslint-plugin-react-hooks": "^4.6.0",
         "eslint-plugin-react-refresh": "^0.4.5",
+        "gh-pages": "^6.3.0",
         "jsdom": "^23.0.1",
         "prettier": "^3.1.1",
         "typescript": "^5.2.2",

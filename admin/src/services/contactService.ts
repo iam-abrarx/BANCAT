@@ -25,5 +25,10 @@ export const contactService = {
     sendPartnership: async (data: PartnershipData) => {
         const response = await api.post('/partnership', data);
         return response.data;
+    },
+
+    getAllContacts: async (params?: any) => {
+        const response = await api.get('/admin/contacts', { params });
+        return response.data;
     }
 };

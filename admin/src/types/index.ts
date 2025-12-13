@@ -13,6 +13,10 @@ export interface Patient {
     medical_summary_bn?: string;
     treatment_cost_required: number;
     treatment_cost_raised: number;
+    fund_raised?: number; // Alias or API variance
+    phone?: string;
+    email?: string;
+    donor_name?: string;
     is_active: boolean;
     is_featured: boolean;
     status: 'active' | 'completed' | 'archived';

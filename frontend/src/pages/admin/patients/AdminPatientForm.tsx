@@ -1,5 +1,5 @@
 import { useForm, Controller } from 'react-hook-form';
-import { Box, Paper, TextField, Button, Grid, Typography, FormControlLabel, Switch, Alert } from '@mui/material';
+import { Box, Paper, TextField, Button, Grid, Typography, FormControlLabel, Switch, Alert, MenuItem } from '@mui/material';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useNavigate, useParams } from 'react-router-dom';
 import { patientService } from '../../../services/patientService';
@@ -10,8 +10,13 @@ interface PatientFormData {
     name_bn: string;
     code: string;
     age: number;
+    gender: string;
+    phone: string;
+    email: string;
     location: string;
     cancer_type: string;
+    diagnosis_date: string;
+    donor_name: string;
     photo: string;
     treatment_cost_required: number;
     medical_summary_en: string;
@@ -32,8 +37,13 @@ export const AdminPatientForm = () => {
             name_bn: '',
             code: '',
             age: 0,
+            gender: 'other',
+            phone: '',
+            email: '',
             location: '',
             cancer_type: '',
+            diagnosis_date: '',
+            donor_name: '',
             photo: '',
             treatment_cost_required: 0,
             medical_summary_en: '',
@@ -115,6 +125,22 @@ export const AdminPatientForm = () => {
                                 )}
                             />
                         </Grid>
+
+                        <Grid item xs={12} md={6}>
+                            <Controller
+                                name="gender"
+                                control={control}
+                                rules={{ required: 'Gender is required' }}
+                                render={({ field }) => (
+                                    <TextField {...field} select label="Gender" fullWidth required>
+                                        <MenuItem value="male">Male</MenuItem>
+                                        <MenuItem value="female">Female</MenuItem>
+                                        <MenuItem value="other">Other</MenuItem>
+                                    </TextField>
+                                )}
+                            />
+                        </Grid>
+
                         <Grid item xs={12} md={6}>
                             <Controller
                                 name="cancer_type"
@@ -146,6 +172,24 @@ export const AdminPatientForm = () => {
                                 )}
                             />
                         </Grid>
+                        <Grid item xs={12} md={6}>
+                            <Controller
+                                name="phone"
+                                control={control}
+                                render={({ field }) => (
+                                    <TextField {...field} label="Phone" fullWidth placeholder="+880..." />
+                                )}
+                            />
+                        </Grid>
+                        <Grid item xs={12} md={6}>
+                            <Controller
+                                name="email"
+                                control={control}
+                                render={({ field }) => (
+                                    <TextField {...field} label="Email" fullWidth type="email" />
+                                )}
+                            />
+                        </Grid>
                         <Grid item xs={12} md={4}>
                             <Controller
                                 name="treatment_cost_required"
@@ -153,6 +197,32 @@ export const AdminPatientForm = () => {
                                 rules={{ required: 'Funding Goal is required', min: 0 }}
                                 render={({ field }) => (
                                     <TextField {...field} type="number" label="Treatment Cost Required (৳)" fullWidth required />
+                                )}
+                            />
+                        </Grid>
+
+                        {/* New Fields */}
+                        <Grid item xs={12} md={6}>
+                            <Controller
+                                name="diagnosis_date"
+                                control={control}
+                                render={({ field }) => (
+                                    <TextField
+                                        {...field}
+                                        type="date"
+                                        label="Diagnosis Date"
+                                        fullWidth
+                                        InputLabelProps={{ shrink: true }}
+                                    />
+                                )}
+                            />
+                        </Grid>
+                        <Grid item xs={12} md={6}>
+                            <Controller
+                                name="donor_name"
+                                control={control}
+                                render={({ field }) => (
+                                    <TextField {...field} label="Donor Name" fullWidth placeholder="e.g. Anonymous Sponsor" />
                                 )}
                             />
                         </Grid>

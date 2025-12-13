@@ -26,6 +26,7 @@ class StoryFactory extends Factory
             'featured_image' => 'default.jpg',
             'type' => 'survivor',
             'is_published' => true,
+            'published_at' => now(),
         ];
     }
 }

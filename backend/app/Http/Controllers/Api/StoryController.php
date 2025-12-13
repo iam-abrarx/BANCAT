@@ -60,8 +60,18 @@ class StoryController extends Controller
 
     // Admin Methods
 
+    public function showAdmin($id)
+    {
+        $story = Story::findOrFail($id);
+        return response()->json($story);
+    }
+
+
     public function store(Request $request)
     {
+        // Log request data for debugging
+        \Illuminate\Support\Facades\Log::info('Store Story Request:', $request->all());
+
         $data = $request->validate([
             'title_en' => 'required|string',
             'title_bn' => 'nullable|string',
@@ -72,10 +82,29 @@ class StoryController extends Controller
             'excerpt_bn' => 'nullable|string',
             'content_en' => 'required|string',
             'content_bn' => 'nullable|string',
-            'featured_image' => 'nullable|string',
+            'featured_image' => 'nullable', // Allow file or string
             'video_url' => 'nullable|string',
             'is_published' => 'boolean',
+            'is_featured' => 'boolean',
         ]);
+
+        if ($request->hasFile('featured_image')) {
+            $path = $request->file('featured_image')->store('stories', 'public');
+            $data['featured_image'] = '/storage/' . $path;
+        } else {
+             // If manual URL provided or empty
+             if (!isset($data['featured_image']) || $request->has('featured_image') && !$request->featured_image) {
+                 $data['featured_image'] = null;
+             }
+        }
+
+        // Handle boolean conversion
+        $data['is_published'] = filter_var($request->input('is_published', true), FILTER_VALIDATE_BOOLEAN);
+        $data['is_featured'] = filter_var($request->input('is_featured', false), FILTER_VALIDATE_BOOLEAN);
+
+        if ($data['is_published'] && !isset($data['published_at'])) {
+             $data['published_at'] = now();
+        }
 
         $data['slug'] = Str::slug($data['title_en']) . '-' . Str::random(6);
         $data['view_count'] = 0;
@@ -89,6 +118,8 @@ class StoryController extends Controller
     {
         $story = Story::findOrFail($id);
 
+        \Illuminate\Support\Facades\Log::info('Update Story Request:', $request->all());
+
         $data = $request->validate([
             'title_en' => 'sometimes|string',
             'title_bn' => 'nullable|string',
@@ -99,13 +130,39 @@ class StoryController extends Controller
             'excerpt_bn' => 'nullable|string',
             'content_en' => 'sometimes|string',
             'content_bn' => 'nullable|string',
-            'featured_image' => 'nullable|string',
+            'featured_image' => 'nullable',
             'video_url' => 'nullable|string',
-            'is_published' => 'boolean',
+            'is_published' => 'sometimes',
+            'is_featured' => 'sometimes',
         ]);
+
+        if ($request->hasFile('featured_image')) {
+            $path = $request->file('featured_image')->store('stories', 'public');
+            $data['featured_image'] = '/storage/' . $path;
+        } else {
+            // Keep old image if not provided
+            if (array_key_exists('featured_image', $data) && $data['featured_image'] === null) {
+                 unset($data['featured_image']);
+            }
+             if (isset($data['featured_image']) && !is_string($data['featured_image'])) {
+                unset($data['featured_image']);
+            }
+        }
+
+        // Handle boolean
+        if ($request->has('is_published')) {
+            $data['is_published'] = filter_var($request->input('is_published'), FILTER_VALIDATE_BOOLEAN);
+        }
+        if ($request->has('is_featured')) {
+            $data['is_featured'] = filter_var($request->input('is_featured'), FILTER_VALIDATE_BOOLEAN);
+        }
 
         if (isset($data['title_en']) && $data['title_en'] !== $story->title_en) {
              $data['slug'] = Str::slug($data['title_en']) . '-' . Str::random(6);
+        }
+
+        if (isset($data['is_published']) && $data['is_published'] && is_null($story->published_at)) {
+             $data['published_at'] = now();
         }
 
         $story->update($data);

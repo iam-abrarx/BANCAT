@@ -52,6 +52,7 @@ Route::prefix('v1')->group(function () {
     Route::get('/galleries', [GalleryController::class, 'index']);
     Route::get('/galleries/{slug}', [GalleryController::class, 'show']);
     Route::get('/team-members', [TeamMemberController::class, 'index']);
+    Route::get('/team-members/{id}', [TeamMemberController::class, 'show']);
 
     // Public SEO Settings (for frontend)
     Route::get('/settings/seo', [SettingsController::class, 'getSeoSettings']);
@@ -59,7 +60,8 @@ Route::prefix('v1')->group(function () {
 
     Route::post('/donations/initiate', [DonationController::class, 'initiate']);
     // Callback route for gateway redirect (using GET usually for redirects)
-    Route::get('/donations/callback', [DonationController::class, 'callback'])->name('api.donations.callback');
+    // Callback route for gateway redirect (using GET usually for redirects, POST for IPN/Webhook)
+    Route::match(['get', 'post'], '/donations/callback', [DonationController::class, 'callback'])->name('api.donations.callback');
 
     // Admin donations - temporarily public for debugging
     Route::get('/admin/donations', [DonationController::class, 'index']);
@@ -102,6 +104,7 @@ Route::prefix('v1')->group(function () {
              Route::delete('/patients/{id}', [PatientController::class, 'destroy']);
 
              // Story Management
+             Route::get('/stories/{id}', [StoryController::class, 'showAdmin']);
              Route::post('/stories', [StoryController::class, 'store']);
              Route::put('/stories/{id}', [StoryController::class, 'update']);
              Route::delete('/stories/{id}', [StoryController::class, 'destroy']);

@@ -179,6 +179,7 @@ class WebsiteContentSeeder extends Seeder
                     'content_en' => $story['content'],
                     'content_bn' => $story['content'], // Placeholder
                     'is_published' => true,
+                    'published_at' => now(),
                     'featured_image' => 'https://placehold.co/600x400?text=' . urlencode($story['subject']),
                 ]
             );

@@ -28,7 +28,7 @@ class AuthController extends Controller
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'role' => 'donor', // Default role
-            'status' => 'active',
+            'is_active' => true,
         ]);
 
         $token = $user->createToken('auth_token')->plainTextToken;
