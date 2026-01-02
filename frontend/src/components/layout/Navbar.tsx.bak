@@ -1,0 +1,193 @@
+import { AppBar, Button, Container, Box, IconButton, useTheme, useMediaQuery, ClickAwayListener } from '@mui/material';
+import { Menu as MenuIcon, KeyboardArrowDown } from '@mui/icons-material';
+import { Link as RouterLink, useNavigate, useLocation } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
+import { useAuth } from '../../contexts/AuthContext';
+import { LanguageToggle } from '../common/LanguageToggle';
+import { MobileDrawer } from './MobileDrawer';
+import { useDonationDrawer } from '../../contexts/DonationDrawerContext';
+import { useState } from 'react';
+import { menuConfig } from './menuConfig';
+import logo from '../../assets/logo.png';
+
+export const Navbar = () => {
+    const { t, i18n } = useTranslation();
+    const isBn = i18n.language === 'bn';
+    const theme = useTheme();
+    const isMobile = useMediaQuery(theme.breakpoints.down('lg'));
+    const { user, logout } = useAuth();
+    const navigate = useNavigate();
+    const location = useLocation();
+    const [drawerOpen, setDrawerOpen] = useState(false);
+    const { openDrawer } = useDonationDrawer();
+
+    // Menu state
+    const [activeMenu, setActiveMenu] = useState<string | null>(null);
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const [_, setMenuAnchors] = useState<Record<string, HTMLElement | null>>({});
+
+    const handleLogout = () => {
+        logout();
+        navigate('/login');
+    };
+
+    const handleMenuOpen = (menuId: string, event: React.MouseEvent<HTMLElement>) => {
+        setMenuAnchors(prev => ({ ...prev, [menuId]: event.currentTarget }));
+        setActiveMenu(menuId);
+    };
+
+    const handleMenuClose = () => {
+        setActiveMenu(null);
+    };
+
+    return (
+        <>
+            <AppBar
+                position="sticky"
+                color="transparent"
+                elevation={0}
+                sx={{
+                    bgcolor: 'transparent',
+                    backdropFilter: 'none',
+                    transition: 'all 0.3s ease-in-out',
+                    mt: 2
+                }}
+            >
+                <Container maxWidth="xl">
+                    <Box
+                        sx={{
+                            bgcolor: '#8E44AD', // Purple color from image
+                            borderRadius: '50px',
+                            px: 3,
+                            py: 1,
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'space-between',
+                            boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)'
+                        }}
+                    >
+                        {/* Logo - kept outside or inside? Image shows it might be separate, but let's keep inside for now or adjacent. 
+                           If distinct, the pill starts AFTER the logo? The image shows the menu INSIDE a purple bar. 
+                           Wait, the image shows the WHOLE bar is purple, but "pill like"?
+                           Actually, looking at the crop, it looks like a floating pill.
+                           Let's put the logo inside for now to be safe, or just to the left.
+                           Let's try putting the logo INSIDE the pill on the left.
+                        */}
+                        <Box component={RouterLink} to="/" sx={{ textDecoration: 'none', display: 'flex', alignItems: 'center', mr: 2 }}>
+                            {/* White Logo or original? If background is purple, maybe need white logo variant? 
+                                Assuming current logo works on purple or we use text if image fails. 
+                                For now use existing logo image. */}
+                            <img src={logo} alt="BANcat Logo" style={{ height: '32px', width: 'auto' }} />
+                        </Box>
+
+                        {/* Desktop Nav */}
+                        {!isMobile && (
+                            <Box sx={{ display: 'flex', gap: 1, alignItems: 'center', flex: 1, justifyContent: 'center' }}>
+                                {menuConfig.filter(item => item.type !== 'cta').map(item => {
+                                    const isActive = activeMenu === item.id || (item.id === 'home' && location.pathname === '/');
+
+                                    // Custom rendering for links with specific styles
+                                    return (
+                                        <Button
+                                            key={item.id}
+                                            component={item.type === 'link' ? RouterLink : 'button'}
+                                            to={item.type === 'link' ? item.path! : undefined}
+                                            onClick={(e) => {
+                                                if (item.type !== 'link') {
+                                                    // Handle dropdown/mega open
+                                                    handleMenuOpen(item.id, e);
+                                                }
+                                            }}
+                                            onMouseEnter={(e) => {
+                                                if (item.type !== 'link') {
+                                                    handleMenuOpen(item.id, e);
+                                                }
+                                            }}
+                                            // Handle mouse leave for dropdowns? usually on the container.
+                                            // mixed approach in original code.
+
+                                            sx={{
+                                                fontWeight: isActive ? 700 : 500,
+                                                color: item.label === 'Home' ? '#FFC107' : 'white', // Yellow for Home, White for others
+                                                textTransform: 'none',
+                                                px: 2,
+                                                '&:hover': {
+                                                    color: '#FFC107',
+                                                    bgcolor: 'rgba(255, 255, 255, 0.1)',
+                                                },
+                                            }}
+                                            endIcon={item.type !== 'link' ? <KeyboardArrowDown sx={{ color: 'white' }} /> : undefined}
+                                        >
+                                            {item.label}
+                                        </Button>
+                                    );
+                                })}
+                            </Box>
+                        )}
+
+                        {/* Right side */}
+                        {!isMobile && (
+                            <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+                                {/* Search Bar - White Pill */}
+                                <Box sx={{ bgcolor: 'white', borderRadius: '20px', px: 2, py: 0.5, display: 'flex', alignItems: 'center', maxHeight: 36 }}>
+                                    {/* Override SearchBar styles or minimal version */}
+                                    {/* Simplified Search Input for visual match */}
+                                    <input
+                                        type="text"
+                                        placeholder="Search..."
+                                        style={{
+                                            border: 'none',
+                                            outline: 'none',
+                                            background: 'transparent',
+                                            fontSize: '14px',
+                                            width: '120px'
+                                        }}
+                                    />
+                                    {/* Search Icon */}
+                                    <svg width="16" height="16" fill="gray" viewBox="0 0 16 16">
+                                        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
+                                    </svg>
+                                </Box>
+
+                                {/* Login / Lang */}
+                                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, color: 'white', fontSize: '14px', fontWeight: 600 }}>
+                                    {user ? (
+                                        <Button
+                                            onClick={handleLogout}
+                                            sx={{ color: 'white', fontWeight: 600, textTransform: 'none' }}
+                                        >
+                                            {t('nav.logout', 'Logout')}
+                                        </Button>
+                                    ) : (
+                                        <RouterLink to="/login" style={{ color: 'white', textDecoration: 'none' }}>
+                                            Login
+                                        </RouterLink>
+                                    )}
+                                    <span>|</span>
+                                    <LanguageToggle sx={{ color: 'white' }} />
+                                    {/* Note: LanguageToggle might need prop to enforce white text */}
+                                </Box>
+
+                            </Box>
+                        )}
+
+                        {/* Mobile Menu Icon */}
+                        {isMobile && (
+                            <IconButton
+                                edge="end"
+                                color="inherit"
+                                aria-label="menu"
+                                onClick={() => setDrawerOpen(true)}
+                                sx={{ color: 'white' }}
+                            >
+                                <MenuIcon />
+                            </IconButton>
+                        )}
+                    </Box>
+                </Container>
+            </AppBar>
+
+            <MobileDrawer open={drawerOpen} onClose={() => setDrawerOpen(false)} />
+        </>
+    );
+};

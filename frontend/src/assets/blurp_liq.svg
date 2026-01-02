@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 583.38 546.96">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: url(#_Безымянный_градиент_60);
+      }
+    </style>
+    <radialGradient id="_Безымянный_градиент_60" data-name="Безымянный градиент 60" cx="266.18" cy="276.25" fx="266.18" fy="276.25" r="348.9" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#514ea1"/>
+      <stop offset=".18" stop-color="#574ea0"/>
+      <stop offset=".44" stop-color="#694fa0"/>
+      <stop offset=".74" stop-color="#8751a0"/>
+      <stop offset="1" stop-color="#a753a0"/>
+    </radialGradient>
+  </defs>
+  <path class="cls-1" d="M129.56,221.22c-285.22,169-33.58,406.16,126.56,298.83,102.34-68.59,211.81-41.43,288.58-119.44,76.76-78,24.39-200.24-28.85-249.77C462.61,101.32,487.52,13.66,363.71.53c-109.73-11.64-150.82,171.31-234.15,220.69Z"/>
+</svg>

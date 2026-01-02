@@ -1,9 +1,14 @@
 import { IconButton, Menu, MenuItem, Tooltip } from '@mui/material';
+import type { SxProps, Theme } from '@mui/material';
 import { Language as LanguageIcon } from '@mui/icons-material';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-export const LanguageToggle = () => {
+interface LanguageToggleProps {
+    sx?: SxProps<Theme>;
+}
+
+export const LanguageToggle = ({ sx }: LanguageToggleProps) => {
     const { i18n } = useTranslation();
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
@@ -30,6 +35,7 @@ export const LanguageToggle = () => {
                     aria-haspopup="true"
                     onClick={handleMenu}
                     color="inherit"
+                    sx={sx}
                 >
                     <LanguageIcon />
                 </IconButton>

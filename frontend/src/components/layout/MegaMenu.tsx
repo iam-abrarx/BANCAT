@@ -85,18 +85,18 @@ export const MegaMenu = ({
                 {
                     name: 'offset',
                     options: {
-                        offset: [0, 11], // Offset to align with navbar bottom edge
+                        offset: [0, 16], // Slightly more offset
                     },
                 },
                 {
                     name: 'eventListeners',
                     options: {
-                        scroll: false, // Disable scroll repositioning to prevent lag
+                        scroll: false,
                     },
                 },
             ]}
             popperOptions={{
-                strategy: 'fixed', // Fixed positioning prevents scroll jitter
+                strategy: 'fixed',
             }}
         >
             {({ TransitionProps }) => (
@@ -113,28 +113,24 @@ export const MegaMenu = ({
                         sx={{
                             minWidth: featuredImage ? 900 : 700,
                             maxWidth: 1100,
-                            p: 0, // Remove default padding to control layout better
-                            borderRadius: '0 0 24px 24px', // Only bottom corners rounded for attached look
-                            // Premium Glassmorphism
-                            background: alpha('#ffffff', 0.55),
-                            backdropFilter: 'blur(25px) saturate(180%)',
-                            WebkitBackdropFilter: 'blur(25px) saturate(180%)',
-                            border: '1px solid rgba(255, 255, 255, 0.6)',
-                            boxShadow: `
-                                0 40px 80px -20px rgba(50, 50, 93, 0.25), 
-                                0 30px 60px -30px rgba(0, 0, 0, 0.3), 
-                                0 -2px 6px 0 rgba(255, 255, 255, 0.5) inset
-                            `,
+                            p: 0,
+                            borderRadius: '24px', // Fully rounded
+                            // Clean White Look
+                            bgcolor: 'rgba(255, 255, 255, 0.95)',
+                            backdropFilter: 'blur(20px)',
+                            WebkitBackdropFilter: 'blur(20px)',
+                            border: '1px solid rgba(142, 68, 173, 0.1)', // Subtle purple border
+                            boxShadow: '0 20px 60px -10px rgba(44, 14, 69, 0.15)', // Deep purple shadow
                             overflow: 'hidden',
                             position: 'relative',
                         }}
                     >
-                        {/* Decorative Top Gradient Line */}
+                        {/* Decorative Top Accent */}
                         <Box
                             sx={{
-                                height: '4px',
+                                height: '3px',
                                 width: '100%',
-                                background: 'linear-gradient(90deg, #4318FF 0%, #00B2FF 50%, #4318FF 100%)',
+                                background: 'linear-gradient(90deg, #8E44AD 0%, #D2B4DE 50%, #8E44AD 100%)', // Purple gradient
                                 backgroundSize: '200% auto',
                                 animation: 'gradientFlow 3s linear infinite',
                                 '@keyframes gradientFlow': {
@@ -146,28 +142,28 @@ export const MegaMenu = ({
 
                         <Grid container>
                             {/* Links Section */}
-                            <Grid item xs={12} md={featuredImage ? 8 : 12} sx={{ p: 4.5 }}>
-                                <Grid container spacing={5}>
+                            <Grid item xs={12} md={featuredImage ? 8 : 12} sx={{ p: 5 }}>
+                                <Grid container spacing={6}>
                                     {sections.map((section, sectionIndex) => (
                                         <Grid item xs={12} sm={6} key={sectionIndex}>
                                             <motion.div variants={sectionVariants}>
                                                 <Typography
                                                     variant="overline"
                                                     sx={{
-                                                        color: 'primary.main',
+                                                        color: '#8E44AD', // Purple
                                                         fontWeight: 800,
-                                                        letterSpacing: '0.15em',
-                                                        mb: 2.5,
+                                                        letterSpacing: '0.1em',
+                                                        mb: 3,
                                                         display: 'inline-block',
                                                         borderBottom: '2px solid',
-                                                        borderColor: alpha(theme.palette.primary.main, 0.1),
+                                                        borderColor: alpha('#8E44AD', 0.1),
                                                         pb: 0.5,
                                                         fontSize: '0.75rem',
                                                     }}
                                                 >
                                                     {section.title}
                                                 </Typography>
-                                                <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
+                                                <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.5 }}>
                                                     {section.items.map((item, itemIndex) => (
                                                         <motion.div
                                                             key={itemIndex}
@@ -182,14 +178,14 @@ export const MegaMenu = ({
                                                                     alignItems: 'center',
                                                                     gap: 2,
                                                                     p: 1.5,
-                                                                    mx: -1.5, // Negative margin to align text with cleaner edge
-                                                                    borderRadius: '16px',
+                                                                    mx: -1.5,
+                                                                    borderRadius: '12px',
                                                                     textDecoration: 'none',
                                                                     color: 'text.primary',
                                                                     transition: 'all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1)',
                                                                     position: 'relative',
                                                                     '&:hover': {
-                                                                        bgcolor: alpha(theme.palette.primary.main, 0.06),
+                                                                        bgcolor: alpha('#8E44AD', 0.05), // Light purple hover
                                                                         transform: 'translateX(6px)',
                                                                     },
                                                                     '& .icon-arrow': {
@@ -209,7 +205,7 @@ export const MegaMenu = ({
                                                                         sx={{
                                                                             fontWeight: 600,
                                                                             fontSize: '0.95rem',
-                                                                            color: '#1B254B', // Darker navy for better contrast
+                                                                            color: '#2c0e45', // Dark purple text
                                                                         }}
                                                                     >
                                                                         {item.label}
@@ -220,7 +216,7 @@ export const MegaMenu = ({
                                                                             sx={{
                                                                                 color: 'text.secondary',
                                                                                 display: 'block',
-                                                                                mt: 0.25,
+                                                                                mt: 0.5,
                                                                                 fontSize: '0.8rem',
                                                                                 fontWeight: 400,
                                                                                 lineHeight: 1.4,
@@ -234,7 +230,7 @@ export const MegaMenu = ({
                                                                     className="icon-arrow"
                                                                     sx={{
                                                                         fontSize: 20,
-                                                                        color: 'primary.main',
+                                                                        color: '#8E44AD',
                                                                     }}
                                                                 />
                                                             </Box>
@@ -264,16 +260,15 @@ export const MegaMenu = ({
                                                 backgroundImage: `url(${featuredImage.src})`,
                                                 backgroundSize: 'cover',
                                                 backgroundPosition: 'center',
-                                                // Create a soft visual separation
-                                                boxShadow: '-1px 0 0 rgba(0,0,0,0.06)',
                                             }}
                                         >
-                                            {/* Gradient Overlay */}
+                                            {/* Purple Overlay */}
                                             <Box
                                                 sx={{
                                                     position: 'absolute',
                                                     inset: 0,
-                                                    background: 'linear-gradient(to top, rgba(17, 25, 39, 0.8) 0%, rgba(17, 25, 39, 0) 60%)',
+                                                    background: 'linear-gradient(to top, rgba(44, 14, 69, 0.8) 0%, rgba(142, 68, 173, 0.2) 100%)',
+                                                    mixBlendMode: 'multiply'
                                                 }}
                                             />
 

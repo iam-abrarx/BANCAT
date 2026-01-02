@@ -70,10 +70,10 @@ export const DropdownMenu = ({
                 sx={{
                     display: 'flex',
                     alignItems: 'center',
-                    gap: 1,
-                    py: 1.25,
+                    gap: 1.5,
+                    py: 1.5,
                     px: 2,
-                    borderRadius: 2,
+                    borderRadius: 3,
                     textDecoration: 'none',
                     color: 'text.primary',
                     transition: 'all 0.2s cubic-bezier(0.4, 0, 0.2, 1)',
@@ -84,14 +84,14 @@ export const DropdownMenu = ({
                         left: 0,
                         top: '50%',
                         transform: 'translateY(-50%) scaleY(0)',
-                        width: '3px',
-                        height: '60%',
-                        background: 'linear-gradient(180deg, #1976D2, #00897B)',
+                        width: '4px',
+                        height: '70%',
+                        background: '#8E44AD', // Solid purple indicator
                         borderRadius: '0 4px 4px 0',
                         transition: 'transform 0.2s ease',
                     },
                     '&:hover': {
-                        bgcolor: 'rgba(25, 118, 210, 0.08)',
+                        bgcolor: 'rgba(142, 68, 173, 0.08)', // Light purple hover
                         '&::before': {
                             transform: 'translateY(-50%) scaleY(1)',
                         },
@@ -106,8 +106,9 @@ export const DropdownMenu = ({
                     <Typography
                         variant="body2"
                         sx={{
-                            fontWeight: 500,
-                            fontSize: '0.875rem',
+                            fontWeight: 600,
+                            fontSize: '0.9rem',
+                            color: '#2c0e45',
                         }}
                     >
                         {item.label}
@@ -128,11 +129,11 @@ export const DropdownMenu = ({
                 <KeyboardArrowRight
                     className="arrow-icon"
                     sx={{
-                        fontSize: 16,
+                        fontSize: 18,
                         opacity: 0,
                         transform: 'translateX(-8px)',
                         transition: 'all 0.2s ease',
-                        color: 'primary.main',
+                        color: '#8E44AD',
                     }}
                 />
             </Box>
@@ -150,7 +151,7 @@ export const DropdownMenu = ({
                 {
                     name: 'offset',
                     options: {
-                        offset: [0, 12],
+                        offset: [0, 16],
                     },
                 },
             ]}
@@ -166,16 +167,16 @@ export const DropdownMenu = ({
                         onMouseLeave={onMouseLeave}
                         elevation={0}
                         sx={{
-                            minWidth: 240,
-                            py: 1.5,
+                            minWidth: 260,
+                            py: 2,
                             px: 1,
-                            borderRadius: 3,
-                            // Glassmorphism
-                            background: 'rgba(255, 255, 255, 0.9)',
+                            borderRadius: '20px',
+                            // Clean White Look
+                            bgcolor: 'rgba(255, 255, 255, 0.95)',
                             backdropFilter: 'blur(20px)',
                             WebkitBackdropFilter: 'blur(20px)',
-                            border: '1px solid rgba(255, 255, 255, 0.5)',
-                            boxShadow: '0 20px 40px -10px rgba(0, 0, 0, 0.12), 0 0 0 1px rgba(0, 0, 0, 0.05)',
+                            border: '1px solid rgba(142, 68, 173, 0.1)',
+                            boxShadow: '0 15px 40px -10px rgba(44, 14, 69, 0.15)',
                             overflow: 'hidden',
                             position: 'relative',
                             '&::before': {
@@ -185,7 +186,7 @@ export const DropdownMenu = ({
                                 left: 0,
                                 right: 0,
                                 height: '3px',
-                                background: 'linear-gradient(90deg, #1976D2 0%, #00897B 50%, #42A5F5 100%)',
+                                background: 'linear-gradient(90deg, #8E44AD 0%, #D2B4DE 50%, #8E44AD 100%)',
                                 backgroundSize: '200% 100%',
                                 animation: 'gradientShift 3s ease infinite',
                             },
@@ -196,20 +197,21 @@ export const DropdownMenu = ({
                             },
                         }}
                     >
-                        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 0.25 }}>
+                        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 0.5 }}>
                             {regularItems.map((item, index) => renderMenuItem(item, index))}
 
                             {policyItems.length > 0 && (
                                 <>
-                                    <Divider sx={{ my: 1.5, mx: 2 }} />
+                                    <Divider sx={{ my: 1.5, mx: 2, borderColor: 'rgba(0,0,0,0.05)' }} />
                                     <Typography
                                         variant="overline"
                                         sx={{
-                                            color: 'text.secondary',
-                                            fontSize: '0.65rem',
+                                            color: '#8E44AD',
+                                            fontSize: '0.7rem',
+                                            fontWeight: 700,
                                             px: 2,
                                             mb: 0.5,
-                                            letterSpacing: 1.5,
+                                            letterSpacing: 1,
                                         }}
                                     >
                                         Policies

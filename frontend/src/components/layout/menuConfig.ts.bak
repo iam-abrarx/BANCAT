@@ -25,7 +25,7 @@ export interface NavItem {
 }
 
 export const menuConfig: NavItem[] = [
-    // 1. Home
+    // 1. Home - Simple link
     {
         id: 'home',
         label: 'Home',
@@ -33,7 +33,7 @@ export const menuConfig: NavItem[] = [
         type: 'link',
     },
 
-    // 2. About
+    // 2. About - Dropdown menu
     {
         id: 'about',
         label: 'About',
@@ -41,20 +41,16 @@ export const menuConfig: NavItem[] = [
         items: [
             { label: 'About Us', path: '/about' },
             { label: 'Our Team', path: '/about/team' },
-            { label: 'Our Services', path: '/about/services' },
-            { label: 'Privary Policy', path: '/privacy-policy' },
+            { label: 'Our Services', path: '/about/services', description: 'Alok Nibash, Alok Boshoti' },
+            { label: 'Contact Us', path: '/contact' },
+            { label: 'FAQ', path: '/faq' },
+            { label: 'Privacy Policy', path: '/privacy-policy' },
+            { label: 'Terms of Use', path: '/terms-of-use' },
+            { label: 'Refund Policy', path: '/refund-policy' },
         ],
     },
 
-    // 3. Support (New)
-    {
-        id: 'support',
-        label: 'Support',
-        type: 'link', // Treating as link for now, or dropdown if needed
-        path: '/support',
-    },
-
-    // 4. Our Work
+    // 3. Our Work - Mega menu
     {
         id: 'our-work',
         label: 'Our Work',
@@ -83,7 +79,7 @@ export const menuConfig: NavItem[] = [
         ],
     },
 
-    // 5. Stories
+    // 4. Stories - Mega menu
     {
         id: 'stories',
         label: 'Stories',
@@ -111,7 +107,29 @@ export const menuConfig: NavItem[] = [
         ],
     },
 
-    // 6. Get Involved
+    // 5. Campaigns - Mega menu
+    {
+        id: 'campaigns',
+        label: 'Campaigns',
+        type: 'mega',
+        featuredImage: {
+            src: 'https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?auto=format&fit=crop&w=600&q=80',
+            caption: 'Join the Movement'
+        },
+        sections: [
+            {
+                title: 'Our Campaigns',
+                items: [
+                    { label: 'Maa Bachao', path: '/campaigns/maa-bachao' },
+                    { label: 'Alok Nibash (Signature Project)', path: '/alok-nibash' },
+                    { label: 'BANCAT DURBAR', path: '/campaigns/bancat-durbar' },
+                    { label: 'Donate to a Campaign', path: '/campaigns/donate' },
+                ],
+            },
+        ],
+    },
+
+    // 6. Get Involved - Mega menu
     {
         id: 'get-involved',
         label: 'Get Involved',
@@ -126,24 +144,40 @@ export const menuConfig: NavItem[] = [
                 items: [
                     { label: 'Volunteer Opportunities', path: '/volunteer' },
                     { label: 'Patient Support', path: '/volunteer/patient-support' },
+                    { label: 'Event Volunteer', path: '/volunteer/events' },
+                    { label: 'Awareness & Outreach', path: '/volunteer/outreach' },
+                    { label: 'Volunteer Application Form', path: '/volunteer/apply' },
+                ],
+            },
+            {
+                title: 'Partnerships',
+                items: [
+                    { label: 'Brand Partnership', path: '/partnerships/brands' },
+                    { label: 'CSR Guidance', path: '/partnerships/csr' },
                 ],
             },
             {
                 title: 'Fundraising',
                 items: [
                     { label: 'Start Your Own Fundraiser', path: '/fundraising/start' },
-                    { label: 'Donate', path: '/donate' },
+                    { label: 'Fundraising Toolkit', path: '/fundraising/toolkit' },
+                    { label: 'In-Kind Donations', path: '/donations/in-kind' },
+                    { label: 'Legacy Giving', path: '/donations/legacy' },
                 ],
             },
         ],
     },
 
-    // 7. Contact (New)
+    // 7. Donate - CTA button with optional dropdown
     {
-        id: 'contact',
-        label: 'Contact',
-        type: 'link',
-        path: '/contact',
+        id: 'donate',
+        label: 'Donate',
+        type: 'cta',
+        items: [
+            { label: 'Donate Now', path: '/donate', description: 'General Donation' },
+            { label: 'Campaign Donations', path: '/campaigns/donate' },
+            { label: 'Zakat Calculator', path: '/zakat-calculator' },
+        ],
     },
 ];
 

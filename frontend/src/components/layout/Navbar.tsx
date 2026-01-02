@@ -1,95 +1,54 @@
-import { AppBar, Toolbar, Button, Container, Box, IconButton, useTheme, useMediaQuery, ClickAwayListener } from '@mui/material';
+import { AppBar, Button, Container, Box, IconButton, useTheme, useMediaQuery, Collapse } from '@mui/material';
 import { Menu as MenuIcon, KeyboardArrowDown } from '@mui/icons-material';
-import { Link as RouterLink, useNavigate } from 'react-router-dom';
+import { Link as RouterLink, useNavigate, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '../../contexts/AuthContext';
-import { SearchBar } from '../common/SearchBar';
 import { LanguageToggle } from '../common/LanguageToggle';
 import { MobileDrawer } from './MobileDrawer';
 import { MegaMenu } from './MegaMenu';
 import { DropdownMenu } from './DropdownMenu';
-import { useDonationDrawer } from '../../contexts/DonationDrawerContext';
-import { useState, useEffect, useMemo } from 'react';
-import { menuConfig as initialMenuConfig, type NavItem } from './menuConfig';
-import { usePrograms } from '../../hooks/useProgramsCampaigns';
+import { useState, useEffect } from 'react';
+import { menuConfig } from './menuConfig';
+import { TopBar } from './TopBar';
 
 export const Navbar = () => {
-    const { t, i18n } = useTranslation();
-    const isBn = i18n.language === 'bn';
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { t } = useTranslation();
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down('lg'));
     const { user, logout } = useAuth();
     const navigate = useNavigate();
+    const location = useLocation();
     const [drawerOpen, setDrawerOpen] = useState(false);
-    const { openDrawer } = useDonationDrawer();
-    const [scrolled, setScrolled] = useState(false);
 
-    // Fetch dynamic programs
-    const { data: programs } = usePrograms();
+    // Scroll state for hiding/showing TopBar
+    const [showTopBar, setShowTopBar] = useState(false);
+    const [hasScrolled, setHasScrolled] = useState(false);
 
-    // Dynamically update menu config
-    const menuConfig = useMemo(() => {
-        if (!programs) return initialMenuConfig;
+    useEffect(() => {
+        const handleScroll = () => {
+            const currentScrollY = window.scrollY;
 
-        const updatedConfig = [...initialMenuConfig];
-        const ourWorkIndex = updatedConfig.findIndex(item => item.id === 'our-work');
-
-        if (ourWorkIndex !== -1 && updatedConfig[ourWorkIndex].sections) {
-            // Clone the item to avoid mutating original
-            const ourWorkItem = { ...updatedConfig[ourWorkIndex] };
-            const sections = ourWorkItem.sections ? [...ourWorkItem.sections] : [];
-
-            // Define categories
-            const initiativesSlugs = ['awareness', 'holistic-care', 'mental-wellness'];
-            const infoSupportSlugs = ['all-about-cancer-in-bangladesh', 'patient-caregiver-support', '24-7-helpline'];
-
-            // Update Initiatives Section
-            const initiativesIndex = sections.findIndex(s => s.title === 'Initiatives');
-            if (initiativesIndex !== -1) {
-                const intiativePrograms = programs.filter(p => initiativesSlugs.includes(p.slug));
-                if (intiativePrograms.length > 0) {
-                    sections[initiativesIndex] = {
-                        ...sections[initiativesIndex],
-                        items: intiativePrograms.map(p => ({
-                            label: isBn ? (p.name_bn || p.name_en) : p.name_en,
-                            path: `/programs/${p.slug}`
-                        }))
-                    };
-                }
+            // Mark that user has scrolled down significantly
+            if (currentScrollY > 100) {
+                setHasScrolled(true);
             }
 
-            // Update Information & Support Section
-            const infoIndex = sections.findIndex(s => s.title === 'Information & Support');
-            if (infoIndex !== -1) {
-                const infoPrograms = programs.filter(p => infoSupportSlugs.includes(p.slug));
-                if (infoPrograms.length > 0) {
-                    sections[infoIndex] = {
-                        ...sections[infoIndex],
-                        items: infoPrograms.map(p => ({
-                            label: isBn ? (p.name_bn || p.name_en) : p.name_en,
-                            path: `/programs/${p.slug}`
-                        }))
-                    };
-                }
+            // Show TopBar ONLY if at top AND has previously scrolled down
+            if (currentScrollY < 50 && hasScrolled) {
+                setShowTopBar(true);
+            } else {
+                setShowTopBar(false);
             }
+        };
 
-            ourWorkItem.sections = sections;
-            updatedConfig[ourWorkIndex] = ourWorkItem;
-        }
-        return updatedConfig;
-    }, [programs, isBn]);
+        window.addEventListener('scroll', handleScroll);
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, [hasScrolled]);
 
     // Menu state
     const [activeMenu, setActiveMenu] = useState<string | null>(null);
     const [menuAnchors, setMenuAnchors] = useState<Record<string, HTMLElement | null>>({});
-
-    useEffect(() => {
-        const handleScroll = () => {
-            setScrolled(window.scrollY > 20);
-        };
-        window.addEventListener('scroll', handleScroll);
-        return () => window.removeEventListener('scroll', handleScroll);
-    }, []);
 
     const handleLogout = () => {
         logout();
@@ -101,208 +60,202 @@ export const Navbar = () => {
         setActiveMenu(menuId);
     };
 
-    const handleMenuClick = (menuId: string, event: React.MouseEvent<HTMLElement>) => {
-        if (activeMenu === menuId) {
-            // Close if clicking the currently active menu
-            setActiveMenu(null);
-        } else {
-            // Open new menu
-            setMenuAnchors(prev => ({ ...prev, [menuId]: event.currentTarget }));
-            setActiveMenu(menuId);
-        }
-    };
-
     const handleMenuClose = () => {
         setActiveMenu(null);
     };
 
-    const renderNavItem = (item: NavItem) => {
-        const isActive = activeMenu === item.id;
-
-        if (item.type === 'link') {
-            return (
-                <Button
-                    key={item.id}
-                    component={RouterLink}
-                    to={item.path!}
-                    color="inherit"
-                    sx={{
-                        fontWeight: 500,
-                        px: 1.5,
-                        '&:hover': {
-                            bgcolor: 'rgba(25, 118, 210, 0.08)',
-                        },
-                    }}
-                >
-                    {item.label}
-                </Button>
-            );
-        }
-
-        if (item.type === 'cta') {
-            return (
-                <Box
-                    key={item.id}
-                    onMouseEnter={(e) => handleMenuOpen(item.id, e)}
-                    onMouseLeave={handleMenuClose}
-                    sx={{ position: 'relative' }}
-                >
-                    <Button
-                        variant="contained"
-                        onClick={() => openDrawer()}
-                        color="primary"
-                        endIcon={<KeyboardArrowDown sx={{
-                            transition: 'transform 0.2s',
-                            transform: isActive ? 'rotate(180deg)' : 'rotate(0deg)'
-                        }} />}
-                        sx={{
-                            ml: 1,
-                            background: 'linear-gradient(45deg, #1976D2 30%, #42A5F5 90%)',
-                            boxShadow: '0 3px 15px rgba(25, 118, 210, 0.3)',
-                            fontWeight: 600,
-                            px: 2.5,
-                            '&:hover': {
-                                boxShadow: '0 5px 20px rgba(25, 118, 210, 0.4)',
-                                transform: 'translateY(-1px)',
-                            },
-                        }}
-                    >
-                        {t('nav.donate')}
-                    </Button>
-                    {item.items && (
-                        <DropdownMenu
-                            items={item.items}
-                            anchorEl={menuAnchors[item.id] || null}
-                            open={isActive}
-                            onClose={handleMenuClose}
-                            onMouseEnter={() => { }}
-                            onMouseLeave={() => { }}
-                        />
-                    )}
-                </Box>
-            );
-        }
-
-        // Dropdown or Mega menu
-        return (
-            <ClickAwayListener key={item.id} onClickAway={isActive ? handleMenuClose : () => { }}>
-                <Box sx={{ position: 'relative' }}>
-                    <Button
-                        color="inherit"
-                        onClick={(e) => handleMenuClick(item.id, e)}
-                        endIcon={<KeyboardArrowDown sx={{
-                            fontSize: 18,
-                            transition: 'transform 0.2s',
-                            transform: isActive ? 'rotate(180deg)' : 'rotate(0deg)'
-                        }} />}
-                        sx={{
-                            fontWeight: 500,
-                            px: 1.5,
-                            color: isActive ? 'primary.main' : 'inherit',
-                            bgcolor: isActive ? 'rgba(25, 118, 210, 0.08)' : 'transparent',
-                            '&:hover': {
-                                bgcolor: 'rgba(25, 118, 210, 0.08)',
-                            },
-                        }}
-                    >
-                        {item.label}
-                    </Button>
-
-                    {item.type === 'dropdown' && item.items && (
-                        <DropdownMenu
-                            items={item.items}
-                            anchorEl={menuAnchors[item.id] || null}
-                            open={isActive}
-                            onClose={handleMenuClose}
-                            onMouseEnter={() => { }}
-                            onMouseLeave={() => { }}
-                        />
-                    )}
-
-                    {item.type === 'mega' && item.sections && (
-                        <MegaMenu
-                            sections={item.sections}
-                            anchorEl={menuAnchors[item.id] || null}
-                            open={isActive}
-                            onClose={handleMenuClose} // Pass handleMenuClose cleanly
-                            onMouseEnter={() => { }}
-                            onMouseLeave={() => { }}
-                            featuredImage={item.featuredImage}
-                        />
-                    )}
-                </Box>
-            </ClickAwayListener>
-        );
-    };
-
     return (
         <>
-            <AppBar
-                position="sticky"
-                color="default"
-                elevation={scrolled ? 4 : 0}
+            {/* Fixed Header Overlay */}
+            <Box
                 sx={{
-                    bgcolor: 'rgba(255,255,255,0.95)',
-                    backdropFilter: 'blur(8px)',
-                    transition: 'all 0.3s ease-in-out',
-                    borderBottom: scrolled ? 'none' : '1px solid #eee'
+                    position: 'fixed',
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    zIndex: 1100,
+                    transition: 'all 0.3s ease-in-out'
                 }}
             >
-                <Container maxWidth="xl">
-                    <Toolbar disableGutters sx={{ justifyContent: 'space-between', minHeight: scrolled ? 64 : 72, transition: 'min-height 0.3s' }}>
-                        {/* Logo */}
-                        <Box component={RouterLink} to="/" sx={{ textDecoration: 'none', color: 'primary.main', fontWeight: 700, fontSize: '1.5rem', display: 'flex', alignItems: 'center' }}>
-                            BANcat
+                {/* Top Bar - Hides on scroll */}
+                {!isMobile && (
+                    <Collapse in={showTopBar} timeout={300}>
+                        <TopBar />
+                    </Collapse>
+                )}
+
+                <AppBar
+                    position="sticky"
+                    color="transparent"
+                    elevation={0}
+                    sx={{
+                        bgcolor: 'transparent',
+                        backdropFilter: 'none',
+                        transition: 'all 0.3s ease-in-out',
+                        mt: 2,
+                        top: 0
+                    }}
+                >
+                    <Container maxWidth="xl">
+                        <Box
+                            sx={{
+                                bgcolor: '#8E44AD', // Purple color from image
+                                borderRadius: '50px',
+                                px: 3,
+                                py: 1,
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'space-between',
+                                boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)'
+                            }}
+                        >
+                            {/* Logo Removed from here as per new design (it's in TopBar) */}
+
+                            {/* Desktop Nav */}
+                            {!isMobile && (
+                                <Box sx={{ display: 'flex', gap: 1, alignItems: 'center', flex: 1, justifyContent: 'center' }}>
+                                    {menuConfig.filter(item => item.type !== 'cta').map(item => {
+                                        const isActive = activeMenu === item.id || (item.id === 'home' && location.pathname === '/');
+
+                                        if (item.type === 'link') {
+                                            return (
+                                                <Button
+                                                    key={item.id}
+                                                    component={RouterLink}
+                                                    to={item.path!}
+                                                    sx={{
+                                                        fontWeight: isActive ? 700 : 500,
+                                                        color: item.label === 'Home' ? '#FFC107' : 'white',
+                                                        textTransform: 'none',
+                                                        px: 2,
+                                                        minWidth: 'auto',
+                                                        '&:hover': {
+                                                            color: '#FFC107',
+                                                            bgcolor: 'rgba(255, 255, 255, 0.1)',
+                                                        },
+                                                    }}
+                                                >
+                                                    {item.label}
+                                                </Button>
+                                            );
+                                        }
+
+                                        // Dropdown or Mega menu
+                                        return (
+                                            <Box
+                                                key={item.id}
+                                                onMouseEnter={(e) => handleMenuOpen(item.id, e)}
+                                                onMouseLeave={handleMenuClose}
+                                                sx={{ position: 'relative' }}
+                                            >
+                                                <Button
+                                                    onClick={(e) => handleMenuOpen(item.id, e)}
+                                                    sx={{
+                                                        fontWeight: isActive ? 700 : 500,
+                                                        color: isActive ? '#FFC107' : 'white',
+                                                        textTransform: 'none',
+                                                        px: 2,
+                                                        minWidth: 'auto',
+                                                        '&:hover': {
+                                                            color: '#FFC107',
+                                                            bgcolor: 'rgba(255, 255, 255, 0.1)',
+                                                        },
+                                                    }}
+                                                    endIcon={<KeyboardArrowDown sx={{ color: 'white' }} />}
+                                                >
+                                                    {item.label}
+                                                </Button>
+
+                                                {item.type === 'dropdown' && item.items && (
+                                                    <DropdownMenu
+                                                        items={item.items}
+                                                        anchorEl={menuAnchors[item.id] || null}
+                                                        open={isActive}
+                                                        onClose={handleMenuClose}
+                                                        onMouseEnter={() => { }}
+                                                        onMouseLeave={() => { }}
+                                                    />
+                                                )}
+
+                                                {item.type === 'mega' && item.sections && (
+                                                    <MegaMenu
+                                                        sections={item.sections}
+                                                        anchorEl={menuAnchors[item.id] || null}
+                                                        open={isActive}
+                                                        onClose={handleMenuClose}
+                                                        onMouseEnter={() => { }}
+                                                        onMouseLeave={() => { }}
+                                                        featuredImage={item.featuredImage}
+                                                    />
+                                                )}
+                                            </Box>
+                                        );
+                                    })}
+                                </Box>
+                            )}
+
+                            {/* Right side */}
+                            {!isMobile && (
+                                <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+                                    {/* Search Bar - White Pill */}
+                                    <Box sx={{ bgcolor: 'white', borderRadius: '20px', px: 2, py: 0.5, display: 'flex', alignItems: 'center', maxHeight: 36 }}>
+                                        {/* Override SearchBar styles or minimal version */}
+                                        {/* Simplified Search Input for visual match */}
+                                        <input
+                                            type="text"
+                                            placeholder="Search..."
+                                            style={{
+                                                border: 'none',
+                                                outline: 'none',
+                                                background: 'transparent',
+                                                fontSize: '14px',
+                                                width: '120px'
+                                            }}
+                                        />
+                                        {/* Search Icon */}
+                                        <svg width="16" height="16" fill="gray" viewBox="0 0 16 16">
+                                            <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
+                                        </svg>
+                                    </Box>
+
+                                    {/* Login / Lang */}
+                                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, color: 'white', fontSize: '14px', fontWeight: 600 }}>
+                                        {user ? (
+                                            <Button
+                                                onClick={handleLogout}
+                                                sx={{ color: 'white', fontWeight: 600, textTransform: 'none' }}
+                                            >
+                                                {t('nav.logout', 'Logout')}
+                                            </Button>
+                                        ) : (
+                                            <RouterLink to="/login" style={{ color: 'white', textDecoration: 'none' }}>
+                                                Login
+                                            </RouterLink>
+                                        )}
+                                        <span>|</span>
+                                        <LanguageToggle sx={{ color: 'white' }} />
+                                        {/* Note: LanguageToggle might need prop to enforce white text */}
+                                    </Box>
+
+                                </Box>
+                            )}
+
+                            {/* Mobile Menu Icon */}
+                            {isMobile && (
+                                <IconButton
+                                    edge="end"
+                                    color="inherit"
+                                    aria-label="menu"
+                                    onClick={() => setDrawerOpen(true)}
+                                    sx={{ color: 'white' }}
+                                >
+                                    <MenuIcon />
+                                </IconButton>
+                            )}
                         </Box>
-
-                        {/* Desktop Nav */}
-                        {!isMobile && (
-                            <Box sx={{ display: 'flex', gap: 0.5, alignItems: 'center', flex: 1, justifyContent: 'center' }}>
-                                {menuConfig.filter(item => item.type !== 'cta').map(renderNavItem)}
-                            </Box>
-                        )}
-
-                        {/* Right side */}
-                        {!isMobile && (
-                            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                                <SearchBar placeholder={t('common.search', 'Search...')} />
-                                <LanguageToggle />
-                                {user ? (
-                                    <Button
-                                        color="inherit"
-                                        onClick={handleLogout}
-                                        sx={{ fontWeight: 600 }}
-                                    >
-                                        {t('nav.logout', 'Logout')}
-                                    </Button>
-                                ) : (
-                                    <Button
-                                        color="inherit"
-                                        component={RouterLink}
-                                        to="/login"
-                                        sx={{ fontWeight: 600 }}
-                                    >
-                                        {t('nav.login', 'Login')}
-                                    </Button>
-                                )}
-                                {menuConfig.filter(item => item.type === 'cta').map(renderNavItem)}
-                            </Box>
-                        )}
-
-                        {/* Mobile Menu Icon */}
-                        {isMobile && (
-                            <IconButton
-                                edge="end"
-                                color="inherit"
-                                aria-label="menu"
-                                onClick={() => setDrawerOpen(true)}
-                            >
-                                <MenuIcon />
-                            </IconButton>
-                        )}
-                    </Toolbar>
-                </Container>
-            </AppBar>
+                    </Container>
+                </AppBar>
+            </Box>
 
             <MobileDrawer open={drawerOpen} onClose={() => setDrawerOpen(false)} />
         </>

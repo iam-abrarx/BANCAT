@@ -7,6 +7,7 @@ import { SearchBar } from '../common/SearchBar';
 import { LanguageToggle } from '../common/LanguageToggle';
 import { MobileDrawer } from './MobileDrawer';
 import { useState, useEffect } from 'react';
+import logo from '../../assets/logo.png';
 
 export const Navbar = () => {
     const { t } = useTranslation();
@@ -45,9 +46,10 @@ export const Navbar = () => {
             >
                 <Container maxWidth="lg">
                     <Toolbar disableGutters sx={{ justifyContent: 'space-between', minHeight: scrolled ? 64 : 80, transition: 'min-height 0.3s' }}>
+
                         {/* Logo */}
-                        <Box component={RouterLink} to="/" sx={{ textDecoration: 'none', color: 'primary.main', fontWeight: 700, fontSize: '1.5rem', display: 'flex', alignItems: 'center' }}>
-                            BANcat
+                        <Box component={RouterLink} to="/" sx={{ textDecoration: 'none', display: 'flex', alignItems: 'center' }}>
+                            <img src={logo} alt="BANcat Logo" style={{ height: '40px', width: 'auto' }} />
                         </Box>
 
                         {/* Desktop Search */}
