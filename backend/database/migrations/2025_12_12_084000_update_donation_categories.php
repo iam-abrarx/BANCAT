@@ -20,7 +20,7 @@ return new class extends Migration
         // Since this is a local dev environment likely using SQLite (based on generic error behavior),
         // let's try a safer approach if it's not MySQL/Postgres.
         
-        $driver = Schema::connection($this->getConnection())->getConfig('driver');
+        $driver = DB::getDriverName();
 
         if ($driver === 'sqlite') {
             // For SQLite, we can't modify column directly. 
@@ -53,7 +53,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        $driver = Schema::connection($this->getConnection())->getConfig('driver');
+        $driver = DB::getDriverName();
         if ($driver !== 'sqlite') {
              DB::statement("ALTER TABLE donations MODIFY COLUMN category ENUM('general', 'campaign', 'patient', 'emergency') NOT NULL DEFAULT 'general'");
         }

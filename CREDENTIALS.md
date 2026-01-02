@@ -11,7 +11,7 @@ Here are the seeded user accounts for testing the Admin Panel and User features.
 ### 1. Super Administrator
 
 - **Name:** Super Admin
-- **Email:** `super_admin@bancat.com`
+- **Email:** `superadmin@bancat.org` (or `super_admin@bancat.com`)
 - **Password:** `password`
 - **Role:** Super Admin
 - **Access:** Ultimate control. Can create/edit everything, including other Admins.

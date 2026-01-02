@@ -18,7 +18,8 @@ import {
     LightMode as LightModeIcon,
     Settings as SettingsIcon,
     Handshake as HandshakeIcon,
-    ContactMail as ContactIcon
+    ContactMail as ContactIcon,
+    MenuBook as MenuBookIcon
 } from '@mui/icons-material';
 import { Link, Outlet, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
@@ -58,6 +59,8 @@ export const AdminLayout = () => {
         { text: 'Contacts', icon: <ContactIcon />, path: '/admin/contacts' },
         { text: 'Settings', icon: <SettingsIcon />, path: '/admin/settings' },
     ];
+
+    const documentationItem = { text: 'Documentation', icon: <MenuBookIcon />, path: 'http://localhost:3000', external: true };
 
     return (
         <Box sx={{ display: 'flex', bgcolor: 'background.default', minHeight: '100vh' }}>
@@ -257,6 +260,47 @@ export const AdminLayout = () => {
                             </ListItem>
                         ))}
                     </List>
+                </Box>
+
+                {/* Documentation Link */}
+                <Box sx={{ px: 2, pb: 1 }}>
+                    <Divider sx={{ mb: 1, opacity: 0.5 }} />
+                    <ListItem disablePadding>
+                        <Tooltip title={isCollapsed ? documentationItem.text : ""} placement="right" arrow disableHoverListener={!isCollapsed}>
+                            <ListItemButton
+                                component="a"
+                                href={documentationItem.path}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                sx={{
+                                    borderRadius: '12px',
+                                    minHeight: 48,
+                                    justifyContent: isCollapsed ? 'center' : 'initial',
+                                    px: isCollapsed ? 1 : 2.5,
+                                    overflow: 'hidden',
+                                    color: 'text.secondary',
+                                    '&:hover': { bgcolor: 'action.hover', color: 'primary.main' }
+                                }}
+                            >
+                                <ListItemIcon
+                                    sx={{
+                                        minWidth: 0,
+                                        mr: isCollapsed ? 0 : 2,
+                                        justifyContent: 'center',
+                                        color: 'inherit',
+                                    }}
+                                >
+                                    {documentationItem.icon}
+                                </ListItemIcon>
+                                {!isCollapsed && (
+                                    <ListItemText
+                                        primary={documentationItem.text}
+                                        primaryTypographyProps={{ fontSize: '14px', fontWeight: 500 }}
+                                    />
+                                )}
+                            </ListItemButton>
+                        </Tooltip>
+                    </ListItem>
                 </Box>
 
                 {/* Bottom Section - Sign out */}
