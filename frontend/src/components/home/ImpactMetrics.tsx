@@ -1,7 +1,7 @@
 import { Box, Container, Grid, Paper, Typography } from '@mui/material';
 import { Favorite, Groups, VerifiedUser, LocalHospital } from '@mui/icons-material';
 import { useTranslation } from 'react-i18next';
-import { motion, useInView, useSpring, useTransform } from 'framer-motion';
+import { motion, useInView, useSpring } from 'framer-motion';
 import { useRef, useEffect, useState } from 'react';
 
 // Animated counter component
@@ -103,59 +103,13 @@ export const ImpactMetrics = () => {
         <Box
             ref={ref}
             sx={{
-                py: { xs: 6, md: 8 },
+                py: { xs: 2, md: 4 },
                 bgcolor: 'grey.50',
                 position: 'relative',
                 overflow: 'hidden',
             }}
         >
-            {/* Decorative background */}
-            <Box
-                sx={{
-                    position: 'absolute',
-                    top: '50%',
-                    left: '50%',
-                    transform: 'translate(-50%, -50%)',
-                    width: '150%',
-                    height: '150%',
-                    background: 'radial-gradient(circle, rgba(25, 118, 210, 0.03) 0%, transparent 70%)',
-                    pointerEvents: 'none',
-                }}
-            />
-
             <Container maxWidth="lg">
-                {/* Section header */}
-                <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={isInView ? { opacity: 1, y: 0 } : {}}
-                    transition={{ duration: 0.6 }}
-                >
-                    <Typography
-                        variant="overline"
-                        sx={{
-                            display: 'block',
-                            textAlign: 'center',
-                            color: 'primary.main',
-                            fontWeight: 700,
-                            letterSpacing: 3,
-                            mb: 1,
-                        }}
-                    >
-                        Our Impact
-                    </Typography>
-                    <Typography
-                        variant="h3"
-                        sx={{
-                            textAlign: 'center',
-                            fontWeight: 700,
-                            mb: 6,
-                            color: 'text.primary',
-                        }}
-                    >
-                        Making a Real Difference
-                    </Typography>
-                </motion.div>
-
                 <motion.div
                     variants={containerVariants}
                     initial="hidden"

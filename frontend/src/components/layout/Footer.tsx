@@ -1,223 +1,126 @@
 import { Box, Container, Grid, Typography, Link, Stack, IconButton } from '@mui/material';
 import { Link as RouterLink } from 'react-router-dom';
-import { Facebook, Twitter, Instagram, YouTube, Email, Phone, LocationOn } from '@mui/icons-material';
-import { motion } from 'framer-motion';
-
-const socialLinks = [
-    { icon: <Facebook />, href: '#', label: 'Facebook' },
-    { icon: <Twitter />, href: '#', label: 'Twitter' },
-    { icon: <Instagram />, href: '#', label: 'Instagram' },
-    { icon: <YouTube />, href: '#', label: 'YouTube' },
-];
+import { Facebook, Twitter, LinkedIn } from '@mui/icons-material';
+import footerImage from '../../assets/footer/Asset 20@3x.png';
 
 export const Footer = () => {
     return (
-        <Box sx={{ bgcolor: 'grey.900', color: 'white', pt: 10, pb: 4, mt: 'auto', position: 'relative' }}>
-            {/* Gradient top border */}
-            <Box
-                sx={{
-                    position: 'absolute',
-                    top: 0,
-                    left: 0,
-                    right: 0,
-                    height: 4,
-                    background: 'linear-gradient(90deg, #1976D2 0%, #00897B 50%, #42A5F5 100%)',
-                }}
-            />
+        <Box sx={{ bgcolor: 'black', color: 'white', pt: 8, pb: 4, mt: 'auto', overflow: 'hidden' }}>
+            <Container maxWidth="xl">
+                <Grid container spacing={4} alignItems="flex-start">
 
-            <Container maxWidth="lg">
-                <Grid container spacing={6}>
-                    {/* Brand & Bio */}
+                    {/* Left Column: Contact Details */}
+                    <Grid item xs={12} md={3}>
+                        <Typography variant="h6" sx={{ fontWeight: 700, mb: 1, fontFamily: "'Montserrat', sans-serif" }}>
+                            Contact Details
+                        </Typography>
+                        <Typography variant="body2" sx={{ mb: 2 }}>
+                            Corporate office
+                        </Typography>
+
+                        <Typography variant="body2" sx={{ color: '#f5aa21', mb: 2 }}>
+                            House-300E, Road-414, Block-A,Bashundhara R/A, Dhaka- 1229
+                        </Typography>
+
+                        <Typography variant="body2" sx={{ color: '#f5aa21', mb: 0 }}>
+                            Mosabbir Alok Nivesh Home-01
+                        </Typography>
+                        <Typography variant="body2" sx={{ color: '#f5aa21', mb: 2 }}>
+                            House-144, Road-3, Block-A, Bsahundhara R/A, Dhaka- 1229
+                        </Typography>
+
+                        <Typography variant="body2" sx={{ color: '#f5aa21', mb: 0 }}>
+                            Mosabbir Alok Nivesh Home-02
+                        </Typography>
+                        <Typography variant="body2" sx={{ color: '#f5aa21', mb: 3 }}>
+                            House-3220, Road-66, Block-L, Bsahundhara R/A, Dhaka- 1229
+                        </Typography>
+
+                        <Typography variant="body2" sx={{ color: '#f5aa21', mb: 0 }}>
+                            Phone: +8801303073503
+                        </Typography>
+                        <Typography variant="body2" sx={{ color: '#f5aa21', mb: 4 }}>
+                            Email: support@bancat.org.bd
+                        </Typography>
+
+                        <Stack direction="row" spacing={2}>
+                            <IconButton sx={{ border: '1px solid white', color: 'white' }} size="small">
+                                <Facebook fontSize="small" />
+                            </IconButton>
+                            <IconButton sx={{ border: '1px solid white', color: 'white' }} size="small">
+                                <Twitter fontSize="small" />
+                            </IconButton>
+                            <IconButton sx={{ border: '1px solid white', color: 'white' }} size="small">
+                                <LinkedIn fontSize="small" />
+                            </IconButton>
+                        </Stack>
+                    </Grid>
+
+                    {/* Center Column: Image */}
+                    <Grid item xs={12} md={5} sx={{ display: 'flex', justifyContent: 'center', position: 'relative' }}>
+                        <Box
+                            component="img"
+                            src={footerImage}
+                            alt="BANCAT Fist"
+                            sx={{
+                                width: '100%',
+                                maxWidth: '350px',
+                                height: 'auto',
+                                mt: -5, // Pull it up slightly to overlap or fit better
+                                mb: -10 // Let it extend down
+                            }}
+                        />
+                    </Grid>
+
+                    {/* Right Column: Links Grid */}
                     <Grid item xs={12} md={4}>
-                        <motion.div
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ duration: 0.5 }}
-                        >
-                            <Typography
-                                variant="h5"
-                                fontWeight="bold"
-                                gutterBottom
-                                sx={{
-                                    background: 'linear-gradient(135deg, #42A5F5, #4DB6AC)',
-                                    WebkitBackgroundClip: 'text',
-                                    WebkitTextFillColor: 'transparent',
-                                }}
-                            >
-                                BANcat
-                            </Typography>
-                            <Typography variant="body2" color="grey.400" sx={{ maxWidth: 300, mb: 3, lineHeight: 1.8 }}>
-                                Supporting cancer patients in Bangladesh with financial aid, care, and hope.
-                                Join our mission to fight cancer together.
-                            </Typography>
+                        <Grid container spacing={4}>
+                            {/* Row 1 */}
+                            <Grid item xs={6}>
+                                <Typography variant="subtitle2" sx={{ fontWeight: 700, mb: 2 }}>About BANCAT</Typography>
+                                <Stack spacing={1}>
+                                    <Link component={RouterLink} to="/about" underline="none" sx={{ color: '#f5aa21', fontSize: '0.85rem' }}>About Us</Link>
+                                    <Link component={RouterLink} to="/approach" underline="none" sx={{ color: '#f5aa21', fontSize: '0.85rem' }}>Our Approach (AAA)</Link>
+                                    <Link component={RouterLink} to="/services" underline="none" sx={{ color: '#f5aa21', fontSize: '0.85rem' }}>Our Services / Care Centres</Link>
+                                    <Link component={RouterLink} to="/stories" underline="none" sx={{ color: '#f5aa21', fontSize: '0.85rem' }}>Stories of Hope</Link>
+                                </Stack>
+                            </Grid>
+                            <Grid item xs={6} sx={{ textAlign: 'right' }}>
+                                <Typography variant="subtitle2" sx={{ fontWeight: 700, mb: 2 }}>Get Involved</Typography>
+                                <Stack spacing={1} alignItems="flex-end">
+                                    <Link component={RouterLink} to="/donate" underline="none" sx={{ color: '#f5aa21', fontSize: '0.85rem' }}>Donate Now</Link>
+                                    <Link component={RouterLink} to="/zakat" underline="none" sx={{ color: '#f5aa21', fontSize: '0.85rem' }}>Zakat Calculator</Link>
+                                    <Link component={RouterLink} to="/contact" underline="none" sx={{ color: '#f5aa21', fontSize: '0.85rem' }}>Contact Us</Link>
+                                    <Link component={RouterLink} to="/privacy" underline="none" sx={{ color: '#f5aa21', fontSize: '0.85rem' }}>Privacy Policy</Link>
+                                </Stack>
+                            </Grid>
 
-                            {/* Social Links */}
-                            <Stack direction="row" spacing={1}>
-                                {socialLinks.map((social, index) => (
-                                    <motion.div
-                                        key={index}
-                                        whileHover={{ y: -4 }}
-                                        whileTap={{ scale: 0.95 }}
-                                    >
-                                        <IconButton
-                                            href={social.href}
-                                            aria-label={social.label}
-                                            sx={{
-                                                color: 'grey.400',
-                                                bgcolor: 'rgba(255, 255, 255, 0.05)',
-                                                transition: 'all 0.3s ease',
-                                                '&:hover': {
-                                                    color: 'white',
-                                                    bgcolor: 'primary.main',
-                                                },
-                                            }}
-                                        >
-                                            {social.icon}
-                                        </IconButton>
-                                    </motion.div>
-                                ))}
-                            </Stack>
-                        </motion.div>
-                    </Grid>
-
-                    {/* Quick Links */}
-                    <Grid item xs={6} md={2}>
-                        <motion.div
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ duration: 0.5, delay: 0.1 }}
-                        >
-                            <Typography variant="subtitle1" fontWeight="bold" gutterBottom sx={{ color: 'grey.200' }}>
-                                Quick Links
-                            </Typography>
-                            <Stack spacing={1.5} sx={{ mt: 2 }}>
-                                {[
-                                    { label: 'About Us', path: '/about' },
-                                    { label: 'Programs', path: '/programs' },
-                                    { label: 'Stories', path: '/stories' },
-                                    { label: 'Volunteer', path: '/volunteer' },
-                                    { label: 'Zakat Calculator', path: '/zakat-calculator' },
-                                    { label: 'Contact', path: '/contact' },
-                                ].map((link, i) => (
-                                    <Link
-                                        key={i}
-                                        component={RouterLink}
-                                        to={link.path}
-                                        underline="none"
-                                        sx={{
-                                            color: 'grey.400',
-                                            transition: 'all 0.2s ease',
-                                            display: 'inline-block',
-                                            '&:hover': {
-                                                color: 'primary.light',
-                                                transform: 'translateX(4px)',
-                                            },
-                                        }}
-                                    >
-                                        {link.label}
-                                    </Link>
-                                ))}
-                            </Stack>
-                        </motion.div>
-                    </Grid>
-
-                    {/* Legal */}
-                    <Grid item xs={6} md={2}>
-                        <motion.div
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ duration: 0.5, delay: 0.2 }}
-                        >
-                            <Typography variant="subtitle1" fontWeight="bold" gutterBottom sx={{ color: 'grey.200' }}>
-                                Legal
-                            </Typography>
-                            <Stack spacing={1.5} sx={{ mt: 2 }}>
-                                {[
-                                    { label: 'Privacy Policy', path: '/privacy-policy' },
-                                    { label: 'Terms of Use', path: '/terms-of-use' },
-                                    { label: 'Refund Policy', path: '/refund-policy' },
-                                    { label: 'FAQ', path: '/faq' },
-                                ].map((link, i) => (
-                                    <Link
-                                        key={i}
-                                        component={RouterLink}
-                                        to={link.path}
-                                        underline="none"
-                                        sx={{
-                                            color: 'grey.400',
-                                            transition: 'all 0.2s ease',
-                                            display: 'inline-block',
-                                            '&:hover': {
-                                                color: 'primary.light',
-                                                transform: 'translateX(4px)',
-                                            },
-                                        }}
-                                    >
-                                        {link.label}
-                                    </Link>
-                                ))}
-                            </Stack>
-                        </motion.div>
-                    </Grid>
-
-                    {/* Contact */}
-                    <Grid item xs={12} md={4}>
-                        <motion.div
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ duration: 0.5, delay: 0.3 }}
-                        >
-                            <Typography variant="subtitle1" fontWeight="bold" gutterBottom sx={{ color: 'grey.200' }}>
-                                Contact Us
-                            </Typography>
-                            <Stack spacing={2} sx={{ mt: 2 }}>
-                                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
-                                    <Email sx={{ color: 'primary.light', fontSize: 20 }} />
-                                    <Typography variant="body2" color="grey.400">
-                                        info@bancat.org
-                                    </Typography>
-                                </Box>
-                                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
-                                    <Phone sx={{ color: 'primary.light', fontSize: 20 }} />
-                                    <Typography variant="body2" color="grey.400">
-                                        +880 1234 567890
-                                    </Typography>
-                                </Box>
-                                <Box sx={{ display: 'flex', alignItems: 'flex-start', gap: 1.5 }}>
-                                    <LocationOn sx={{ color: 'primary.light', fontSize: 20 }} />
-                                    <Typography variant="body2" color="grey.400">
-                                        House 12, Road 5, Dhanmondi<br />
-                                        Dhaka-1205, Bangladesh
-                                    </Typography>
-                                </Box>
-                            </Stack>
-                        </motion.div>
+                            {/* Row 2 */}
+                            <Grid item xs={6}>
+                                <Typography variant="subtitle2" sx={{ fontWeight: 700, mb: 2, mt: 2 }}>Cancer & Support</Typography>
+                                <Stack spacing={1}>
+                                    <Link component={RouterLink} to="/cancer-info" underline="none" sx={{ color: '#f5aa21', fontSize: '0.85rem' }}>All About Cancer</Link>
+                                    <Link component={RouterLink} to="/support" underline="none" sx={{ color: '#f5aa21', fontSize: '0.85rem' }}>Patient & Caregiver Support</Link>
+                                    <Link component={RouterLink} to="/faq" underline="none" sx={{ color: '#f5aa21', fontSize: '0.85rem' }}>FAQ & Help</Link>
+                                    <Link component={RouterLink} to="/helpline" underline="none" sx={{ color: '#f5aa21', fontSize: '0.85rem' }}>Helpline & Live Chat</Link>
+                                </Stack>
+                            </Grid>
+                            <Grid item xs={6} sx={{ textAlign: 'right' }}>
+                                <Typography variant="subtitle2" sx={{ fontWeight: 700, mb: 2, mt: 2 }}>Donate & Legal</Typography>
+                                <Stack spacing={1} alignItems="flex-end">
+                                    <Link component={RouterLink} to="/donate-info" underline="none" sx={{ color: '#f5aa21', fontSize: '0.85rem' }}>All About Cancer</Link>
+                                    <Link component={RouterLink} to="/caregiver" underline="none" sx={{ color: '#f5aa21', fontSize: '0.85rem' }}>Patient & Caregiver Support</Link>
+                                    <Link component={RouterLink} to="/faq-legal" underline="none" sx={{ color: '#f5aa21', fontSize: '0.85rem' }}>FAQ & Help</Link>
+                                    <Link component={RouterLink} to="/helpline-legal" underline="none" sx={{ color: '#f5aa21', fontSize: '0.85rem' }}>Helpline & Live Chat</Link>
+                                </Stack>
+                            </Grid>
+                        </Grid>
                     </Grid>
                 </Grid>
 
-                {/* Bottom bar */}
-                <Box
-                    sx={{
-                        mt: 8,
-                        pt: 4,
-                        borderTop: '1px solid',
-                        borderColor: 'rgba(255, 255, 255, 0.1)',
-                        display: 'flex',
-                        flexDirection: { xs: 'column', sm: 'row' },
-                        justifyContent: 'space-between',
-                        alignItems: 'center',
-                        gap: 2,
-                    }}
-                >
-                    <Typography variant="body2" color="grey.500">
-                        © {new Date().getFullYear()} BANcat. All rights reserved.
-                    </Typography>
-                    <Typography variant="body2" color="grey.500">
-                        Made with ❤️ for cancer warriors everywhere
+                <Box sx={{ borderTop: '1px solid #333', mt: 8, pt: 3 }}>
+                    <Typography variant="body2" sx={{ color: 'grey.600' }}>
+                        © 2025 BANCAT
                     </Typography>
                 </Box>
             </Container>
