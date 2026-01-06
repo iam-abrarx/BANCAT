@@ -17,7 +17,7 @@ export const CampaignBanner = () => {
     const percentage = Math.min((campaign.raised_amount / campaign.goal_amount) * 100, 100);
 
     return (
-        <Box sx={{ py: 10 }}>
+        <Box sx={{ pt: 0, pb: 10 }}>
             <Container maxWidth="lg">
                 <Paper
                     elevation={0}

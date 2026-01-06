@@ -17,7 +17,7 @@ export const VideoSection = () => {
                 <Typography
                     variant="h3"
                     sx={{
-                        color: '#582d82',
+                        color: '#f5aa21',
                         fontWeight: 700,
                         fontFamily: "'Montserrat', sans-serif"
                     }}
@@ -27,7 +27,7 @@ export const VideoSection = () => {
             </Box>
 
             {/* Orange Video Section */}
-            <Box sx={{ bgcolor: '#f5aa21', py: 10 }}>
+            <Box sx={{ bgcolor: 'white', py: 10 }}>
                 <Container maxWidth="md">
                     <Box
                         sx={{

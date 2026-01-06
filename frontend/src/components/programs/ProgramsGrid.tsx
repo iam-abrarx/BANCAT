@@ -44,7 +44,8 @@ export const ProgramsGrid = () => {
         <Box
             ref={ref}
             sx={{
-                py: { xs: 10, md: 14 },
+                pt: 0,
+                pb: { xs: 10, md: 14 },
                 bgcolor: 'grey.50',
                 position: 'relative',
                 overflow: 'hidden',
@@ -119,7 +120,7 @@ export const ProgramsGrid = () => {
                     animate={isInView ? "visible" : "hidden"}
                 >
                     <Grid container spacing={4}>
-                        {displayPrograms.map((program, index) => (
+                        {displayPrograms.map((program) => (
                             <Grid item xs={12} md={4} key={program.id}>
                                 <motion.div variants={cardVariants}>
                                     <Box

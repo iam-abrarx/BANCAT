@@ -1,12 +1,98 @@
-import { Box, Container, Typography, Grid, Button, Paper } from '@mui/material';
+import { Box, Container, Typography, Grid, Paper } from '@mui/material';
 import { VolunteerActivism, Handshake, Spa, Person, Star } from '@mui/icons-material';
-import joinImage from '../../assets/join_us/Asset 18@3x-20.jpg';
+import joinBg from '../../assets/join_bg_17734.jpg';
+
+const cardStyle = {
+    position: 'relative',
+    overflow: 'hidden',
+    bgcolor: 'rgba(255,255,255,0.05)',
+    color: 'white',
+    borderRadius: 2,
+    textAlign: 'center',
+    height: '100%',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    cursor: 'pointer',
+    border: '1px solid rgba(255,255,255,0.1)',
+    backdropFilter: 'blur(4px)',
+    transition: 'all 0.8s cubic-bezier(0.4, 0, 0.2, 1)', // Very gentle
+
+    // Gradient Overlay via pseudo-element for smooth opacity transition
+    '&::before': {
+        content: '""',
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        width: '100%',
+        height: '100%',
+        background: 'linear-gradient(135deg, rgba(128, 14, 235, 0.7), rgba(245, 233, 211, 0.1))',
+        opacity: 0.2,
+        transition: 'opacity 0.5s ease-in-out',
+        zIndex: 0,
+    },
+
+    '&:hover': {
+        transform: 'translateY(-4px)',
+        boxShadow: '0 10px 30px rgba(0,0,0,0.1)',
+        border: '1px solid rgba(255,255,255,0.2)'
+    },
+
+    '&:hover::before': {
+        opacity: 1,
+    },
+
+    // Ensure content stays on top
+    '& > *': {
+        position: 'relative',
+        zIndex: 1,
+    }
+};
 
 const JoinUs = () => {
     return (
-        <Box>
-            {/* Section 1: Ways to Join (Green) */}
-            <Box sx={{ bgcolor: '#7c9c5d', py: 10, color: 'white' }}>
+        <Box
+            id="join-us-section"
+            sx={{
+                position: 'relative',
+                width: '100%',
+                overflow: 'hidden',
+                color: 'white'
+            }}>
+            {/* Background Image */}
+            <Box
+                sx={{
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    backgroundImage: `url(${joinBg})`,
+                    backgroundSize: 'cover',
+                    backgroundPosition: 'center',
+                    zIndex: -2,
+                    filter: 'blur(12px)',
+                }}
+            />
+
+            {/* Color Overlay */}
+            <Box
+                sx={{
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    bgcolor: '#8d15c5ff',
+                    mixBlendMode: 'multiply',
+                    opacity: 0.8,
+                    zIndex: -1,
+                }}
+            />
+
+            {/* Section 1: Ways to Join */}
+            <Box sx={{ py: 10 }}>
                 <Container maxWidth="lg">
                     <Box sx={{ textAlign: 'center', mb: 8, maxWidth: '800px', mx: 'auto' }}>
                         <Typography variant="h3" sx={{ fontWeight: 700, fontFamily: "'Montserrat', sans-serif", mb: 2 }}>
@@ -19,26 +105,12 @@ const JoinUs = () => {
                         </Typography>
                     </Box>
 
-                    {/* Feature Cards Row 1 (Orange) */}
+                    {/* Feature Cards Row 1 */}
                     <Grid container spacing={3} justifyContent="center" sx={{ mb: 3 }}>
                         <Grid item xs={12} sm={6} md={4}>
                             <Paper
                                 elevation={0}
-                                sx={{
-                                    bgcolor: '#f5aa21',
-                                    color: 'white',
-                                    p: 4,
-                                    borderRadius: '20px',
-                                    textAlign: 'center',
-                                    height: '100%',
-                                    display: 'flex',
-                                    flexDirection: 'column',
-                                    alignItems: 'center',
-                                    justifyContent: 'center',
-                                    cursor: 'pointer',
-                                    transition: 'transform 0.2s',
-                                    '&:hover': { transform: 'scale(1.02)' }
-                                }}
+                                sx={{ ...cardStyle, p: 4 }}
                             >
                                 <VolunteerActivism sx={{ fontSize: 60, mb: 2 }} />
                                 <Typography variant="h5" sx={{ fontWeight: 700, fontFamily: "'Montserrat', sans-serif" }}>
@@ -49,21 +121,7 @@ const JoinUs = () => {
                         <Grid item xs={12} sm={6} md={4}>
                             <Paper
                                 elevation={0}
-                                sx={{
-                                    bgcolor: '#f5aa21',
-                                    color: 'white',
-                                    p: 4,
-                                    borderRadius: '20px',
-                                    textAlign: 'center',
-                                    height: '100%',
-                                    display: 'flex',
-                                    flexDirection: 'column',
-                                    alignItems: 'center',
-                                    justifyContent: 'center',
-                                    cursor: 'pointer',
-                                    transition: 'transform 0.2s',
-                                    '&:hover': { transform: 'scale(1.02)' }
-                                }}
+                                sx={{ ...cardStyle, p: 4 }}
                             >
                                 <Handshake sx={{ fontSize: 60, mb: 2 }} />
                                 <Typography variant="h5" sx={{ fontWeight: 700, fontFamily: "'Montserrat', sans-serif" }}>
@@ -78,16 +136,7 @@ const JoinUs = () => {
                         <Grid item xs={12} sm={4} md={3}>
                             <Paper
                                 elevation={0}
-                                sx={{
-                                    bgcolor: '#9c94c9',
-                                    color: 'white',
-                                    p: 3,
-                                    borderRadius: '20px',
-                                    textAlign: 'center',
-                                    cursor: 'pointer',
-                                    transition: 'transform 0.2s',
-                                    '&:hover': { transform: 'scale(1.02)' }
-                                }}
+                                sx={{ ...cardStyle, p: 3 }}
                             >
                                 <Spa sx={{ fontSize: 40, mb: 1 }} />
                                 <Typography variant="h6" sx={{ fontWeight: 600 }}>
@@ -98,16 +147,7 @@ const JoinUs = () => {
                         <Grid item xs={12} sm={4} md={3}>
                             <Paper
                                 elevation={0}
-                                sx={{
-                                    bgcolor: '#9c94c9',
-                                    color: 'white',
-                                    p: 3,
-                                    borderRadius: '20px',
-                                    textAlign: 'center',
-                                    cursor: 'pointer',
-                                    transition: 'transform 0.2s',
-                                    '&:hover': { transform: 'scale(1.02)' }
-                                }}
+                                sx={{ ...cardStyle, p: 3 }}
                             >
                                 <Person sx={{ fontSize: 40, mb: 1 }} />
                                 <Typography variant="h6" sx={{ fontWeight: 600 }}>
@@ -118,79 +158,13 @@ const JoinUs = () => {
                         <Grid item xs={12} sm={4} md={3}>
                             <Paper
                                 elevation={0}
-                                sx={{
-                                    bgcolor: '#9c94c9',
-                                    color: 'white',
-                                    p: 3,
-                                    borderRadius: '20px',
-                                    textAlign: 'center',
-                                    cursor: 'pointer',
-                                    transition: 'transform 0.2s',
-                                    '&:hover': { transform: 'scale(1.02)' }
-                                }}
+                                sx={{ ...cardStyle, p: 3 }}
                             >
                                 <Star sx={{ fontSize: 40, mb: 1 }} />
                                 <Typography variant="h6" sx={{ fontWeight: 600 }}>
                                     Career
                                 </Typography>
                             </Paper>
-                        </Grid>
-                    </Grid>
-                </Container>
-            </Box>
-
-            {/* Section 2: Image & CTA (Orange) */}
-            <Box sx={{ bgcolor: '#f5aa21', py: 10, color: 'white', position: 'relative', overflow: 'hidden' }}>
-                <Container maxWidth="lg">
-                    <Grid container spacing={8} alignItems="center">
-                        {/* Image Side */}
-                        <Grid item xs={12} md={5}>
-                            <Box
-                                component="img"
-                                src={joinImage}
-                                alt="Join with us"
-                                sx={{
-                                    width: '100%',
-                                    height: 'auto',
-                                    // Organic blob shape approximation
-                                    borderRadius: '43% 57% 70% 30% / 45% 54% 46% 55%',
-                                    boxShadow: '0 10px 30px rgba(0,0,0,0.1)'
-                                }}
-                            />
-                        </Grid>
-
-                        {/* Divider Line (visible on desktop) */}
-                        <Grid item md={1} sx={{ display: { xs: 'none', md: 'flex' }, justifyContent: 'center' }}>
-                            <Box sx={{ width: '2px', height: '200px', borderLeft: '2px dashed rgba(255,255,255,0.5)' }} />
-                        </Grid>
-
-                        {/* Text Side */}
-                        <Grid item xs={12} md={6}>
-                            <Typography variant="h3" sx={{ fontWeight: 700, fontFamily: "'Montserrat', sans-serif", mb: 2 }}>
-                                Join with Us
-                            </Typography>
-                            <Typography sx={{ lineHeight: 1.6, mb: 4, maxWidth: '500px' }}>
-                                Bangladesh Cancer Aid Trust (BANCAT) is a community-driven organization providing care beyond
-                                treatment through awareness, advocacy, facilitated cancer scopes, and a safe sanctuary of support for
-                                patients and their families.
-                            </Typography>
-                            <Button
-                                variant="contained"
-                                sx={{
-                                    bgcolor: 'white',
-                                    color: '#f5aa21',
-                                    borderRadius: '50px',
-                                    px: 4,
-                                    py: 1.5,
-                                    fontWeight: 700,
-                                    textTransform: 'none',
-                                    '&:hover': {
-                                        bgcolor: '#fff8e1'
-                                    }
-                                }}
-                            >
-                                Learn More
-                            </Button>
                         </Grid>
                     </Grid>
                 </Container>

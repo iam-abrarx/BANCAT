@@ -85,7 +85,7 @@ export const MegaMenu = ({
                 {
                     name: 'offset',
                     options: {
-                        offset: [0, 16], // Slightly more offset
+                        offset: [0, 12], // Consistent gap
                     },
                 },
                 {
@@ -114,7 +114,7 @@ export const MegaMenu = ({
                             minWidth: featuredImage ? 900 : 700,
                             maxWidth: 1100,
                             p: 0,
-                            borderRadius: '24px', // Fully rounded
+                            borderRadius: '0 0 24px 24px', // Square top, rounded bottom
                             // Clean White Look
                             bgcolor: 'rgba(255, 255, 255, 0.95)',
                             backdropFilter: 'blur(20px)',

@@ -7,14 +7,14 @@ export const Footer = () => {
     return (
         <Box sx={{ bgcolor: 'black', color: 'white', pt: 8, pb: 4, mt: 'auto', overflow: 'hidden' }}>
             <Container maxWidth="xl">
-                <Grid container spacing={4} alignItems="flex-start">
+                <Grid container spacing={2}>
 
-                    {/* Left Column: Contact Details */}
+                    {/* SECTION 1: Contact Details (3/12) */}
                     <Grid item xs={12} md={3}>
-                        <Typography variant="h6" sx={{ fontWeight: 700, mb: 1, fontFamily: "'Montserrat', sans-serif" }}>
+                        <Typography variant="h6" sx={{ fontWeight: 400, mb: 3, fontFamily: "'Montserrat', sans-serif" }}>
                             Contact Details
                         </Typography>
-                        <Typography variant="body2" sx={{ mb: 2 }}>
+                        <Typography variant="body2" sx={{ mb: 2, color: 'grey.500' }}>
                             Corporate office
                         </Typography>
 
@@ -26,14 +26,14 @@ export const Footer = () => {
                             Mosabbir Alok Nivesh Home-01
                         </Typography>
                         <Typography variant="body2" sx={{ color: '#f5aa21', mb: 2 }}>
-                            House-144, Road-3, Block-A, Bsahundhara R/A, Dhaka- 1229
+                            House-144, Road-3, Block-A, Bashundhara R/A, Dhaka- 1229
                         </Typography>
 
                         <Typography variant="body2" sx={{ color: '#f5aa21', mb: 0 }}>
                             Mosabbir Alok Nivesh Home-02
                         </Typography>
-                        <Typography variant="body2" sx={{ color: '#f5aa21', mb: 3 }}>
-                            House-3220, Road-66, Block-L, Bsahundhara R/A, Dhaka- 1229
+                        <Typography variant="body2" sx={{ color: '#f5aa21', mb: 4 }}>
+                            House-3220, Road-66, Block-L, Bashundhara R/A, Dhaka- 1229
                         </Typography>
 
                         <Typography variant="body2" sx={{ color: '#f5aa21', mb: 0 }}>
@@ -42,83 +42,90 @@ export const Footer = () => {
                         <Typography variant="body2" sx={{ color: '#f5aa21', mb: 4 }}>
                             Email: support@bancat.org.bd
                         </Typography>
+                    </Grid>
 
-                        <Stack direction="row" spacing={2}>
-                            <IconButton sx={{ border: '1px solid white', color: 'white' }} size="small">
-                                <Facebook fontSize="small" />
-                            </IconButton>
-                            <IconButton sx={{ border: '1px solid white', color: 'white' }} size="small">
-                                <Twitter fontSize="small" />
-                            </IconButton>
-                            <IconButton sx={{ border: '1px solid white', color: 'white' }} size="small">
-                                <LinkedIn fontSize="small" />
-                            </IconButton>
+                    {/* SECTION 2: Other Infos (Links & Image) */}
+
+                    {/* About BANCAT (2/12) */}
+                    <Grid item xs={6} md={2}>
+                        <Typography variant="subtitle1" sx={{ fontWeight: 400, mb: 3 }}>About BANCAT</Typography>
+                        <Stack spacing={1.5}>
+                            <Link component={RouterLink} to="/about" underline="none" sx={{ color: '#f5aa21', fontSize: '0.9rem' }}>About Us</Link>
+                            <Link component={RouterLink} to="/approach" underline="none" sx={{ color: '#f5aa21', fontSize: '0.9rem' }}>Our Approach (AAA)</Link>
+                            <Link component={RouterLink} to="/services" underline="none" sx={{ color: '#f5aa21', fontSize: '0.9rem' }}>Our Services / Care Centres</Link>
+                            <Link component={RouterLink} to="/stories" underline="none" sx={{ color: '#f5aa21', fontSize: '0.9rem' }}>Stories of Hope</Link>
                         </Stack>
                     </Grid>
 
-                    {/* Center Column: Image */}
-                    <Grid item xs={12} md={5} sx={{ display: 'flex', justifyContent: 'center', position: 'relative' }}>
+                    {/* Get Involved (2/12) */}
+                    <Grid item xs={6} md={2}>
+                        <Typography variant="subtitle1" sx={{ fontWeight: 400, mb: 3 }}>Get Involved</Typography>
+                        <Stack spacing={1.5}>
+                            <Link component={RouterLink} to="/donate" underline="none" sx={{ color: '#f5aa21', fontSize: '0.9rem' }}>Donate Now</Link>
+                            <Link component={RouterLink} to="/zakat" underline="none" sx={{ color: '#f5aa21', fontSize: '0.9rem' }}>Zakat Calculator</Link>
+                            <Link component={RouterLink} to="/contact" underline="none" sx={{ color: '#f5aa21', fontSize: '0.9rem' }}>Contact Us</Link>
+                            <Link component={RouterLink} to="/privacy" underline="none" sx={{ color: '#f5aa21', fontSize: '0.9rem' }}>Privacy Policy</Link>
+                        </Stack>
+                    </Grid>
+
+                    {/* Cancer & Support (2/12) */}
+                    <Grid item xs={6} md={2}>
+                        <Typography variant="subtitle1" sx={{ fontWeight: 400, mb: 3 }}>Cancer & Support</Typography>
+                        <Stack spacing={1.5}>
+                            <Link component={RouterLink} to="/cancer-info" underline="none" sx={{ color: '#f5aa21', fontSize: '0.9rem' }}>All About Cancer</Link>
+                            <Link component={RouterLink} to="/support" underline="none" sx={{ color: '#f5aa21', fontSize: '0.9rem' }}>Patient & Caregiver Support</Link>
+                            <Link component={RouterLink} to="/faq" underline="none" sx={{ color: '#f5aa21', fontSize: '0.9rem' }}>FAQ & Help</Link>
+                            <Link component={RouterLink} to="/helpline" underline="none" sx={{ color: '#f5aa21', fontSize: '0.9rem' }}>Helpline & Live Chat</Link>
+                        </Stack>
+                    </Grid>
+
+                    {/* Image Column (1/12) */}
+                    <Grid item xs={12} md={1} sx={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'center', position: 'relative' }}>
                         <Box
                             component="img"
                             src={footerImage}
                             alt="BANCAT Fist"
                             sx={{
-                                width: '100%',
-                                maxWidth: '350px',
-                                height: 'auto',
-                                mt: -5, // Pull it up slightly to overlap or fit better
-                                mb: -10 // Let it extend down
+                                width: '300px', // Large width to overflow
+                                maxWidth: 'none',
+                                position: 'absolute',
+                                bottom: '-50px',
+                                left: '50%',
+                                transform: 'translateX(-50%)',
+                                zIndex: 1
                             }}
                         />
                     </Grid>
 
-                    {/* Right Column: Links Grid */}
-                    <Grid item xs={12} md={4}>
-                        <Grid container spacing={4}>
-                            {/* Row 1 */}
-                            <Grid item xs={6}>
-                                <Typography variant="subtitle2" sx={{ fontWeight: 700, mb: 2 }}>About BANCAT</Typography>
-                                <Stack spacing={1}>
-                                    <Link component={RouterLink} to="/about" underline="none" sx={{ color: '#f5aa21', fontSize: '0.85rem' }}>About Us</Link>
-                                    <Link component={RouterLink} to="/approach" underline="none" sx={{ color: '#f5aa21', fontSize: '0.85rem' }}>Our Approach (AAA)</Link>
-                                    <Link component={RouterLink} to="/services" underline="none" sx={{ color: '#f5aa21', fontSize: '0.85rem' }}>Our Services / Care Centres</Link>
-                                    <Link component={RouterLink} to="/stories" underline="none" sx={{ color: '#f5aa21', fontSize: '0.85rem' }}>Stories of Hope</Link>
-                                </Stack>
-                            </Grid>
-                            <Grid item xs={6} sx={{ textAlign: 'right' }}>
-                                <Typography variant="subtitle2" sx={{ fontWeight: 700, mb: 2 }}>Get Involved</Typography>
-                                <Stack spacing={1} alignItems="flex-end">
-                                    <Link component={RouterLink} to="/donate" underline="none" sx={{ color: '#f5aa21', fontSize: '0.85rem' }}>Donate Now</Link>
-                                    <Link component={RouterLink} to="/zakat" underline="none" sx={{ color: '#f5aa21', fontSize: '0.85rem' }}>Zakat Calculator</Link>
-                                    <Link component={RouterLink} to="/contact" underline="none" sx={{ color: '#f5aa21', fontSize: '0.85rem' }}>Contact Us</Link>
-                                    <Link component={RouterLink} to="/privacy" underline="none" sx={{ color: '#f5aa21', fontSize: '0.85rem' }}>Privacy Policy</Link>
-                                </Stack>
-                            </Grid>
-
-                            {/* Row 2 */}
-                            <Grid item xs={6}>
-                                <Typography variant="subtitle2" sx={{ fontWeight: 700, mb: 2, mt: 2 }}>Cancer & Support</Typography>
-                                <Stack spacing={1}>
-                                    <Link component={RouterLink} to="/cancer-info" underline="none" sx={{ color: '#f5aa21', fontSize: '0.85rem' }}>All About Cancer</Link>
-                                    <Link component={RouterLink} to="/support" underline="none" sx={{ color: '#f5aa21', fontSize: '0.85rem' }}>Patient & Caregiver Support</Link>
-                                    <Link component={RouterLink} to="/faq" underline="none" sx={{ color: '#f5aa21', fontSize: '0.85rem' }}>FAQ & Help</Link>
-                                    <Link component={RouterLink} to="/helpline" underline="none" sx={{ color: '#f5aa21', fontSize: '0.85rem' }}>Helpline & Live Chat</Link>
-                                </Stack>
-                            </Grid>
-                            <Grid item xs={6} sx={{ textAlign: 'right' }}>
-                                <Typography variant="subtitle2" sx={{ fontWeight: 700, mb: 2, mt: 2 }}>Donate & Legal</Typography>
-                                <Stack spacing={1} alignItems="flex-end">
-                                    <Link component={RouterLink} to="/donate-info" underline="none" sx={{ color: '#f5aa21', fontSize: '0.85rem' }}>All About Cancer</Link>
-                                    <Link component={RouterLink} to="/caregiver" underline="none" sx={{ color: '#f5aa21', fontSize: '0.85rem' }}>Patient & Caregiver Support</Link>
-                                    <Link component={RouterLink} to="/faq-legal" underline="none" sx={{ color: '#f5aa21', fontSize: '0.85rem' }}>FAQ & Help</Link>
-                                    <Link component={RouterLink} to="/helpline-legal" underline="none" sx={{ color: '#f5aa21', fontSize: '0.85rem' }}>Helpline & Live Chat</Link>
-                                </Stack>
-                            </Grid>
-                        </Grid>
+                    {/* Donate & Legal (2/12) */}
+                    <Grid item xs={6} md={2} sx={{ textAlign: 'right' }}>
+                        <Typography variant="subtitle1" sx={{ fontWeight: 400, mb: 3 }}>Donate & Legal</Typography>
+                        <Stack spacing={1.5} alignItems="flex-end">
+                            <Link component={RouterLink} to="/donate-info" underline="none" sx={{ color: '#f5aa21', fontSize: '0.9rem' }}>All About Cancer</Link>
+                            <Link component={RouterLink} to="/caregiver" underline="none" sx={{ color: '#f5aa21', fontSize: '0.9rem' }}>Patient &</Link>
+                            <Link component={RouterLink} to="/caregiver" underline="none" sx={{ color: '#f5aa21', fontSize: '0.9rem' }}>Caregiver Support</Link>
+                            <Link component={RouterLink} to="/faq-legal" underline="none" sx={{ color: '#f5aa21', fontSize: '0.9rem' }}>FAQ & Help</Link>
+                            <Link component={RouterLink} to="/helpline-legal" underline="none" sx={{ color: '#f5aa21', fontSize: '0.9rem' }}>Helpline & Live Chat</Link>
+                        </Stack>
                     </Grid>
                 </Grid>
 
-                <Box sx={{ borderTop: '1px solid #333', mt: 8, pt: 3 }}>
+                {/* SECTION 3: Social Icons & Bottom Bar */}
+                <Box sx={{ borderTop: '1px solid #333', mt: 8, pt: 3, display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 2 }}>
+                    {/* Social Icons */}
+                    <Stack direction="row" spacing={2}>
+                        <IconButton sx={{ border: '1px solid white', color: 'white' }} size="small">
+                            <Facebook fontSize="small" />
+                        </IconButton>
+                        <IconButton sx={{ border: '1px solid white', color: 'white' }} size="small">
+                            <Twitter fontSize="small" />
+                        </IconButton>
+                        <IconButton sx={{ border: '1px solid white', color: 'white' }} size="small">
+                            <LinkedIn fontSize="small" />
+                        </IconButton>
+                    </Stack>
+
+                    {/* Copyright */}
                     <Typography variant="body2" sx={{ color: 'grey.600' }}>
                         © 2025 BANCAT
                     </Typography>

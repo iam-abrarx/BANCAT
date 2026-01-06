@@ -6,7 +6,7 @@ export const StatsBanner = () => {
         <Box
             sx={{
                 bgcolor: '#582d82',
-                py: { xs: 8, md: 10 },
+                py: { xs: 12, md: 20 },
                 position: 'relative',
                 overflow: 'hidden'
             }}

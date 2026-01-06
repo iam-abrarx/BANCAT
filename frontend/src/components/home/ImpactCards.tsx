@@ -40,10 +40,12 @@ export const ImpactCards = () => {
                                 sx={{
                                     bgcolor: '#d631e9', // Vibrant orchid/magenta from design
                                     color: 'white',
-                                    borderRadius:
-                                        index === 0 ? '50px 0 0 50px' :
+                                    borderRadius: {
+                                        xs: '0',
+                                        md: index === 0 ? '50px 0 0 50px' :
                                             index === stats.length - 1 ? '0 50px 50px 0' :
-                                                '0',
+                                                '0'
+                                    },
                                     height: '100%',
                                     minHeight: '280px',
                                     display: 'flex',

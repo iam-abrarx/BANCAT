@@ -151,7 +151,7 @@ export const DropdownMenu = ({
                 {
                     name: 'offset',
                     options: {
-                        offset: [0, 16],
+                        offset: [0, 12],
                     },
                 },
             ]}
@@ -170,7 +170,7 @@ export const DropdownMenu = ({
                             minWidth: 260,
                             py: 2,
                             px: 1,
-                            borderRadius: '20px',
+                            borderRadius: '0 0 20px 20px',
                             // Clean White Look
                             bgcolor: 'rgba(255, 255, 255, 0.95)',
                             backdropFilter: 'blur(20px)',

@@ -22,20 +22,15 @@ export const Navbar = () => {
     const [drawerOpen, setDrawerOpen] = useState(false);
 
     // Scroll state for hiding/showing TopBar
-    const [showTopBar, setShowTopBar] = useState(false);
-    const [hasScrolled, setHasScrolled] = useState(false);
+    const [showTopBar, setShowTopBar] = useState(true);
+
 
     useEffect(() => {
         const handleScroll = () => {
             const currentScrollY = window.scrollY;
 
-            // Mark that user has scrolled down significantly
-            if (currentScrollY > 100) {
-                setHasScrolled(true);
-            }
-
-            // Show TopBar ONLY if at top AND has previously scrolled down
-            if (currentScrollY < 50 && hasScrolled) {
+            // Show TopBar ONLY if at top
+            if (currentScrollY < 50) {
                 setShowTopBar(true);
             } else {
                 setShowTopBar(false);
@@ -44,7 +39,7 @@ export const Navbar = () => {
 
         window.addEventListener('scroll', handleScroll);
         return () => window.removeEventListener('scroll', handleScroll);
-    }, [hasScrolled]);
+    }, []);
 
     // Menu state
     const [activeMenu, setActiveMenu] = useState<string | null>(null);
@@ -89,31 +84,27 @@ export const Navbar = () => {
                     color="transparent"
                     elevation={0}
                     sx={{
-                        bgcolor: 'transparent',
+                        bgcolor: '#8E44AD', // Static color
                         backdropFilter: 'none',
-                        transition: 'all 0.3s ease-in-out',
-                        mt: 2,
-                        top: 0
+                        transition: 'background-color 0.4s ease-in-out', // Smooth color transition
+                        top: 0,
+                        boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)'
                     }}
                 >
-                    <Container maxWidth="xl">
+                    <Container maxWidth={false} sx={{ maxWidth: '100% !important', px: 4 }}>
                         <Box
                             sx={{
-                                bgcolor: '#8E44AD', // Purple color from image
-                                borderRadius: '50px',
-                                px: 3,
-                                py: 1,
                                 display: 'flex',
                                 alignItems: 'center',
                                 justifyContent: 'space-between',
-                                boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)'
+                                py: 1
                             }}
                         >
                             {/* Logo Removed from here as per new design (it's in TopBar) */}
 
                             {/* Desktop Nav */}
                             {!isMobile && (
-                                <Box sx={{ display: 'flex', gap: 1, alignItems: 'center', flex: 1, justifyContent: 'center' }}>
+                                <Box sx={{ display: 'flex', gap: 1, alignItems: 'center', flex: 1, justifyContent: 'flex-start', ml: 55 }}>
                                     {menuConfig.filter(item => item.type !== 'cta').map(item => {
                                         const isActive = activeMenu === item.id || (item.id === 'home' && location.pathname === '/');
 
