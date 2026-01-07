@@ -9,6 +9,7 @@ I have created the workflow files for you, but for security reasons, **I cannot 
 1. Go to your GitHub Repository -> **Settings**.
 2. On the left sidebar, click **Secrets and variables** -> **Actions**.
 3. Click **New repository secret** (Green button).
+   > **Note:** Do NOT use "Environment secrets" for this setup. Use "Repository secrets" which are listed below the Environment secrets section.
 4. Add the following three secrets:
 
 | Name | Value |
