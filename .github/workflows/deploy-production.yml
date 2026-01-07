@@ -54,14 +54,17 @@ jobs:
           cd admin
           npm install
           npm run build
-          
+          ls -la dist # Debug: List dist content
+          cd ..
+          ls -R admin/dist # Debug: Verify visibility from root
+
       - name: Deploy Admin
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          local-dir: ./admin/dist/
+          local-dir: admin/dist/
           server-dir: ./admin/
 
   deploy-backend:
