@@ -3,9 +3,9 @@ import react from '@vitejs/plugin-react';
 import { resolve } from 'path';
 
 export default defineConfig(({ command }) => ({
-  base: command === 'build' ? '/BANCAT---Bangladesh-Cancer-Aid-Trust/admin/' : '/',
+  base: '/admin/',
   build: {
-    outDir: '../frontend/dist/admin',
+    outDir: 'dist',
     emptyOutDir: true,
   },
   plugins: [react()],
