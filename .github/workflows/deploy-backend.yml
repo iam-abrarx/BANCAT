@@ -32,7 +32,8 @@ jobs:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          # Assuming 'api' folder (or similar) inside the main site root:
+          # Upload only the 'backend' folder content to 'api'
+          local-dir: ./backend/
           server-dir: ./api/
           exclude: |
             **/.git*

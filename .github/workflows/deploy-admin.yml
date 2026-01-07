@@ -32,5 +32,6 @@ jobs:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          # Assuming 'admin' folder inside the main site root:
+          # Upload only the 'dist' folder (production build)
+          local-dir: ./admin/dist/
           server-dir: ./admin/

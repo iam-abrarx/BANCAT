@@ -32,5 +32,6 @@ jobs:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          # Since the FTP account is likely specific to the site or subdomain:
+          # Upload only the 'dist' folder (production build)
+          local-dir: ./frontend/dist/
           server-dir: ./ 
