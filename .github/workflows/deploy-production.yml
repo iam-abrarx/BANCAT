@@ -51,12 +51,7 @@ jobs:
       - name: Zip Admin
         run: |
           cd admin/dist
-          cp ../../deployment/frontend_htaccess .htaccess 
-          # Admin also needs SPA routing relative to /admin/ if we want deep linking to work properly 
-          # But for now, let's just zip it. Admin usually is fine or manages its own hash router. 
-          # Actually, Admin uses BrowserRouter, so it needs fallback too!
-          # Let's verify if admin needs specific RewriteBase /admin/
-          # For safety, I'll strictly focus on frontend and backend first.
+          cp ../../deployment/admin_htaccess .htaccess 
           zip -r ../../admin.zip .
 
       # --- BACKEND ---
