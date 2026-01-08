@@ -53,7 +53,7 @@ export const TeamPage = () => {
                     <CardMedia
                         component="img"
                         height="280"
-                        image={member.photo ? (member.photo.startsWith('http') ? member.photo : `${window.location.origin}${member.photo}`) : '/assets/placeholder-person.png'}
+                        image={member.photo ? (member.photo.startsWith('http') ? member.photo : `${window.location.origin}/api${member.photo}`) : '/assets/placeholder-person.png'}
                         alt={member.name_en}
                         sx={{ objectFit: 'cover', objectPosition: 'top' }}
                     />

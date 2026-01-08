@@ -256,7 +256,7 @@ export const Testimonials = () => {
                                     </Typography>
                                     <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
                                         <Avatar
-                                            src={testimonial.image?.startsWith('http') ? testimonial.image : `${window.location.origin}${testimonial.image}`}
+                                            src={testimonial.image?.startsWith('http') ? testimonial.image : `${window.location.origin}/api${testimonial.image}`}
                                             alt={testimonial.name}
                                             sx={{
                                                 width: 56,
