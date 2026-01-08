@@ -27,7 +27,9 @@ return [
         'http://127.0.0.1:3000',
         'http://127.0.0.1:5173',
         'http://127.0.0.1:5174',
+        'http://127.0.0.1:5174',
         'http://127.0.0.1:5175',
+        'https://new.bancat.org.bd', // Production Domain
     ],
 
     'allowed_origins_patterns' => [],
