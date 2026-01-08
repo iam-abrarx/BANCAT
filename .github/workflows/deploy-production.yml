@@ -60,15 +60,10 @@ jobs:
           cd backend
           composer install --no-dev --optimize-autoloader
 
-      - name: Create .env from Secret
+      - name: Create .env
         run: |
-          cd backend
-          if [ -n "${{ secrets.ENV_FILE }}" ]; then
-            echo "${{ secrets.ENV_FILE }}" > .env
-          else
-            echo "Warning: No ENV_FILE secret found."
-            cp .env.example .env
-          fi
+          echo "Using deployment/backend/env.production as .env"
+          cp deployment/backend/env.production backend/.env
 
       - name: Zip Backend (Core)
         run: |

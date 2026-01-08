@@ -27,8 +27,13 @@ class RouteServiceProvider extends ServiceProvider
         $this->configureRateLimiting();
 
         $this->routes(function () {
+            // Smart default: 'api' for local, '' for production (subdirectory)
+            // We check matching URL to be safe if APP_ENV is stale
+            $isProduction = config('app.env') === 'production' || str_contains(config('app.url'), 'bancat.org.bd');
+            $defaultPrefix = $isProduction ? '' : 'api';
+
             Route::middleware('api')
-                ->prefix(env('API_ROUTE_PREFIX', 'api'))
+                ->prefix(env('API_ROUTE_PREFIX', $defaultPrefix))
                 ->group(base_path('routes/api.php'));
 
             Route::middleware('web')
