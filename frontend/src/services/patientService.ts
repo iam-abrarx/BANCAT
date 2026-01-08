@@ -2,7 +2,7 @@ import axios from 'axios';
 import type { Patient } from '../types';
 
 // Configure base URL (should be in env, but hardcoding for dev now if not set)
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000/api/v1';
+const API_URL = import.meta.env.VITE_API_URL || '/api/v1';
 
 const api = axios.create({
     baseURL: API_URL,

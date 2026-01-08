@@ -41,7 +41,7 @@ export const ContactPage = () => {
                 // Note: axios needs to be imported if not already. 
                 // It wasn't imported in original file, so I need to add import or assume global (bad assumption).
                 // I will add import in a separate block or manually via Replace.
-                const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:8000/api/v1';
+                const apiUrl = import.meta.env.VITE_API_URL || '/api/v1';
                 const response = await fetch(`${apiUrl}/pages/contact-intro`);
                 if (response.ok) {
                     const data = await response.json();
