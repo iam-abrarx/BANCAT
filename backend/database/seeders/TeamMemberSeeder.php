@@ -81,14 +81,18 @@ class TeamMemberSeeder extends Seeder
         foreach ($trusteesData as $index => $data) {
             try {
                 $photoPath = $data[2];
-                // if (str_starts_with($data[2], 'http')) {
-                //     $contents = file_get_contents($data[2]);
-                //     if ($contents) {
-                //         $filename = 'trustee_' . ($index + 1) . '.jpg';
-                //         Storage::disk('public')->put('team-members/' . $filename, $contents);
-                //         $photoPath = '/storage/team-members/' . $filename;
-                //     }
-                // }
+                if (str_starts_with($data[2], 'http')) {
+                    try {
+                        $response = Http::timeout(10)->get($data[2]);
+                        if ($response->successful()) {
+                            $filename = 'trustee_' . ($index + 1) . '.jpg';
+                            Storage::disk('public')->put('team-members/' . $filename, $response->body());
+                            $photoPath = '/storage/team-members/' . $filename;
+                        }
+                    } catch (\Exception $e) {
+                        // Keep original URL if download fails
+                    }
+                }
 
                 TeamMember::create([
                     'name_en' => $data[0],
@@ -108,14 +112,18 @@ class TeamMemberSeeder extends Seeder
         foreach ($ambassadorsData as $index => $data) {
             try {
                 $photoPath = $data[2];
-                // if (str_starts_with($data[2], 'http')) {
-                //     $contents = @file_get_contents($data[2]); // suppress warnings for 404s
-                //     if ($contents) {
-                //         $filename = 'ambassador_' . ($index + 1) . '.jpg';
-                //         Storage::disk('public')->put('team-members/' . $filename, $contents);
-                //         $photoPath = '/storage/team-members/' . $filename;
-                //     }
-                // }
+                if (str_starts_with($data[2], 'http')) {
+                    try {
+                        $response = Http::timeout(10)->get($data[2]);
+                        if ($response->successful()) {
+                            $filename = 'ambassador_' . ($index + 1) . '.jpg';
+                            Storage::disk('public')->put('team-members/' . $filename, $response->body());
+                            $photoPath = '/storage/team-members/' . $filename;
+                        }
+                    } catch (\Exception $e) {
+                        // Keep original if download fails
+                    }
+                }
 
                 TeamMember::create([
                     'name_en' => $data[0],
