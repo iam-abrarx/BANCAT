@@ -24,7 +24,8 @@ export const TeamPage = () => {
             try {
                 // Assuming public API endpoint exists. If not, I might need to create it or use existing content endpoint.
                 // Based on standard Laravel resource controllers:
-                const response = await axios.get('http://localhost:8000/api/v1/team-members');
+                const apiUrl = import.meta.env.VITE_API_URL || '/api/v1';
+                const response = await axios.get(`${apiUrl}/team-members`);
                 setMembers(response.data);
             } catch (err) {
                 console.error('Failed to fetch team members', err);
@@ -52,7 +53,7 @@ export const TeamPage = () => {
                     <CardMedia
                         component="img"
                         height="280"
-                        image={member.photo ? (member.photo.startsWith('http') ? member.photo : `http://localhost:8000${member.photo}`) : '/assets/placeholder-person.png'}
+                        image={member.photo ? (member.photo.startsWith('http') ? member.photo : `${window.location.origin}${member.photo}`) : '/assets/placeholder-person.png'}
                         alt={member.name_en}
                         sx={{ objectFit: 'cover', objectPosition: 'top' }}
                     />
