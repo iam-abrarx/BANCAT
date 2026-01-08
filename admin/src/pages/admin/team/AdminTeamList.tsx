@@ -72,7 +72,7 @@ export const AdminTeamList = () => {
                                     <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
                                         {member.photo && (
                                             <img
-                                                src={member.photo.startsWith('http') ? member.photo : `${window.location.origin}${member.photo}`}
+                                                src={member.photo.startsWith('http') ? member.photo : `${window.location.origin}/api${member.photo}`}
                                                 alt={member.name_en}
                                                 style={{ width: 40, height: 40, borderRadius: '50%', objectFit: 'cover' }}
                                             />

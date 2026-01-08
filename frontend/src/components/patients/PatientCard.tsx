@@ -32,7 +32,7 @@ export const PatientCard = ({ patient }: PatientCardProps) => {
             <CardMedia
                 component="img"
                 height="240"
-                image={patient.photo ? (patient.photo.startsWith('http') ? patient.photo : `${import.meta.env.VITE_API_URL?.replace('/api/v1', '')}${patient.photo}`) : 'https://via.placeholder.com/400x240?text=No+Image'}
+                image={patient.photo ? (patient.photo.startsWith('http') ? patient.photo : `${import.meta.env.VITE_API_URL?.replace('/api/v1', '')}/api${patient.photo}`) : 'https://via.placeholder.com/400x240?text=No+Image'}
                 alt={patient.name_en}
                 sx={{ objectFit: 'cover' }}
                 onError={(e: any) => e.target.src = 'https://via.placeholder.com/400x240?text=No+Image'}

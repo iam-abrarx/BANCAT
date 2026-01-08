@@ -125,7 +125,7 @@ export const FeaturedPatients = () => {
                                                 component="img"
                                                 className="patient-image"
                                                 height="240"
-                                                image={patient.photo ? (patient.photo.startsWith('http') ? patient.photo : `${import.meta.env.VITE_API_URL?.replace('/api/v1', '')}${patient.photo}`) : 'https://placehold.co/600x400/grey/white?text=No+Image'}
+                                                image={patient.photo ? (patient.photo.startsWith('http') ? patient.photo : `${import.meta.env.VITE_API_URL?.replace('/api/v1', '')}/api${patient.photo}`) : 'https://placehold.co/600x400/grey/white?text=No+Image'}
                                                 alt={patient.name_en}
                                                 sx={{
                                                     transition: 'transform 0.6s ease',
