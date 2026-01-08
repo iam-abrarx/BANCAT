@@ -102,6 +102,7 @@ jobs:
           cp deployment/setup_deployment.php deploy_artifacts/
           cp deployment/seed_database.php deploy_artifacts/
           cp deployment/debug_server.php deploy_artifacts/
+          cp deployment/check_images.php deploy_artifacts/
 
       # --- UPLOAD ---
       - name: Upload Artifacts to FTP
