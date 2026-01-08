@@ -48,7 +48,7 @@ export const AdminProgramList = () => {
                 <Button
                     variant="contained"
                     startIcon={<AddIcon />}
-                    onClick={() => navigate('/admin/programs/new')}
+                    onClick={() => navigate('/programs/new')}
                 >
                     Add Program
                 </Button>
@@ -81,7 +81,7 @@ export const AdminProgramList = () => {
                                 <TableCell align="center">
                                     <IconButton
                                         color="primary"
-                                        onClick={() => navigate(`/admin/programs/${program.id}/edit`)}
+                                        onClick={() => navigate(`/programs/${program.id}/edit`)}
                                     >
                                         <EditIcon />
                                     </IconButton>

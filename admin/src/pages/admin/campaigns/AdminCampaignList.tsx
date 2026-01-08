@@ -80,7 +80,7 @@ export const AdminCampaignList = () => {
                 <Button
                     variant="contained"
                     startIcon={<AddIcon />}
-                    onClick={() => navigate('/admin/campaigns/new')}
+                    onClick={() => navigate('/campaigns/new')}
                 >
                     Add Campaign
                 </Button>
@@ -166,7 +166,7 @@ export const AdminCampaignList = () => {
                 open={Boolean(anchorEl)}
                 onClose={handleCloseMenu}
             >
-                <MenuItem onClick={() => { navigate(`/admin/campaigns/${selectedCampaign?.id}/edit`); handleCloseMenu(); }}>
+                <MenuItem onClick={() => { navigate(`/campaigns/${selectedCampaign?.id}/edit`); handleCloseMenu(); }}>
                     <EditIcon fontSize="small" sx={{ mr: 1 }} /> Edit
                 </MenuItem>
                 <MenuItem onClick={() => handleStatusUpdate('approved')}>

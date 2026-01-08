@@ -7,7 +7,6 @@ const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000/api/v1';
 const api = axios.create({
     baseURL: API_URL,
     headers: {
-        'Content-Type': 'application/json',
         'Accept': 'application/json',
     },
     withCredentials: true,
@@ -18,8 +17,8 @@ api.interceptors.response.use(
     (error) => {
         if (error.response && error.response.status === 401) {
             localStorage.removeItem('token');
-            if (window.location.pathname !== '/login') {
-                window.location.href = '/login';
+            if (window.location.pathname !== '/admin/login') {
+                window.location.href = '/admin/login';
             }
         }
         return Promise.reject(error);

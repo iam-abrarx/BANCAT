@@ -29,7 +29,8 @@ export const Testimonials = () => {
                 // Using axios directly or a service. Assuming base URL is set or using relative path if proxy validation passes.
                 // Since Create React App/Vite proxy might not be set for localhost:8000, we should use full URL or configure proxy.
                 // For this task, full URL is safer for quick verification.
-                const response = await axios.get('http://localhost:8000/api/v1/testimonials');
+                const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:8000/api/v1';
+                const response = await axios.get(`${apiUrl}/testimonials`);
                 // Fallback to hardcoded if empty (optional, but requested "also this testimonials showing in the landing page... check the testimonials in landing page")
                 // If the user wants to see their added ones, we should show what's in DB.
                 // If DB is empty, maybe show empty or kept default?

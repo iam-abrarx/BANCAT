@@ -61,7 +61,7 @@ export const AdminPageForm = () => {
         },
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['admin-pages'] });
-            navigate('/admin/pages');
+            navigate('/pages');
         },
     });
 
@@ -189,7 +189,7 @@ export const AdminPageForm = () => {
                         </Grid>
 
                         <Grid item xs={12} sx={{ display: 'flex', gap: 2, justifyContent: 'flex-end' }}>
-                            <Button variant="outlined" onClick={() => navigate('/admin/pages')}>
+                            <Button variant="outlined" onClick={() => navigate('/pages')}>
                                 Cancel
                             </Button>
                             <Button type="submit" variant="contained" size="large">

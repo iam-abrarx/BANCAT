@@ -6,7 +6,7 @@ on:
       - master
 
 jobs:
-  # 1. Deploy Frontend (Clean Slate for public_html/new)
+  # 1. Deploy Frontend (Root)
   deploy-frontend:
     name: Deploy Frontend
     runs-on: ubuntu-latest
@@ -25,17 +25,25 @@ jobs:
           npm install
           npm run build
 
-      - name: Deploy Frontend to /new
+      - name: Deploy Frontend to /
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
           local-dir: ./frontend/dist/
-          server-dir: /public_html/new/
+          server-dir: /
           dangerous-clean-slate: true
+          exclude: |
+            **/.git*
+            admin/**
+            api/**
+            bancat-api-core/**
+            .well-known/**
+            .htaccess
+            env.production
 
-  # 2. Deploy Backend Code (Hidden Folder)
+  # 2. Deploy Backend Code (Secured Folder)
   deploy-backend-code:
     name: Deploy Backend Code
     runs-on: ubuntu-latest
@@ -60,17 +68,18 @@ jobs:
           if [ -n "${{ secrets.ENV_FILE }}" ]; then
             echo "${{ secrets.ENV_FILE }}" > .env
           else
+            echo "Warning: No ENV_FILE secret found."
             cp .env.example .env
           fi
 
-      - name: Deploy Backend Core to /bancat-api
+      - name: Deploy Backend Core to /bancat-api-core
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
           local-dir: ./backend/
-          server-dir: /bancat-api/
+          server-dir: /bancat-api-core/
           exclude: |
             **/.git*
             **/node_modules/**
@@ -90,21 +99,20 @@ jobs:
       - name: Modify index.php for Production
         run: |
           cd backend/public
-          # Point to the hidden backend vendor
-          sed -i "s|require __DIR__.'/../vendor/autoload.php';|require __DIR__.'/../../../bancat-api/vendor/autoload.php';|g" index.php
-          # Point to the hidden backend bootstrap
-          sed -i "s|\$app = require_once __DIR__.'/../bootstrap/app.php';|\$app = require_once __DIR__.'/../../../bancat-api/bootstrap/app.php';|g" index.php
+          # Point to the sibling folder bancat-api-core
+          sed -i "s|require __DIR__.'/../vendor/autoload.php';|require __DIR__.'/../bancat-api-core/vendor/autoload.php';|g" index.php
+          sed -i "s|\$app = require_once __DIR__.'/../bootstrap/app.php';|\$app = require_once __DIR__.'/../bancat-api-core/bootstrap/app.php';|g" index.php
 
-      - name: Deploy Public to /new/api
+      - name: Deploy Public to /api
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
           local-dir: ./backend/public/
-          server-dir: /public_html/new/api/
+          server-dir: /api/
 
-  # 4. Deploy Admin (Optional)
+  # 4. Deploy Admin
   deploy-admin:
     name: Deploy Admin
     needs: deploy-frontend
@@ -124,11 +132,11 @@ jobs:
           npm install
           npm run build
 
-      - name: Deploy Admin to /new/admin
+      - name: Deploy Admin to /admin
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
           local-dir: ./admin/dist/
-          server-dir: /public_html/new/admin/
+          server-dir: /admin/

@@ -49,7 +49,7 @@ const AdminGalleryList = () => {
                 <Button
                     variant="contained"
                     startIcon={<AddIcon />}
-                    onClick={() => navigate('/admin/gallery/new')}
+                    onClick={() => navigate('/gallery/new')}
                 >
                     Create New Gallery
                 </Button>
@@ -82,7 +82,7 @@ const AdminGalleryList = () => {
                                 <TableCell align="right">
                                     <IconButton
                                         color="primary"
-                                        onClick={() => navigate(`/admin/gallery/${gallery.id}`)}
+                                        onClick={() => navigate(`/gallery/${gallery.id}`)}
                                     >
                                         <EditIcon />
                                     </IconButton>

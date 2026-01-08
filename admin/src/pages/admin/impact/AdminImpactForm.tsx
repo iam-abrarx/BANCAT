@@ -55,7 +55,7 @@ export const AdminImpactForm = () => {
         },
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['admin-impact'] });
-            navigate('/admin/impact');
+            navigate('/impact');
         },
     });
 
@@ -154,7 +154,7 @@ export const AdminImpactForm = () => {
                         </Grid>
 
                         <Grid item xs={12} sx={{ display: 'flex', gap: 2, justifyContent: 'flex-end' }}>
-                            <Button variant="outlined" onClick={() => navigate('/admin/impact')}>
+                            <Button variant="outlined" onClick={() => navigate('/impact')}>
                                 Cancel
                             </Button>
                             <Button type="submit" variant="contained" size="large">

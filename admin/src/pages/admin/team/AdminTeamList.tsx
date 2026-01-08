@@ -46,7 +46,7 @@ export const AdminTeamList = () => {
                 <Button
                     variant="contained"
                     startIcon={<AddIcon />}
-                    onClick={() => navigate('/admin/team/new')}
+                    onClick={() => navigate('/team/new')}
                 >
                     Add Member
                 </Button>
@@ -98,7 +98,7 @@ export const AdminTeamList = () => {
                                 <TableCell align="center">
                                     <IconButton
                                         color="primary"
-                                        onClick={() => navigate(`/admin/team/${member.id}`)}
+                                        onClick={() => navigate(`/team/${member.id}`)}
                                     >
                                         <EditIcon />
                                     </IconButton>

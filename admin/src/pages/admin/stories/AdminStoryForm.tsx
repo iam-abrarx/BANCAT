@@ -85,7 +85,7 @@ export const AdminStoryForm = () => {
         },
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['admin-stories'] });
-            navigate('/admin/stories');
+            navigate('/stories');
         },
     });
 
@@ -317,7 +317,7 @@ export const AdminStoryForm = () => {
                         </Grid>
 
                         <Grid item xs={12} sx={{ display: 'flex', gap: 2, justifyContent: 'flex-end' }}>
-                            <Button variant="outlined" onClick={() => navigate('/admin/stories')}>
+                            <Button variant="outlined" onClick={() => navigate('/stories')}>
                                 Cancel
                             </Button>
                             <Button type="submit" variant="contained" size="large">

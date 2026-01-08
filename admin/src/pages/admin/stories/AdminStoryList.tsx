@@ -60,7 +60,7 @@ export const AdminStoryList = () => {
                 <Button
                     variant="contained"
                     startIcon={<AddIcon />}
-                    onClick={() => navigate('/admin/stories/new')}
+                    onClick={() => navigate('/stories/new')}
                 >
                     Add Story
                 </Button>
@@ -95,7 +95,7 @@ export const AdminStoryList = () => {
                                 <TableCell align="center">
                                     <IconButton
                                         color="primary"
-                                        onClick={() => navigate(`/admin/stories/${story.id}/edit`)}
+                                        onClick={() => navigate(`/stories/${story.id}/edit`)}
                                     >
                                         <EditIcon />
                                     </IconButton>

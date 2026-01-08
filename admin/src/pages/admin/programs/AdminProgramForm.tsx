@@ -111,7 +111,7 @@ export const AdminProgramForm = () => {
         },
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['admin-programs'] });
-            navigate('/admin/programs');
+            navigate('/programs');
         },
     });
 
@@ -282,7 +282,7 @@ export const AdminProgramForm = () => {
                         </Grid>
 
                         <Grid item xs={12} sx={{ display: 'flex', gap: 2, justifyContent: 'flex-end', mt: 4 }}>
-                            <Button variant="outlined" onClick={() => navigate('/admin/programs')}>
+                            <Button variant="outlined" onClick={() => navigate('/programs')}>
                                 Cancel
                             </Button>
                             <Button type="submit" variant="contained" size="large">

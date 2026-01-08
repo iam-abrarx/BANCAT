@@ -46,9 +46,9 @@ export const AdminPageList = () => {
                 <Button
                     variant="contained"
                     startIcon={<AddIcon />}
-                    onClick={() => navigate('/admin/pages/new')}
+                    onClick={() => navigate('/pages/new')}
                 >
-                    Add Page
+                    Create New Page
                 </Button>
             </Box>
 
@@ -85,7 +85,7 @@ export const AdminPageList = () => {
                                     </IconButton>
                                     <IconButton
                                         color="primary"
-                                        onClick={() => navigate(`/admin/pages/${page.id}`)}
+                                        onClick={() => navigate(`/pages/${page.id}`)}
                                     >
                                         <EditIcon />
                                     </IconButton>

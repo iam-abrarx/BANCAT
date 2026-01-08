@@ -73,7 +73,7 @@ export const AdminTeamForm = () => {
         },
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['admin-team'] });
-            navigate('/admin/team');
+            navigate('/team');
         },
     });
 
@@ -291,7 +291,7 @@ export const AdminTeamForm = () => {
                         </Grid>
 
                         <Grid item xs={12} sx={{ display: 'flex', gap: 2, justifyContent: 'flex-end' }}>
-                            <Button variant="outlined" onClick={() => navigate('/admin/team')}>
+                            <Button variant="outlined" onClick={() => navigate('/team')}>
                                 Cancel
                             </Button>
                             <Button type="submit" variant="contained" size="large">

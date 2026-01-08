@@ -48,7 +48,7 @@ export const AdminCampaignForm = () => {
         },
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['admin-campaigns'] });
-            navigate('/admin/campaigns');
+            navigate('/campaigns');
         },
     });
 
@@ -176,7 +176,7 @@ export const AdminCampaignForm = () => {
                         </Grid>
 
                         <Grid item xs={12} sx={{ display: 'flex', gap: 2, justifyContent: 'flex-end' }}>
-                            <Button variant="outlined" onClick={() => navigate('/admin/campaigns')}>
+                            <Button variant="outlined" onClick={() => navigate('/campaigns')}>
                                 Cancel
                             </Button>
                             <Button type="submit" variant="contained" size="large">

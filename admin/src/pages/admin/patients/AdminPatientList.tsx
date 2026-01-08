@@ -59,7 +59,7 @@ export const AdminPatientList = () => {
                 <Button
                     variant="contained"
                     startIcon={<AddIcon />}
-                    onClick={() => navigate('/admin/patients/new')}
+                    onClick={() => navigate('/patients/new')}
                 >
                     Add Patient
                 </Button>
@@ -122,7 +122,7 @@ export const AdminPatientList = () => {
                                     </IconButton>
                                     <IconButton
                                         color="primary"
-                                        onClick={() => navigate(`/admin/patients/${patient.id}/edit`)}
+                                        onClick={() => navigate(`/patients/${patient.id}/edit`)}
                                         size="small"
                                         title="Edit"
                                     >

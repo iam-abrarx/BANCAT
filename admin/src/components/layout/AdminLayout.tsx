@@ -3,6 +3,7 @@ import {
     ListItemText, Typography, Avatar, Divider, IconButton, Tooltip,
     useTheme
 } from '@mui/material';
+import { useEffect } from 'react';
 import {
     Dashboard as DashboardIcon,
     People as PeopleIcon,
@@ -31,12 +32,28 @@ const DRAWER_WIDTH = 280;
 const COLLAPSED_DRAWER_WIDTH = 88;
 
 export const AdminLayout = () => {
-    const { logout, user } = useAuth();
+    const { logout, user, isLoading, isAuthenticated } = useAuth();
     const navigate = useNavigate();
     const location = useLocation();
     const theme = useTheme();
     const { toggleColorMode } = useThemeContext();
     const [isCollapsed, setIsCollapsed] = useState(false);
+
+    useEffect(() => {
+        if (!isLoading && !isAuthenticated) {
+            navigate('/login');
+        }
+    }, [isLoading, isAuthenticated, navigate]);
+
+    if (isLoading) {
+        return (
+            <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100vh', bgcolor: 'background.default' }}>
+                <Typography>Loading...</Typography>
+            </Box>
+        );
+    }
+
+    if (!isAuthenticated) return null;
 
     const handleLogout = () => {
         logout();
@@ -44,23 +61,29 @@ export const AdminLayout = () => {
     };
 
     const menuItems = [
-        { text: 'General', icon: <DashboardIcon />, path: '/admin' },
-        { text: 'Patients', icon: <PeopleIcon />, path: '/admin/patients' },
-        { text: 'Stories', icon: <ArticleIcon />, path: '/admin/stories' },
-        { text: 'Campaigns', icon: <CampaignIcon />, path: '/admin/campaigns' },
-        { text: 'Programs', icon: <VolunteerIcon />, path: '/admin/programs' },
-        { text: 'Donations', icon: <VolunteerIcon />, path: '/admin/donations' },
-        { text: 'Partners', icon: <BusinessIcon />, path: '/admin/partners' },
-        { text: 'Pages', icon: <ArticleIcon />, path: '/admin/pages' },
-        { text: 'Gallery', icon: <DashboardIcon />, path: '/admin/gallery' },
-        { text: 'Testimonials', icon: <RateReviewIcon />, path: '/admin/testimonials' },
-        { text: 'Team', icon: <PeopleIcon />, path: '/admin/team' },
-        { text: 'Volunteers', icon: <HandshakeIcon />, path: '/admin/volunteers' },
-        { text: 'Contacts', icon: <ContactIcon />, path: '/admin/contacts' },
-        { text: 'Settings', icon: <SettingsIcon />, path: '/admin/settings' },
+        { text: 'General', icon: <DashboardIcon />, path: '/' },
+        { text: 'Patients', icon: <PeopleIcon />, path: '/patients' },
+        { text: 'Stories', icon: <ArticleIcon />, path: '/stories' },
+        { text: 'Campaigns', icon: <CampaignIcon />, path: '/campaigns' },
+        { text: 'Programs', icon: <VolunteerIcon />, path: '/programs' },
+        { text: 'Donations', icon: <VolunteerIcon />, path: '/donations' },
+        { text: 'Partners', icon: <BusinessIcon />, path: '/partners' },
+        { text: 'Pages', icon: <ArticleIcon />, path: '/pages' },
+        { text: 'Gallery', icon: <DashboardIcon />, path: '/gallery' },
+        { text: 'Testimonials', icon: <RateReviewIcon />, path: '/testimonials' },
+        { text: 'Team', icon: <PeopleIcon />, path: '/team' },
+        { text: 'Volunteers', icon: <HandshakeIcon />, path: '/volunteers' },
+        { text: 'Contacts', icon: <ContactIcon />, path: '/contacts' },
+        { text: 'Settings', icon: <SettingsIcon />, path: '/settings' },
     ];
 
     const documentationItem = { text: 'Documentation', icon: <MenuBookIcon />, path: 'http://localhost:3000', external: true };
+
+    const isSelected = (path: string) => {
+        const fullPath = path === '/' ? '/admin' : `/admin${path}`;
+        const currentPath = location.pathname.endsWith('/') ? location.pathname.slice(0, -1) : location.pathname;
+        return currentPath === fullPath || currentPath === fullPath + '/' || (path === '/' && currentPath === '/admin');
+    };
 
     return (
         <Box sx={{ display: 'flex', bgcolor: 'background.default', minHeight: '100vh' }}>
@@ -194,7 +217,7 @@ export const AdminLayout = () => {
                                     <ListItemButton
                                         component={Link}
                                         to={item.path}
-                                        selected={location.pathname === item.path}
+                                        selected={isSelected(item.path)}
                                         sx={{
                                             minHeight: 48,
                                             justifyContent: isCollapsed ? 'center' : 'initial',
@@ -202,13 +225,13 @@ export const AdminLayout = () => {
                                             borderRadius: '12px',
                                             transition: 'all 0.2s',
                                             mb: 0.5,
-                                            bgcolor: location.pathname === item.path ? 'primary.main' : 'transparent',
-                                            color: location.pathname === item.path ? 'white' : 'text.secondary',
+                                            bgcolor: isSelected(item.path) ? 'primary.main' : 'transparent',
+                                            color: isSelected(item.path) ? 'white' : 'text.secondary',
                                             '&:hover': {
-                                                bgcolor: location.pathname === item.path ? 'primary.dark' : 'action.hover',
-                                                color: location.pathname === item.path ? 'white' : 'text.primary',
+                                                bgcolor: isSelected(item.path) ? 'primary.dark' : 'action.hover',
+                                                color: isSelected(item.path) ? 'white' : 'text.primary',
                                                 '& .MuiListItemIcon-root': {
-                                                    color: location.pathname === item.path ? 'white' : 'primary.main',
+                                                    color: isSelected(item.path) ? 'white' : 'primary.main',
                                                 }
                                             },
                                             '&.Mui-selected': {
@@ -246,7 +269,7 @@ export const AdminLayout = () => {
                                                 primary={item.text}
                                                 primaryTypographyProps={{
                                                     fontSize: '14px',
-                                                    fontWeight: location.pathname === item.path ? 600 : 500,
+                                                    fontWeight: isSelected(item.path) ? 600 : 500,
                                                     noWrap: true, // Prevent text wrapping
                                                 }}
                                                 sx={{

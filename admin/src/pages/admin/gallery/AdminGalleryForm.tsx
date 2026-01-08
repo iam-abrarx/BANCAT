@@ -98,14 +98,21 @@ const AdminGalleryForm = () => {
                 const created = await galleryService.create(formData);
                 console.log('Gallery Created', created);
                 if (created.id) {
-                    navigate('/admin/gallery');
+                    navigate('/gallery');
                     return;
                 }
             }
-            navigate('/admin/gallery');
-        } catch (error) {
+            navigate('/gallery');
+        } catch (error: any) {
             console.error('Failed to save gallery', error);
-            alert('Failed to save gallery');
+            const message = error.response?.data?.message || error.message || 'Failed to save gallery';
+            const errors = error.response?.data?.errors;
+            if (errors) {
+                const errorDetails = Object.values(errors).flat().join('\n');
+                alert(`Validation failed:\n${errorDetails}`);
+            } else {
+                alert(`Error: ${message}`);
+            }
         }
     };
 
@@ -123,7 +130,7 @@ const AdminGalleryForm = () => {
 
     return (
         <Box>
-            <Button startIcon={<ArrowBack />} onClick={() => navigate('/admin/gallery')} sx={{ mb: 2 }}>
+            <Button startIcon={<ArrowBack />} onClick={() => navigate('/gallery')} sx={{ mb: 2 }}>
                 Back to List
             </Button>
             <Paper sx={{ p: 4 }}>

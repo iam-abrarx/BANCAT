@@ -46,7 +46,7 @@ export const AdminImpactList = () => {
                 <Button
                     variant="contained"
                     startIcon={<AddIcon />}
-                    onClick={() => navigate('/admin/impact/new')}
+                    onClick={() => navigate('/impact/new')}
                 >
                     Add Metric
                 </Button>
@@ -81,7 +81,7 @@ export const AdminImpactList = () => {
                                 <TableCell align="center">
                                     <IconButton
                                         color="primary"
-                                        onClick={() => navigate(`/admin/impact/${metric.id}`)}
+                                        onClick={() => navigate(`/impact/${metric.id}`)}
                                     >
                                         <EditIcon />
                                     </IconButton>

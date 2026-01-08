@@ -97,7 +97,7 @@ export const AdminPatientForm = () => {
         },
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['admin-patients'] });
-            navigate('/admin/patients');
+            navigate('/patients');
         },
     });
 
@@ -365,7 +365,7 @@ export const AdminPatientForm = () => {
                         </Grid>
 
                         <Grid item xs={12} sx={{ display: 'flex', gap: 2, justifyContent: 'flex-end', mt: 2 }}>
-                            <Button variant="outlined" onClick={() => navigate('/admin/patients')}>
+                            <Button variant="outlined" onClick={() => navigate('/patients')}>
                                 Cancel
                             </Button>
                             <Button type="submit" variant="contained" size="large">

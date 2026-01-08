@@ -44,7 +44,7 @@ export const AdminVolunteerDetail = () => {
 
     return (
         <Box>
-            <Button startIcon={<ArrowBack />} onClick={() => navigate('/admin/volunteers')} sx={{ mb: 2 }}>
+            <Button startIcon={<ArrowBack />} onClick={() => navigate('/volunteers')} sx={{ mb: 2 }}>
                 Back to List
             </Button>
 

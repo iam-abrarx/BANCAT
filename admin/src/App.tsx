@@ -31,8 +31,7 @@ function App() {
   return (
     <Routes>
       <Route path="/login" element={<Login />} />
-      <Route path="/" element={<Navigate to="/admin" replace />} />
-      <Route path="/admin" element={<AdminLayout />}>
+      <Route path="/" element={<AdminLayout />}>
         <Route index element={<AdminDashboard />} />
 
         <Route path="patients" element={<AdminPatientList />} />
