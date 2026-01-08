@@ -14,13 +14,16 @@ class DatabaseSeeder extends Seeder
     {
         // \App\Models\User::factory(10)->create();
 
-        \App\Models\User::factory()->create([
-            'name' => 'Admin User',
-            'email' => 'admin@bancat.org',
-            'role' => 'admin',
-            'password' => bcrypt('password'),
-            'is_active' => true,
-        ]);
+        // Check if exists or create to avoid Duplicate Entry 500 error
+        \App\Models\User::firstOrCreate(
+            ['email' => 'admin@bancat.org'],
+            [
+                'name' => 'Admin User',
+                'role' => 'admin',
+                'password' => bcrypt('password'),
+                'is_active' => true,
+            ]
+        );
         
         $this->call([
             PageSeeder::class,
