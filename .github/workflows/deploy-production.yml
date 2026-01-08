@@ -6,9 +6,8 @@ on:
       - master
 
 jobs:
-  # 1. Deploy Frontend (Root)
-  deploy-frontend:
-    name: Deploy Frontend
+  build-and-deploy:
+    name: Build, Zip, and Deploy
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
@@ -19,50 +18,43 @@ jobs:
         with:
           node-version: '18'
 
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          extensions: mbstring, intl, pdo_mysql, zip
+
+      # --- FRONTEND ---
       - name: Build Frontend
         run: |
           cd frontend
           npm install
           npm run build
+      
+      - name: Zip Frontend
+        run: |
+          cd frontend/dist
+          zip -r ../../frontend.zip .
 
-      - name: Deploy Frontend to /
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
-        with:
-          server: ${{ secrets.FTP_SERVER }}
-          username: ${{ secrets.FTP_USERNAME }}
-          password: ${{ secrets.FTP_PASSWORD }}
-          local-dir: ./frontend/dist/
-          server-dir: ./
-          dangerous-clean-slate: true
-          exclude: |
-            **/.git*
-            admin/**
-            api/**
-            bancat-api-core/**
-            .well-known/**
-            .htaccess
-            env.production
+      # --- ADMIN ---
+      - name: Build Admin
+        run: |
+          cd admin
+          npm install
+          npm run build
 
-  # 2. Deploy Backend Code (Secured Folder)
-  deploy-backend-code:
-    name: Deploy Backend Code
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout Code
-        uses: actions/checkout@v4
+      - name: Zip Admin
+        run: |
+          cd admin/dist
+          zip -r ../../admin.zip .
 
-      - name: Setup PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: '8.2'
-          extensions: mbstring, intl, pdo_mysql
-
-      - name: Install Dependencies
+      # --- BACKEND ---
+      - name: Install Backend Dependencies
         run: |
           cd backend
           composer install --no-dev --optimize-autoloader
 
-      - name: Create .env
+      - name: Create .env from Secret
         run: |
           cd backend
           if [ -n "${{ secrets.ENV_FILE }}" ]; then
@@ -72,72 +64,50 @@ jobs:
             cp .env.example .env
           fi
 
-      - name: Deploy Backend Core to /bancat-api-core
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
-        with:
-          server: ${{ secrets.FTP_SERVER }}
-          username: ${{ secrets.FTP_USERNAME }}
-          password: ${{ secrets.FTP_PASSWORD }}
-          local-dir: ./backend/
-          server-dir: ./bancat-api-core/
-          exclude: |
-            **/.git*
-            **/node_modules/**
-            **/tests/**
-            **/public/**
-            **/storage/*.key
-            .phpunit.result.cache
+      - name: Zip Backend (Core)
+        run: |
+          cd backend
+          # Zip contents avoiding .git and node_modules (though composer installed them, we keep them)
+          # We exclude storage keys and tests
+          zip -r ../backend.zip . -x "*.git*" "tests/*" "storage/*.key" "node_modules/phpunit/*"
 
-  # 3. Deploy Backend Public (API Entry Point)
-  deploy-backend-public:
-    name: Deploy Backend Public
-    needs: [deploy-frontend, deploy-backend-code]
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout Code
-        uses: actions/checkout@v4
-
-      - name: Modify index.php for Production
+      # --- BACKEND PUBLIC ---
+      - name: Prepare Public API
         run: |
           cd backend/public
-          # Point to the sibling folder bancat-api-core
+          # Fix paths for production relative to /api/ -> /bancat-api-core/
           sed -i "s|require __DIR__.'/../vendor/autoload.php';|require __DIR__.'/../bancat-api-core/vendor/autoload.php';|g" index.php
           sed -i "s|\$app = require_once __DIR__.'/../bootstrap/app.php';|\$app = require_once __DIR__.'/../bancat-api-core/bootstrap/app.php';|g" index.php
-
-      - name: Deploy Public to /api
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
-        with:
-          server: ${{ secrets.FTP_SERVER }}
-          username: ${{ secrets.FTP_USERNAME }}
-          password: ${{ secrets.FTP_PASSWORD }}
-          local-dir: ./backend/public/
-          server-dir: ./api/
-
-  # 4. Deploy Admin
-  deploy-admin:
-    name: Deploy Admin
-    needs: deploy-frontend
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout Code
-        uses: actions/checkout@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '18'
-
-      - name: Build Admin
+          
+      - name: Zip Backend Public
         run: |
-          cd admin
-          npm install
-          npm run build
+          cd backend/public
+          zip -r ../../backend_public.zip .
 
-      - name: Deploy Admin to /admin
+      # --- PREPARE ARTIFACTS FOLDER ---
+      - name: Collect Artifacts
+        run: |
+          mkdir deploy_artifacts
+          mv frontend.zip deploy_artifacts/
+          mv admin.zip deploy_artifacts/
+          mv backend.zip deploy_artifacts/
+          mv backend_public.zip deploy_artifacts/
+          cp deployment/setup_deployment.php deploy_artifacts/
+
+      # --- UPLOAD ---
+      - name: Upload Artifacts to FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          local-dir: ./admin/dist/
-          server-dir: ./admin/
+          local-dir: ./deploy_artifacts/
+          server-dir: ./
+          dangerous-clean-slate: false 
+
+      # --- TRIGGER EXTRACTION & MIGRATION ---
+      - name: Trigger Deployment Script
+        run: |
+          echo "Triggering setup script..."
+          curl -L "https://new.bancat.org.bd/setup_deployment.php"
+          echo "Deployment triggered."

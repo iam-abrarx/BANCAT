@@ -21,6 +21,40 @@ echo "<h1>Deployment Setup Utility</h1>";
 echo "<pre>";
 
 try {
+    // 0. Unzip Artifacts
+    echo "<h2>Extracting Files...</h2>";
+    $zips = [
+        'frontend.zip' => __DIR__ . '/',
+        'admin.zip' => __DIR__ . '/admin/',
+        'backend.zip' => $basePath . '/',
+        'backend_public.zip' => __DIR__ . '/api/',
+    ];
+
+    foreach ($zips as $zipFile => $extractTo) {
+        $fullZipPath = __DIR__ . '/' . $zipFile;
+        if (file_exists($fullZipPath)) {
+            echo "Found $zipFile. Extracting to $extractTo... ";
+            
+            // Create directory if not exists
+            if (!file_exists($extractTo)) {
+                mkdir($extractTo, 0755, true);
+            }
+
+            $zip = new ZipArchive;
+            if ($zip->open($fullZipPath) === TRUE) {
+                $zip->extractTo($extractTo);
+                $zip->close();
+                echo "<span style='color:green'>Success!</span>\n";
+                // Optionally delete zip after success
+                // unlink($fullZipPath); 
+            } else {
+                echo "<span style='color:red'>Failed to open zip.</span>\n";
+            }
+        } else {
+            echo "Skipping $zipFile (not found).\n";
+        }
+    }
+    
     // 1. Run Migrations
     echo "<h2>Running Migrations...</h2>";
     Artisan::call('migrate', ['--force' => true]);
