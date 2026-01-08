@@ -8,7 +8,7 @@ use App\Http\Controllers\Api\DonationController;
 use App\Http\Controllers\Api\TeamMemberController;
 use App\Http\Controllers\Api\ImpactMetricController;
 use App\Http\Controllers\Api\PageController;
-use App\Http\Controllers\Api\Authcontroller;
+use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\DashboardController;
 use App\Http\Controllers\Api\VolunteerController;
 use App\Http\Controllers\Api\UserController;
