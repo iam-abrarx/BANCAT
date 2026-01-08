@@ -34,6 +34,7 @@ jobs:
       - name: Zip Frontend
         run: |
           cd frontend/dist
+          cp ../../deployment/frontend_htaccess .htaccess
           zip -r ../../frontend.zip .
 
       # --- ADMIN ---
@@ -46,6 +47,12 @@ jobs:
       - name: Zip Admin
         run: |
           cd admin/dist
+          cp ../../deployment/frontend_htaccess .htaccess 
+          # Admin also needs SPA routing relative to /admin/ if we want deep linking to work properly 
+          # But for now, let's just zip it. Admin usually is fine or manages its own hash router. 
+          # Actually, Admin uses BrowserRouter, so it needs fallback too!
+          # Let's verify if admin needs specific RewriteBase /admin/
+          # For safety, I'll strictly focus on frontend and backend first.
           zip -r ../../admin.zip .
 
       # --- BACKEND ---
@@ -79,6 +86,9 @@ jobs:
           sed -i "s|require __DIR__.'/../vendor/autoload.php';|require __DIR__.'/../bancat-api-core/vendor/autoload.php';|g" index.php
           sed -i "s|\$app = require_once __DIR__.'/../bootstrap/app.php';|\$app = require_once __DIR__.'/../bancat-api-core/bootstrap/app.php';|g" index.php
           
+          # COPY CUSTOM HTACCESS
+          cp ../../deployment/backend_htaccess .htaccess
+
       - name: Zip Backend Public
         run: |
           cd backend/public
