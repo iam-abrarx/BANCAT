@@ -28,10 +28,9 @@ jobs:
       - name: Build Frontend
         run: |
           cd frontend
+          echo "VITE_API_URL=https://new.bancat.org.bd/api/v1" > .env.production
           npm install
           npm run build
-        env:
-          VITE_API_URL: "https://new.bancat.org.bd/api/v1"
       
       - name: Zip Frontend
         run: |
@@ -43,10 +42,9 @@ jobs:
       - name: Build Admin
         run: |
           cd admin
+          echo "VITE_API_URL=https://new.bancat.org.bd/api/v1" > .env.production
           npm install
           npm run build
-        env:
-          VITE_API_URL: "https://new.bancat.org.bd/api/v1"
 
       - name: Zip Admin
         run: |
