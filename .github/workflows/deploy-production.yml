@@ -103,6 +103,7 @@ jobs:
           mv backend_public.zip deploy_artifacts/
           cp deployment/setup_deployment.php deploy_artifacts/
           cp deployment/seed_database.php deploy_artifacts/
+          cp deployment/debug_server.php deploy_artifacts/
 
       # --- UPLOAD ---
       - name: Upload Artifacts to FTP
