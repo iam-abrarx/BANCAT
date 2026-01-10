@@ -1,5 +1,5 @@
 {
-    "name": "bancat-frontend",
+    "name": "bancat-admin",
     "version": "1.0.0",
     "description": "BANcat Frontend - React SPA for cancer awareness and patient support platform",
     "type": "module",

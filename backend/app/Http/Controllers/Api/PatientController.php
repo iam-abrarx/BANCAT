@@ -10,7 +10,13 @@ class PatientController extends Controller
 {
     public function index(Request $request)
     {
-        $query = Patient::query()->where('is_active', true);
+        $query = Patient::query()
+            ->where('is_active', true)
+            ->withSum([
+                'donations as donations_sum' => fn($q) => $q
+                    ->where('payment_status', 'completed')
+                    ->where('status', 'approved')
+            ], 'amount');
 
         if ($request->has('featured')) {
             $query->where('is_featured', true);
@@ -61,6 +67,12 @@ class PatientController extends Controller
 
         $patients = $query->paginate(12);
 
+        // Add computed raised_amount to each patient
+        $patients->getCollection()->transform(function ($patient) {
+            $patient->raised_amount = ($patient->donations_sum ?? 0) + ($patient->fund_raised ?? 0);
+            return $patient;
+        });
+
         return response()->json($patients);
     }
 
@@ -84,8 +96,6 @@ class PatientController extends Controller
      */
     public function store(Request $request)
     {
-        \Illuminate\Support\Facades\Log::info('Store Patient Request:', $request->all());
-        \Illuminate\Support\Facades\Log::info('Has File photo:', [$request->hasFile('photo')]);
 
         $data = $request->validate([
             'name_en' => 'required|string',
@@ -111,7 +121,6 @@ class PatientController extends Controller
         if ($request->hasFile('photo')) {
             $path = $request->file('photo')->store('patients', 'public');
             $data['photo'] = '/storage/' . $path;
-            \Illuminate\Support\Facades\Log::info('Photo stored at: ' . $data['photo']);
         } else {
             // Explicitly set to null if no valid file found, to avoid array/object issues
             $data['photo'] = null;
@@ -120,8 +129,6 @@ class PatientController extends Controller
         // Handle boolean conversion if form-data sends strings
         $data['is_active'] = filter_var($request->input('is_active', true), FILTER_VALIDATE_BOOLEAN);
         $data['is_featured'] = filter_var($request->input('is_featured', false), FILTER_VALIDATE_BOOLEAN);
-
-        \Illuminate\Support\Facades\Log::info('Create Data:', $data);
 
         $patient = Patient::create($data);
 
@@ -133,9 +140,6 @@ class PatientController extends Controller
      */
     public function update(Request $request, $id)
     {
-        \Illuminate\Support\Facades\Log::info('Update Patient Request:', $request->all());
-        \Illuminate\Support\Facades\Log::info('Has File photo:', [$request->hasFile('photo')]);
-
         $patient = Patient::findOrFail($id);
 
         $data = $request->validate([
@@ -145,7 +149,6 @@ class PatientController extends Controller
             'phone' => 'nullable|string',
             'email' => 'nullable|email',
             'donor_name' => 'nullable|string',
-            'location' => 'sometimes|string',
             'location' => 'sometimes|string',
             'gender' => 'sometimes|in:male,female,other',
             'cancer_type' => 'sometimes|string',
@@ -163,7 +166,6 @@ class PatientController extends Controller
         if ($request->hasFile('photo')) {
             $path = $request->file('photo')->store('patients', 'public');
             $data['photo'] = '/storage/' . $path;
-            \Illuminate\Support\Facades\Log::info('Photo stored at: ' . $data['photo']);
         } else {
             // If updating and no new file, we usually keep the old one.
             // But validation rule 'photo' => 'nullable' might include 'photo' => null in $data if sent?

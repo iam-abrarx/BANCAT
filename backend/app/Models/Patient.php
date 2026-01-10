@@ -41,15 +41,8 @@ class Patient extends Model
         'treatment_cost_raised' => 'decimal:2',
     ];
 
-    protected $appends = ['raised_amount'];
-
-    public function getRaisedAmountAttribute()
-    {
-        return $this->donations()
-            ->where('payment_status', 'completed')
-            ->where('status', 'approved')
-            ->sum('amount') + ($this->fund_raised ?? 0);
-    }
+    // Removed raised_amount accessor to prevent N+1 queries
+    // Use eager loading with withSum in controllers instead
 
     public function updates()
     {

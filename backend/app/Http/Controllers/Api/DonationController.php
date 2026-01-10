@@ -37,11 +37,14 @@ class DonationController extends Controller
 
         if ($request->has('search')) {
             $search = $request->search;
-            $query->where('transaction_id', 'like', "%{$search}%")
-                  ->orWhereHas('donor', function($q) use ($search) {
-                      $q->where('name', 'like', "%{$search}%")
-                        ->orWhere('email', 'like', "%{$search}%");
+            $query->where(function($q) use ($search) {
+                // Remove leading % for better index usage
+                $q->where('transaction_id', 'like', "{$search}%")
+                  ->orWhereHas('donor', function($subQ) use ($search) {
+                      $subQ->where('name', 'like', "{$search}%")
+                           ->orWhere('email', 'like', "{$search}%");
                   });
+            });
         }
 
         return $query->orderBy('created_at', 'desc')->paginate(15);

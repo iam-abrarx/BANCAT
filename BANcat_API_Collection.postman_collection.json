@@ -1,0 +1,1019 @@
+{
+    "info": {
+        "name": "BANcat API",
+        "description": "Complete API collection for BANcat - Bangladesh Cancer Trust application",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+        "_postman_id": "bancat-api-collection",
+        "version": "1.0.0"
+    },
+    "variable": [
+        {
+            "key": "base_url",
+            "value": "http://localhost:8000/api/v1",
+            "type": "string"
+        },
+        {
+            "key": "token",
+            "value": "",
+            "type": "string"
+        }
+    ],
+    "auth": {
+        "type": "bearer",
+        "bearer": [
+            {
+                "key": "token",
+                "value": "{{token}}",
+                "type": "string"
+            }
+        ]
+    },
+    "item": [
+        {
+            "name": "Authentication",
+            "item": [
+                {
+                    "name": "Register",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"name\": \"John Doe\",\n  \"email\": \"john@example.com\",\n  \"password\": \"password123\",\n  \"password_confirmation\": \"password123\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/register",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "register"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Login",
+                    "event": [
+                        {
+                            "listen": "test",
+                            "script": {
+                                "exec": [
+                                    "var jsonData = pm.response.json();",
+                                    "if (jsonData.token) {",
+                                    "    pm.collectionVariables.set('token', jsonData.token);",
+                                    "}"
+                                ]
+                            }
+                        }
+                    ],
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"email\": \"admin@bancat.org.bd\",\n  \"password\": \"password\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/login",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "login"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Get Current User",
+                    "request": {
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{token}}"
+                                }
+                            ]
+                        },
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{base_url}}/user",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "user"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Logout",
+                    "request": {
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{token}}"
+                                }
+                            ]
+                        },
+                        "method": "POST",
+                        "header": [],
+                        "url": {
+                            "raw": "{{base_url}}/logout",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "logout"
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Patients",
+            "item": [
+                {
+                    "name": "List Patients",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{base_url}}/patients?featured=true&sort=newest&page=1",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "patients"
+                            ],
+                            "query": [
+                                {
+                                    "key": "featured",
+                                    "value": "true"
+                                },
+                                {
+                                    "key": "search",
+                                    "value": "",
+                                    "disabled": true
+                                },
+                                {
+                                    "key": "cancer_type",
+                                    "value": "",
+                                    "disabled": true
+                                },
+                                {
+                                    "key": "district",
+                                    "value": "",
+                                    "disabled": true
+                                },
+                                {
+                                    "key": "sort",
+                                    "value": "newest"
+                                },
+                                {
+                                    "key": "page",
+                                    "value": "1"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Get Patient by Code",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{base_url}}/patients/PAT001",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "patients",
+                                "PAT001"
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Stories",
+            "item": [
+                {
+                    "name": "List Stories",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{base_url}}/stories",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "stories"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Get Story by Slug",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{base_url}}/stories/success-story-1",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "stories",
+                                "success-story-1"
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Programs",
+            "item": [
+                {
+                    "name": "List Programs",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{base_url}}/programs",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "programs"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Get Program by Slug",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{base_url}}/programs/program-slug",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "programs",
+                                "program-slug"
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Campaigns",
+            "item": [
+                {
+                    "name": "List Campaigns",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{base_url}}/campaigns",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "campaigns"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Get Campaign by Slug",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{base_url}}/campaigns/campaign-slug",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "campaigns",
+                                "campaign-slug"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Submit Campaign",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"name\": \"Campaign Name\",\n  \"description\": \"Campaign description\",\n  \"goal_amount\": 100000\n}"
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/campaigns/submit",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "campaigns",
+                                "submit"
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Donations",
+            "item": [
+                {
+                    "name": "Initiate Donation",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"amount\": 5000,\n  \"payment_method\": \"bkash\",\n  \"patient_id\": 1,\n  \"donor_name\": \"Anonymous\",\n  \"donor_email\": \"donor@example.com\",\n  \"donor_phone\": \"01712345678\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/donations/initiate",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "donations",
+                                "initiate"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Donation Callback",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{base_url}}/donations/callback?transaction_id=TXN123456",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "donations",
+                                "callback"
+                            ],
+                            "query": [
+                                {
+                                    "key": "transaction_id",
+                                    "value": "TXN123456"
+                                }
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Settings",
+            "item": [
+                {
+                    "name": "Get SEO Settings",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{base_url}}/settings/seo",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "settings",
+                                "seo"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Get Company Settings",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{base_url}}/settings/company",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "settings",
+                                "company"
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Contact & Volunteer",
+            "item": [
+                {
+                    "name": "Submit Contact Form",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"name\": \"John Doe\",\n  \"email\": \"john@example.com\",\n  \"subject\": \"General Inquiry\",\n  \"message\": \"I would like to know more about...\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/contact",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "contact"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Submit Partnership",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"company_name\": \"ABC Corp\",\n  \"contact_person\": \"Jane Smith\",\n  \"email\": \"jane@abccorp.com\",\n  \"phone\": \"01712345678\",\n  \"partnership_type\": \"CSR\",\n  \"message\": \"We are interested in partnering...\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/partnership",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "partnership"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Apply as Volunteer",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"name\": \"John Doe\",\n  \"email\": \"john@example.com\",\n  \"phone\": \"01712345678\",\n  \"skills\": \"Medical background, fundraising\",\n  \"availability\": \"Weekends\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/volunteers/apply",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "volunteers",
+                                "apply"
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Admin - Patients",
+            "item": [
+                {
+                    "name": "Get Patient by ID",
+                    "request": {
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{token}}"
+                                }
+                            ]
+                        },
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{base_url}}/admin/patients/1",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "admin",
+                                "patients",
+                                "1"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Create Patient",
+                    "request": {
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{token}}"
+                                }
+                            ]
+                        },
+                        "method": "POST",
+                        "header": [],
+                        "body": {
+                            "mode": "formdata",
+                            "formdata": [
+                                {
+                                    "key": "name_en",
+                                    "value": "Patient Name",
+                                    "type": "text"
+                                },
+                                {
+                                    "key": "name_bn",
+                                    "value": "রোগীর নাম",
+                                    "type": "text"
+                                },
+                                {
+                                    "key": "code",
+                                    "value": "PAT002",
+                                    "type": "text"
+                                },
+                                {
+                                    "key": "age",
+                                    "value": "45",
+                                    "type": "text"
+                                },
+                                {
+                                    "key": "gender",
+                                    "value": "female",
+                                    "type": "text"
+                                },
+                                {
+                                    "key": "cancer_type",
+                                    "value": "breast",
+                                    "type": "text"
+                                },
+                                {
+                                    "key": "location",
+                                    "value": "Dhaka",
+                                    "type": "text"
+                                },
+                                {
+                                    "key": "medical_summary_en",
+                                    "value": "Diagnosis details...",
+                                    "type": "text"
+                                },
+                                {
+                                    "key": "treatment_cost_required",
+                                    "value": "500000",
+                                    "type": "text"
+                                },
+                                {
+                                    "key": "is_active",
+                                    "value": "true",
+                                    "type": "text"
+                                },
+                                {
+                                    "key": "is_featured",
+                                    "value": "false",
+                                    "type": "text"
+                                },
+                                {
+                                    "key": "photo",
+                                    "type": "file",
+                                    "src": []
+                                }
+                            ]
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/admin/patients",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "admin",
+                                "patients"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Update Patient",
+                    "request": {
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{token}}"
+                                }
+                            ]
+                        },
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"name_en\": \"Updated Name\",\n  \"treatment_cost_required\": 600000\n}"
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/admin/patients/1",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "admin",
+                                "patients",
+                                "1"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Delete Patient",
+                    "request": {
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{token}}"
+                                }
+                            ]
+                        },
+                        "method": "DELETE",
+                        "header": [],
+                        "url": {
+                            "raw": "{{base_url}}/admin/patients/1",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "admin",
+                                "patients",
+                                "1"
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Admin - Donations",
+            "item": [
+                {
+                    "name": "List Donations",
+                    "request": {
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{token}}"
+                                }
+                            ]
+                        },
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{base_url}}/admin/donations?payment_status=completed&status=approved",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "admin",
+                                "donations"
+                            ],
+                            "query": [
+                                {
+                                    "key": "payment_status",
+                                    "value": "completed"
+                                },
+                                {
+                                    "key": "status",
+                                    "value": "approved"
+                                },
+                                {
+                                    "key": "search",
+                                    "value": "",
+                                    "disabled": true
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Approve Donation",
+                    "request": {
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{token}}"
+                                }
+                            ]
+                        },
+                        "method": "PUT",
+                        "header": [],
+                        "url": {
+                            "raw": "{{base_url}}/admin/donations/1/approve",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "admin",
+                                "donations",
+                                "1",
+                                "approve"
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Admin - Settings",
+            "item": [
+                {
+                    "name": "Update SEO Settings",
+                    "request": {
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{token}}"
+                                }
+                            ]
+                        },
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"site_title\": \"BANcat - Bangladesh Cancer Trust\",\n  \"site_description\": \"Supporting cancer patients in Bangladesh\",\n  \"google_analytics_id\": \"G-XXXXXXXXXX\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/admin/settings/seo",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "admin",
+                                "settings",
+                                "seo"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Update Company Settings",
+                    "request": {
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{token}}"
+                                }
+                            ]
+                        },
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"phone\": \"+880 1234567890\",\n  \"email\": \"info@bancat.org.bd\",\n  \"street\": \"123 Main Street\",\n  \"city\": \"Dhaka\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/admin/settings/company",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "admin",
+                                "settings",
+                                "company"
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Admin - Dashboard",
+            "item": [
+                {
+                    "name": "Get Admin Stats",
+                    "request": {
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{token}}"
+                                }
+                            ]
+                        },
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{base_url}}/admin/stats",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "admin",
+                                "stats"
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Team Members",
+            "item": [
+                {
+                    "name": "List Team Members",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{base_url}}/team-members",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "team-members"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Get Team Member",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{base_url}}/team-members/1",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "team-members",
+                                "1"
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Testimonials",
+            "item": [
+                {
+                    "name": "List Testimonials",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{base_url}}/testimonials",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "testimonials"
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Galleries",
+            "item": [
+                {
+                    "name": "List Galleries",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{base_url}}/galleries",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "galleries"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Get Gallery by Slug",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{base_url}}/galleries/gallery-slug",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "galleries",
+                                "gallery-slug"
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Pages",
+            "item": [
+                {
+                    "name": "Get Page by Slug",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{base_url}}/pages/about-us",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "pages",
+                                "about-us"
+                            ]
+                        }
+                    }
+                }
+            ]
+        }
+    ]
+}

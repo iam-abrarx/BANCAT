@@ -26,61 +26,64 @@ import AdminGalleryForm from './pages/admin/gallery/AdminGalleryForm';
 
 import { AdminSettings } from './pages/admin/settings/AdminSettings';
 import { AdminContactList } from './pages/admin/contacts/AdminContactList';
+import { ErrorBoundary } from './components/ErrorBoundary';
 
 function App() {
   return (
-    <Routes>
-      <Route path="/login" element={<Login />} />
-      <Route path="/" element={<AdminLayout />}>
-        <Route index element={<AdminDashboard />} />
+    <ErrorBoundary>
+      <Routes>
+        <Route path="/login" element={<Login />} />
+        <Route path="/" element={<AdminLayout />}>
+          <Route index element={<AdminDashboard />} />
 
-        <Route path="patients" element={<AdminPatientList />} />
-        <Route path="patients/new" element={<AdminPatientForm />} />
-        <Route path="patients/:id/edit" element={<AdminPatientForm />} />
+          <Route path="patients" element={<AdminPatientList />} />
+          <Route path="patients/new" element={<AdminPatientForm />} />
+          <Route path="patients/:id/edit" element={<AdminPatientForm />} />
 
-        <Route path="stories" element={<AdminStoryList />} />
-        <Route path="stories/new" element={<AdminStoryForm />} />
-        <Route path="stories/:id/edit" element={<AdminStoryForm />} />
+          <Route path="stories" element={<AdminStoryList />} />
+          <Route path="stories/new" element={<AdminStoryForm />} />
+          <Route path="stories/:id/edit" element={<AdminStoryForm />} />
 
-        <Route path="volunteers" element={<AdminVolunteerList />} />
-        <Route path="volunteers/:id" element={<AdminVolunteerDetail />} />
+          <Route path="volunteers" element={<AdminVolunteerList />} />
+          <Route path="volunteers/:id" element={<AdminVolunteerDetail />} />
 
-        <Route path="campaigns" element={<AdminCampaignList />} />
-        <Route path="campaigns/new" element={<AdminCampaignForm />} />
-        <Route path="campaigns/:id/edit" element={<AdminCampaignForm />} />
+          <Route path="campaigns" element={<AdminCampaignList />} />
+          <Route path="campaigns/new" element={<AdminCampaignForm />} />
+          <Route path="campaigns/:id/edit" element={<AdminCampaignForm />} />
 
-        <Route path="programs" element={<AdminProgramList />} />
-        <Route path="programs/new" element={<AdminProgramForm />} />
-        <Route path="programs/:id/edit" element={<AdminProgramForm />} />
+          <Route path="programs" element={<AdminProgramList />} />
+          <Route path="programs/new" element={<AdminProgramForm />} />
+          <Route path="programs/:id/edit" element={<AdminProgramForm />} />
 
-        <Route path="donations" element={<AdminDonationList />} />
+          <Route path="donations" element={<AdminDonationList />} />
 
-        <Route path="team" element={<AdminTeamList />} />
-        <Route path="team/new" element={<AdminTeamForm />} />
-        <Route path="team/:id" element={<AdminTeamForm />} />
+          <Route path="team" element={<AdminTeamList />} />
+          <Route path="team/new" element={<AdminTeamForm />} />
+          <Route path="team/:id" element={<AdminTeamForm />} />
 
-        <Route path="impact" element={<AdminImpactList />} />
-        <Route path="impact/new" element={<AdminImpactForm />} />
-        <Route path="impact/:id" element={<AdminImpactForm />} />
+          <Route path="impact" element={<AdminImpactList />} />
+          <Route path="impact/new" element={<AdminImpactForm />} />
+          <Route path="impact/:id" element={<AdminImpactForm />} />
 
-        <Route path="pages" element={<AdminPageList />} />
-        <Route path="pages/new" element={<AdminPageForm />} />
-        <Route path="pages/:id" element={<AdminPageForm />} />
+          <Route path="pages" element={<AdminPageList />} />
+          <Route path="pages/new" element={<AdminPageForm />} />
+          <Route path="pages/:id" element={<AdminPageForm />} />
 
-        <Route path="gallery" element={<AdminGalleryList />} />
-        <Route path="gallery/new" element={<AdminGalleryForm />} />
-        <Route path="gallery/:id" element={<AdminGalleryForm />} />
+          <Route path="gallery" element={<AdminGalleryList />} />
+          <Route path="gallery/new" element={<AdminGalleryForm />} />
+          <Route path="gallery/:id" element={<AdminGalleryForm />} />
 
-        <Route path="partners" element={<AdminPartnerList />} />
-        <Route path="contacts" element={<AdminContactList />} />
+          <Route path="partners" element={<AdminPartnerList />} />
+          <Route path="contacts" element={<AdminContactList />} />
 
-        <Route path="settings" element={<AdminSettings />} />
-        <Route path="users" element={<Navigate to="/admin/settings" replace />} />
+          <Route path="settings" element={<AdminSettings />} />
+          <Route path="users" element={<Navigate to="/admin/settings" replace />} />
 
-        <Route path="testimonials" element={<Testimonials />} />
-      </Route>
+          <Route path="testimonials" element={<Testimonials />} />
+        </Route>
 
-    </Routes>
+      </Routes>
+    </ErrorBoundary>
   );
 }
 

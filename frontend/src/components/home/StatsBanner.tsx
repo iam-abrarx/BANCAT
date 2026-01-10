@@ -1,4 +1,4 @@
-import { Box, Container, Typography, Button } from '@mui/material';
+import { Box, Container, Typography, Button, Grid } from '@mui/material';
 import { Link as RouterLink } from 'react-router-dom';
 
 export const StatsBanner = () => {
@@ -88,6 +88,36 @@ export const StatsBanner = () => {
                     >
                         Make An Impact
                     </Button>
+
+                    {/* Three Feature Boxes */}
+                    <Box sx={{ mt: 8 }}>
+                        <Grid container spacing={0}>
+                            <Grid item xs={12} md={4}>
+                                <Box sx={{ position: 'relative', height: '280px', backgroundImage: 'url(/h1-img-1.jpg)', backgroundSize: 'cover', backgroundPosition: 'center', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'flex-start', px: 4, overflow: 'hidden', '&::before': { content: '""', position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: 'rgba(245, 170, 33, 0.75)', zIndex: 1 } }}>
+                                    <Box sx={{ position: 'relative', zIndex: 2 }}>
+                                        <Typography variant="h5" sx={{ color: 'white', fontWeight: 700, fontFamily: 'Montserrat', mb: 3, lineHeight: 1.3, maxWidth: '280px' }}>Today is the day to reach out and lend a helping hand</Typography>
+                                        <Button variant="contained" sx={{ backgroundColor: 'white !important', color: '#f5aa21 !important', borderRadius: '50px', px: 4, py: 1, fontWeight: 600, fontFamily: 'Montserrat', textTransform: 'none', fontSize: '0.95rem', boxShadow: 'none', '&:hover': { backgroundColor: 'rgba(255,255,255,0.9) !important', boxShadow: 'none' } }}>Donate</Button>
+                                    </Box>
+                                </Box>
+                            </Grid>
+                            <Grid item xs={12} md={4}>
+                                <Box sx={{ position: 'relative', height: '280px', backgroundImage: 'url(/h1-img-2.jpg)', backgroundSize: 'cover', backgroundPosition: 'center', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'flex-start', px: 4, overflow: 'hidden', '&::before': { content: '""', position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: 'rgba(0, 0, 0, 0.5)', zIndex: 1 } }}>
+                                    <Box sx={{ position: 'relative', zIndex: 2 }}>
+                                        <Typography variant="h5" sx={{ color: 'white', fontWeight: 700, fontFamily: 'Montserrat', mb: 3, lineHeight: 1.3, maxWidth: '280px' }}>Even the smallest of donations can help change a life</Typography>
+                                        <Button variant="contained" sx={{ backgroundColor: 'white !important', color: '#333 !important', borderRadius: '50px', px: 4, py: 1, fontWeight: 600, fontFamily: 'Montserrat', textTransform: 'none', fontSize: '0.95rem', boxShadow: 'none', '&:hover': { backgroundColor: 'rgba(255,255,255,0.9) !important', boxShadow: 'none' } }}>Donate</Button>
+                                    </Box>
+                                </Box>
+                            </Grid>
+                            <Grid item xs={12} md={4}>
+                                <Box sx={{ position: 'relative', height: '280px', backgroundImage: 'url(/h1-img-3.jpg)', backgroundSize: 'cover', backgroundPosition: 'center', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'flex-start', px: 4, overflow: 'hidden', '&::before': { content: '""', position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: 'rgba(139, 195, 74, 0.75)', zIndex: 1 } }}>
+                                    <Box sx={{ position: 'relative', zIndex: 2 }}>
+                                        <Typography variant="h5" sx={{ color: 'white', fontWeight: 700, fontFamily: 'Montserrat', mb: 3, lineHeight: 1.3, maxWidth: '280px' }}>Become a volunteer. You'll feel the benefits instantly</Typography>
+                                        <Button variant="contained" sx={{ backgroundColor: 'white !important', color: '#8bc34a !important', borderRadius: '50px', px: 4, py: 1, fontWeight: 600, fontFamily: 'Montserrat', textTransform: 'none', fontSize: '0.95rem', boxShadow: 'none', '&:hover': { backgroundColor: 'rgba(255,255,255,0.9) !important', boxShadow: 'none' } }}>Donate</Button>
+                                    </Box>
+                                </Box>
+                            </Grid>
+                        </Grid>
+                    </Box>
                 </Box>
             </Container>
         </Box>

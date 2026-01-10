@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\SeoSetting;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Cache;
 
 class SettingsController extends Controller
 {
@@ -14,7 +15,9 @@ class SettingsController extends Controller
      */
     public function getSeoSettings(): JsonResponse
     {
-        $settings = SeoSetting::getAllSettings();
+        $settings = Cache::remember('seo_settings', 3600, function () {
+            return SeoSetting::getAllSettings();
+        });
         
         return response()->json([
             'success' => true,
@@ -50,6 +53,10 @@ class SettingsController extends Controller
         ]);
 
         SeoSetting::updateSettings($validatedData);
+        
+        // Clear cache when settings are updated
+        Cache::forget('seo_settings');
+        Cache::forget('company_settings');
 
         return response()->json([
             'success' => true,
@@ -63,24 +70,26 @@ class SettingsController extends Controller
      */
     public function getCompanySettings(): JsonResponse
     {
-        $allSettings = SeoSetting::getAllSettings();
-        
-        // Extract company-specific settings
-        $companySettings = [
-            'city' => $allSettings['company_city'] ?? '',
-            'country' => $allSettings['company_country'] ?? 'Bangladesh',
-            'state' => $allSettings['company_state'] ?? '',
-            'zip' => $allSettings['company_zip'] ?? '',
-            'street' => $allSettings['company_street'] ?? '',
-            'phone' => $allSettings['company_phone'] ?? '',
-            'website' => $allSettings['company_website'] ?? '',
-            'email' => $allSettings['company_email'] ?? '',
-            'social_profiles' => $allSettings['company_social_profiles'] ?? [],
-            'footer_site_link' => $allSettings['footer_site_link'] ?? '',
-            'footer_copyright' => $allSettings['footer_copyright'] ?? '',
-            'footer_external_text' => $allSettings['footer_external_text'] ?? '',
-            'footer_external_link' => $allSettings['footer_external_link'] ?? '',
-        ];
+        $companySettings = Cache::remember('company_settings', 3600, function () {
+            $allSettings = SeoSetting::getAllSettings();
+            
+            // Extract company-specific settings
+            return [
+                'city' => $allSettings['company_city'] ?? '',
+                'country' => $allSettings['company_country'] ?? 'Bangladesh',
+                'state' => $allSettings['company_state'] ?? '',
+                'zip' => $allSettings['company_zip'] ?? '',
+                'street' => $allSettings['company_street'] ?? '',
+                'phone' => $allSettings['company_phone'] ?? '',
+                'website' => $allSettings['company_website'] ?? '',
+                'email' => $allSettings['company_email'] ?? '',
+                'social_profiles' => $allSettings['company_social_profiles'] ?? [],
+                'footer_site_link' => $allSettings['footer_site_link'] ?? '',
+                'footer_copyright' => $allSettings['footer_copyright'] ?? '',
+                'footer_external_text' => $allSettings['footer_external_text'] ?? '',
+                'footer_external_link' => $allSettings['footer_external_link'] ?? '',
+            ];
+        });
         
         return response()->json([
             'success' => true,
@@ -131,6 +140,10 @@ class SettingsController extends Controller
         }
 
         SeoSetting::updateSettings($mappedData);
+        
+        // Clear cache when settings are updated
+        Cache::forget('seo_settings');
+        Cache::forget('company_settings');
 
         return response()->json([
             'success' => true,

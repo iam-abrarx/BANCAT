@@ -58,26 +58,24 @@ Route::prefix('v1')->group(function () {
     Route::get('/settings/seo', [SettingsController::class, 'getSeoSettings']);
     Route::get('/settings/company', [SettingsController::class, 'getCompanySettings']);
 
-    Route::post('/donations/initiate', [DonationController::class, 'initiate']);
-    // Callback route for gateway redirect (using GET usually for redirects)
     // Callback route for gateway redirect (using GET usually for redirects, POST for IPN/Webhook)
     Route::match(['get', 'post'], '/donations/callback', [DonationController::class, 'callback'])->name('api.donations.callback');
-
-    // Admin donations - temporarily public for debugging
-    Route::get('/admin/donations', [DonationController::class, 'index']);
-    Route::put('/admin/donations/{id}/approve', [DonationController::class, 'approve']);
 
     Route::post('/register', [AuthController::class, 'register']);
     Route::post('/login', [AuthController::class, 'login']);
 
-    // Volunteer Route
-    Route::post('/volunteers/apply', [VolunteerController::class, 'store']);
+    // Rate-limited public endpoints
+    Route::middleware('throttle:60,1')->group(function () {
+        // Volunteer Route
+        Route::post('/volunteers/apply', [VolunteerController::class, 'store']);
 
-    // Contact Routes
-    Route::post('/contact', [ContactController::class, 'storeContact']);
-    // Contact Routes
-    Route::post('/contact', [ContactController::class, 'storeContact']);
-    Route::post('/partnership', [PartnerApplicationController::class, 'store']); // Updated to use new controller
+        // Contact Routes
+        Route::post('/contact', [ContactController::class, 'storeContact']);
+        Route::post('/partnership', [PartnerApplicationController::class, 'store']);
+
+        // Donation Routes
+        Route::post('/donations/initiate', [DonationController::class, 'initiate']);
+    });
 
     // Protected Routes
     Route::middleware('auth:sanctum')->group(function () {
@@ -152,34 +150,27 @@ Route::prefix('v1')->group(function () {
              Route::put('/partners/{id}', [PartnerApplicationController::class, 'update']);
              Route::delete('/partners/{id}', [PartnerApplicationController::class, 'destroy']);
              Route::put('/partners/{id}/status', [PartnerApplicationController::class, 'updateStatus']);
-             Route::put('/partners/{id}', [PartnerApplicationController::class, 'update']);
-             Route::delete('/partners/{id}', [PartnerApplicationController::class, 'destroy']);
-             Route::put('/partners/{id}/status', [PartnerApplicationController::class, 'updateStatus']);
 
              // Testimonial Management
              Route::post('/testimonials', [TestimonialController::class, 'store']);
              Route::put('/testimonials/{id}', [TestimonialController::class, 'update']);
              Route::delete('/testimonials/{id}', [TestimonialController::class, 'destroy']);
 
+             // Donation Management
+             Route::get('/donations', [DonationController::class, 'index']);
+             Route::put('/donations/{id}/approve', [DonationController::class, 'approve']);
+
+             // SEO Settings Management
+             Route::put('/settings/seo', [SettingsController::class, 'updateSeoSettings']);
+             Route::put('/settings/company', [SettingsController::class, 'updateCompanySettings']);
+
              // Gallery Management
-             /*
+             Route::get('/galleries', [GalleryController::class, 'index']);
              Route::post('/galleries', [GalleryController::class, 'store']);
              Route::put('/galleries/{id}', [GalleryController::class, 'update']);
              Route::delete('/galleries/{id}', [GalleryController::class, 'destroy']);
              Route::post('/galleries/{id}/images', [GalleryController::class, 'addImages']);
              Route::delete('/galleries/{id}/images/{imageId}', [GalleryController::class, 'removeImage']);
-             */
-
-             // Donation Management (temporarily disabled - using public route for debugging)
-             // Route::put('/donations/{id}/approve', [DonationController::class, 'approve']);
-
-             // SEO Settings Management
-             Route::put('/settings/seo', [SettingsController::class, 'updateSeoSettings']);
-             Route::put('/settings/company', [SettingsController::class, 'updateCompanySettings']);
         });
     });
-
-    // Temp Public Gallery Routes
-    Route::post('/admin/galleries', [GalleryController::class, 'store']);
-    Route::get('/admin/galleries', [GalleryController::class, 'index']); 
 });
