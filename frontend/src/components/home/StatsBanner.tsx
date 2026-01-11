@@ -1,5 +1,28 @@
 import { Box, Container, Typography, Button, Grid } from '@mui/material';
 import { Link as RouterLink } from 'react-router-dom';
+import { useEffect, useRef } from 'react';
+import { animate, useInView } from 'framer-motion';
+
+const Counter = ({ from, to }: { from: number; to: number }) => {
+    const nodeRef = useRef<HTMLSpanElement>(null);
+    const inView = useInView(nodeRef, { once: true });
+
+    useEffect(() => {
+        const node = nodeRef.current;
+        if (!node || !inView) return;
+
+        const controls = animate(from, to, {
+            duration: 2.5,
+            onUpdate(value) {
+                node.textContent = Math.round(value).toLocaleString();
+            }
+        });
+
+        return () => controls.stop();
+    }, [from, to, inView]);
+
+    return <span ref={nodeRef} />;
+};
 
 export const StatsBanner = () => {
     return (
@@ -46,7 +69,7 @@ export const StatsBanner = () => {
                             mb: 2
                         }}
                     >
-                        Over 116,000
+                        Over <Counter from={0} to={116000} />
                     </Typography>
 
                     {/* Subtitle */}

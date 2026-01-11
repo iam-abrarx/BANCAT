@@ -37,21 +37,37 @@ export const menuConfig: NavItem[] = [
     {
         id: 'about',
         label: 'About',
-        type: 'dropdown',
-        items: [
-            { label: 'About Us', path: '/about' },
-            { label: 'Our Team', path: '/about/team' },
-            { label: 'Our Services', path: '/about/services' },
-            { label: 'Privary Policy', path: '/privacy-policy' },
+        type: 'mega', // Changed to mega to accommodate "Our Services" section
+        sections: [
+            {
+                title: 'Who We Are',
+                items: [
+                    { label: 'About Us', path: '/about' },
+                    { label: 'Our Team', path: '/about/team' },
+                    { label: 'Privacy Policy', path: '/privacy-policy' },
+                ],
+            },
+            {
+                title: 'Our Services',
+                items: [
+                    { label: 'Supervision', path: '/about/supervision' },
+                    { label: 'Training', path: '/about/training' },
+                    { label: 'Counselling', path: '/about/counselling' },
+                ],
+            },
         ],
     },
 
-    // 3. Support (New)
+    // 3. Support
     {
         id: 'support',
         label: 'Support',
-        type: 'link', // Treating as link for now, or dropdown if needed
-        path: '/support',
+        type: 'dropdown',
+        items: [
+            { label: 'Cancer Information', path: '/cancer-info' },
+            { label: 'Caregiver Support', path: '/support/caregiver-support' },
+            { label: 'Live Chat', path: '/support/live-chat' },
+        ],
     },
 
     // 4. Our Work
@@ -59,25 +75,29 @@ export const menuConfig: NavItem[] = [
         id: 'our-work',
         label: 'Our Work',
         type: 'mega',
-        featuredImage: {
-            src: 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=600&q=80',
-            caption: 'Transforming Care'
-        },
+
         sections: [
             {
-                title: 'Initiatives',
+                title: 'Ongoing Projects',
                 items: [
-                    { label: 'Nationwide Cancer Awareness', path: '/programs/awareness' },
-                    { label: 'Holistic Care', path: '/programs/holistic-care' },
-                    { label: 'Mental Wellness', path: '/programs/mental-wellness' },
+                    { label: 'Mosabbir Alok Nibash 1', path: '/alok-nibash' },
+                    { label: 'Mosabbir Alok Nibash 2', path: '/projects/mosabbir-alok-nibash-2' },
+                    { label: 'Alok Kantha', path: '/projects/alok-kantha' },
+                    { label: 'Alokon', path: '/projects/alokon' },
                 ],
             },
             {
-                title: 'Information & Support',
+                title: 'FlagShip Initiative',
                 items: [
-                    { label: 'All About Cancer in Bangladesh', path: '/programs/all-about-cancer-in-bangladesh' },
-                    { label: 'Patient & Caregiver Support', path: '/programs/patient-caregiver-support' },
-                    { label: '24/7 Helpline & Live Chat', path: '/programs/24-7-helpline' },
+                    { label: "Bangladesh's first cancer care village", path: '/alok-nibash' },
+                ],
+            },
+            {
+                title: 'Initiatives',
+                items: [
+                    { label: 'Holistic Support', path: '/programs/holistic-support' },
+                    { label: 'Mental Health Support', path: '/programs/mental-health-support' },
+                    { label: 'Rehabilitation', path: '/projects/rehabilitation' },
                 ],
             },
         ],
@@ -88,24 +108,20 @@ export const menuConfig: NavItem[] = [
         id: 'stories',
         label: 'Stories',
         type: 'mega',
-        featuredImage: {
-            src: 'https://images.unsplash.com/photo-1544027993-37dbfe43562a?auto=format&fit=crop&w=600&q=80',
-            caption: 'Voices of Courage'
-        },
+
         sections: [
             {
-                title: 'Story Categories',
+                title: 'Categories',
                 items: [
-                    { label: 'Impact Stories (Warriors)', path: '/stories?category=warriors' },
-                    { label: 'Patient Testimonials', path: '/stories?category=testimonials' },
-                    { label: 'Caregiver Stories', path: '/stories?category=caregivers' },
-                    { label: 'Volunteer Spotlights', path: '/stories?category=volunteers' },
+                    { label: 'Impact Stories', path: '/stories?category=impact' },
+                    { label: 'Testimonials', path: '/stories?category=testimonials' },
                 ],
             },
             {
                 title: 'Media',
                 items: [
-                    { label: 'Multimedia Gallery', path: '/gallery', description: 'Photos & Videos' },
+                    { label: 'Gallery', path: '/gallery' },
+                    { label: 'Blogs', path: '/blogs' },
                 ],
             },
         ],
@@ -116,34 +132,35 @@ export const menuConfig: NavItem[] = [
         id: 'get-involved',
         label: 'Get Involved',
         type: 'mega',
-        featuredImage: {
-            src: 'https://images.unsplash.com/photo-1559027615-cd4628902d4a?auto=format&fit=crop&w=600&q=80',
-            caption: 'Be the Change'
-        },
+
         sections: [
             {
-                title: 'Volunteer',
+                title: 'Volunteering',
                 items: [
-                    { label: 'Volunteer Opportunities', path: '/volunteer' },
-                    { label: 'Patient Support', path: '/volunteer/patient-support' },
+                    { label: 'Become a Volunteer', path: '/volunteer' },
+                    { label: 'See Stories', path: '/stories' },
                 ],
             },
             {
-                title: 'Fundraising',
+                title: 'Partnership',
                 items: [
-                    { label: 'Start Your Own Fundraiser', path: '/fundraising/start' },
-                    { label: 'Donate', path: '/donate' },
+                    { label: 'Brand Partnership', path: '/partnerships/brands' },
+                    { label: 'Join a Campaign', path: '/campaigns' },
+                    { label: 'Adopt a Patient', path: '/donate/adopt-patient' },
                 ],
             },
         ],
     },
 
-    // 7. Contact (New)
+    // 7. Contact
     {
         id: 'contact',
         label: 'Contact',
-        type: 'link',
-        path: '/contact',
+        type: 'dropdown',
+        items: [
+            { label: 'Contact Us', path: '/contact' },
+            { label: 'FAQ', path: '/faq' },
+        ],
     },
 ];
 

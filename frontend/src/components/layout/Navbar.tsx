@@ -7,7 +7,7 @@ import { LanguageToggle } from '../common/LanguageToggle';
 import { MobileDrawer } from './MobileDrawer';
 import { MegaMenu } from './MegaMenu';
 import { DropdownMenu } from './DropdownMenu';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { menuConfig } from './menuConfig';
 import { TopBar } from './TopBar';
 
@@ -44,6 +44,7 @@ export const Navbar = () => {
     // Menu state
     const [activeMenu, setActiveMenu] = useState<string | null>(null);
     const [menuAnchors, setMenuAnchors] = useState<Record<string, HTMLElement | null>>({});
+    const closeTimerRef = useRef<NodeJS.Timeout | null>(null);
 
     const handleLogout = () => {
         logout();
@@ -51,12 +52,25 @@ export const Navbar = () => {
     };
 
     const handleMenuOpen = (menuId: string, event: React.MouseEvent<HTMLElement>) => {
+        if (closeTimerRef.current) {
+            clearTimeout(closeTimerRef.current);
+            closeTimerRef.current = null;
+        }
         setMenuAnchors(prev => ({ ...prev, [menuId]: event.currentTarget }));
         setActiveMenu(menuId);
     };
 
     const handleMenuClose = () => {
-        setActiveMenu(null);
+        closeTimerRef.current = setTimeout(() => {
+            setActiveMenu(null);
+        }, 150);
+    };
+
+    const handleMouseEnter = () => {
+        if (closeTimerRef.current) {
+            clearTimeout(closeTimerRef.current);
+            closeTimerRef.current = null;
+        }
     };
 
     return (
@@ -131,11 +145,13 @@ export const Navbar = () => {
                                             );
                                         }
 
-                                        // Dropdown or Mega menu
                                         return (
                                             <Box
                                                 key={item.id}
-                                                onMouseEnter={(e) => handleMenuOpen(item.id, e)}
+                                                onMouseEnter={(e) => {
+                                                    handleMouseEnter();
+                                                    handleMenuOpen(item.id, e);
+                                                }}
                                                 onMouseLeave={handleMenuClose}
                                                 sx={{ position: 'relative' }}
                                             >
@@ -161,10 +177,10 @@ export const Navbar = () => {
                                                     <DropdownMenu
                                                         items={item.items}
                                                         anchorEl={menuAnchors[item.id] || null}
-                                                        open={isActive}
+                                                        open={isActive && !!menuAnchors[item.id]}
                                                         onClose={handleMenuClose}
-                                                        onMouseEnter={() => { }}
-                                                        onMouseLeave={() => { }}
+                                                        onMouseEnter={handleMouseEnter}
+                                                        onMouseLeave={handleMenuClose}
                                                     />
                                                 )}
 
@@ -172,10 +188,10 @@ export const Navbar = () => {
                                                     <MegaMenu
                                                         sections={item.sections}
                                                         anchorEl={menuAnchors[item.id] || null}
-                                                        open={isActive}
+                                                        open={isActive && !!menuAnchors[item.id]}
                                                         onClose={handleMenuClose}
-                                                        onMouseEnter={() => { }}
-                                                        onMouseLeave={() => { }}
+                                                        onMouseEnter={handleMouseEnter}
+                                                        onMouseLeave={handleMenuClose}
                                                         featuredImage={item.featuredImage}
                                                     />
                                                 )}

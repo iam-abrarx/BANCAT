@@ -5,7 +5,8 @@ import { CampaignBanner } from '../components/campaigns/CampaignBanner';
 
 
 import { StatsBanner } from '../components/home/StatsBanner';
-import { ParallaxStory } from '../components/home/ParallaxStory';
+// import { ParallaxStory } from '../components/home/ParallaxStory'; // Removed in favor of Carousel
+import { PatientStoriesCarousel } from '../components/home/PatientStoriesCarousel';
 import { ImpactCards } from '../components/home/ImpactCards';
 import JoinUs from '../components/home/JoinUs';
 import { AboutUs } from '../components/home/AboutUs';
@@ -23,8 +24,9 @@ export const Home = () => {
         }}>
             <Box><Hero /></Box>
             <Box sx={{ scrollSnapAlign: 'none !important' }}><StatsBanner /></Box>
-            <Box><ParallaxStory /></Box>
+            {/* <Box><ParallaxStory /></Box> */}
             <Box><ImpactCards /></Box>
+            <Box><PatientStoriesCarousel /></Box>
             <Box><AboutUs /></Box>
             <Box sx={{ scrollSnapAlign: 'none !important' }}><Partners /></Box>
             <Box><VideoSection /></Box>

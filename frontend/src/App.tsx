@@ -78,10 +78,19 @@ function App() {
           <Route path="/terms-of-use" element={<DynamicPage slug="terms-of-use" />} />
           <Route path="/refund-policy" element={<DynamicPage slug="refund-policy" />} />
 
+
           {/* Generic Routes for new sections */}
+          <Route path="/about/:slug" element={<DynamicPage />} />
           <Route path="/initiatives/:slug" element={<DynamicPage />} />
           <Route path="/support/:slug" element={<DynamicPage />} />
           <Route path="/programs/:slug" element={<DynamicPage />} />
+          <Route path="/projects/:slug" element={<DynamicPage />} />
+          <Route path="/partnerships/:slug" element={<DynamicPage />} />
+          <Route path="/donate/:slug" element={<DynamicPage />} />
+
+          <Route path="/media" element={<DynamicPage slug="media" />} />
+          <Route path="/gallery" element={<DynamicPage slug="gallery" />} />
+          <Route path="/blogs" element={<DynamicPage slug="blogs" />} />
 
           {/* Catch-all route should be last if it existed, but we have specific ones */}
         </Routes>

@@ -1,20 +1,24 @@
-import { Box, Button, Container, Grid, TextField, Typography } from '@mui/material';
-import { Favorite } from '@mui/icons-material';
+import { Box, Button, Container, Grid, TextField, Typography, ButtonGroup } from '@mui/material';
+import { Favorite, CreditCard } from '@mui/icons-material';
+import { useState } from 'react';
 import heroImage from '../../assets/hero-new.jpg';
 
 export const Hero = () => {
+    const [amount, setAmount] = useState<string>('');
+
+    const handlePresetClick = (value: string) => {
+        setAmount(value);
+    };
+
     return (
         <Box
             sx={{
                 position: 'relative',
                 width: '100%',
-                minHeight: '115vh', // Increased slightly from 100vh
+                minHeight: '115vh',
                 display: 'flex',
                 alignItems: 'center',
                 overflow: 'hidden',
-                // Header is now fixed/overlay, so we start at top naturally
-                // but might need padding to ensure content isn't covered if it starts too high.
-                // However, design shows full screen hero with content centered.
                 pt: { xs: '180px', md: '250px' },
                 pb: { xs: 8, md: 12 }
             }}
@@ -29,7 +33,7 @@ export const Hero = () => {
                     bottom: 0,
                     backgroundImage: `url(${heroImage})`,
                     backgroundSize: 'cover',
-                    backgroundPosition: 'top right', // Aligned right as requested
+                    backgroundPosition: 'top right',
                     zIndex: -2,
                 }}
             />
@@ -42,9 +46,7 @@ export const Hero = () => {
                     left: 0,
                     right: 0,
                     bottom: 0,
-
-
-                    opacity: 0.93, // Intensified overlay
+                    background: 'linear-gradient(to right, rgba(88, 45, 130, 0.95) 0%, rgba(88, 45, 130, 0.8) 50%, rgba(88, 45, 130, 0.4) 100%)', // Gradient overlay
                     zIndex: -1,
                 }}
             />
@@ -57,14 +59,15 @@ export const Hero = () => {
                             <Typography
                                 variant="h1"
                                 sx={{
-                                    fontWeight: 600,
-                                    fontFamily: "'Montserrat', sans-serif", // Updated to Montserrat
+                                    fontWeight: 700,
+                                    fontFamily: "'Montserrat', sans-serif",
                                     color: 'white',
-                                    lineHeight: 0.9,
-                                    fontSize: { xs: '2.5rem', md: '3.5rem', lg: '4.2rem' }, // Reduced font size
+                                    lineHeight: 0.95,
+                                    fontSize: { xs: '2.5rem', md: '3.5rem', lg: '4.5rem' },
                                     textTransform: 'uppercase',
-                                    letterSpacing: '-2px',
-                                    mb: 4
+                                    letterSpacing: '-1px',
+                                    mb: 4,
+                                    textShadow: '0 4px 20px rgba(0,0,0,0.3)'
                                 }}
                             >
                                 FIGHTING<br />
@@ -74,17 +77,16 @@ export const Hero = () => {
                             <Typography
                                 variant="h6"
                                 sx={{
-                                    color: 'rgba(255,255,255,0.9)',
-                                    fontFamily: "'Montserrat', sans-serif", // Updated to Montserrat
+                                    color: 'rgba(255,255,255,0.95)',
+                                    fontFamily: "'Montserrat', sans-serif",
                                     mb: 5,
                                     maxWidth: '550px',
-                                    fontWeight: 600,
-                                    fontSize: { xs: '0.85rem', md: '0.95rem' }, // Reduced secondary font size
+                                    fontWeight: 500,
+                                    fontSize: { xs: '1rem', md: '1.1rem' },
                                     lineHeight: 1.6
                                 }}
                             >
-                                Join BANCAT in our mission<br />
-                                to support cancer patients with hope, care, and financial aid.
+                                Join BANCAT in our mission to support cancer patients with hope, care, and financial aid. Your contribution can save a life today.
                             </Typography>
                             <Button
                                 variant="outlined"
@@ -110,240 +112,179 @@ export const Hero = () => {
                         </Box>
                     </Grid>
 
-
-
                     {/* Right Content - Donation Blurp */}
                     <Grid item xs={12} md={5} lg={6} sx={{ display: 'flex', justifyContent: 'center', mt: { xs: 4, md: 0 }, position: 'relative' }}>
                         <Box
                             sx={{
                                 width: '100%',
-                                maxWidth: '520px', // Increased size
+                                maxWidth: '500px',
                                 position: 'relative',
-                                minHeight: '620px', // Increased size
                                 display: 'flex',
                                 alignItems: 'center',
                                 justifyContent: 'center'
                             }}
                         >
-
-                            {/* Organic Blob Background */}
-                            <Box
-                                component="svg"
-                                viewBox="0 0 583.38 546.96"
-                                sx={{
-                                    position: 'absolute',
-                                    top: '50%',
-                                    left: '50%',
-                                    transform: 'translate(-50%, -50%)',
-                                    width: '110%',
-                                    height: '110%',
-                                    zIndex: 0,
-                                    overflow: 'visible', // Prevent straight-edge clipping
-                                    filter: 'drop-shadow(0 20px 30px rgba(0,0,0,0.3)) brightness(0.6) saturate(1.4)',
-                                    '& path': { fill: 'url(#liquidGradient)' }
-                                }}
-                            >
-                                <defs>
-                                    <radialGradient id="liquidGradient" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
-                                        <stop offset="0%" stopColor="#4b20dd">
-                                            <animate attributeName="stop-color" values="#4b20dd; #6035e8; #4b20dd" dur="8s" repeatCount="indefinite" />
-                                        </stop>
-                                        <stop offset="100%" stopColor="#AB47BC">
-                                            <animate attributeName="stop-color" values="#AB47BC; #8E24AA; #AB47BC" dur="8s" repeatCount="indefinite" />
-                                        </stop>
-                                    </radialGradient>
-                                </defs>
-                                {/* User-specified organic shape - Static with subtle breathing animation */}
-                                <g transform-origin="center">
-                                    <animateTransform
-                                        attributeName="transform"
-                                        type="scale"
-                                        values="1; 1.02; 1"
-                                        dur="10s"
-                                        repeatCount="indefinite"
-                                        additive="sum"
-                                    />
-                                    <animateTransform
-                                        attributeName="transform"
-                                        type="rotate"
-                                        values="-1 291 273; 1 291 273; -1 291 273"
-                                        dur="12s"
-                                        repeatCount="indefinite"
-                                        additive="sum"
-                                    />
-                                    <path
-                                        d="M129.56,221.22c-285.22,169-33.58,406.16,126.56,298.83,102.34-68.59,211.81-41.43,288.58-119.44,76.76-78,24.39-200.24-28.85-249.77C462.61,101.32,487.52,13.66,363.71.53c-109.73-11.64-150.82,171.31-234.15,220.69Z"
-                                        fill="url(#liquidGradient)"
-                                    />
-                                </g>
-                            </Box>
-
-                            {/* Form Content - Optimized to match reference */}
+                            {/* Glassmorphism Card */}
                             <Box sx={{
                                 position: 'relative',
                                 zIndex: 1,
                                 width: '100%',
-                                p: { xs: 4, md: 11 },
+                                p: { xs: 4, md: 5 },
                                 display: 'flex',
                                 flexDirection: 'column',
                                 alignItems: 'center',
-                                gap: 2.5
+                                gap: 2.5,
+                                background: 'rgba(255, 255, 255, 0.1)',
+                                backdropFilter: 'blur(15px)',
+                                borderRadius: '30px',
+                                border: '1px solid rgba(255, 255, 255, 0.2)',
+                                boxShadow: '0 8px 32px 0 rgba(31, 38, 135, 0.37)'
                             }}>
-
-                                {/* Donation Type */}
-                                <Box sx={{ textAlign: 'right', width: '100%' }}>
-                                    <Typography
-                                        variant="caption"
-                                        sx={{
-                                            display: 'block',
-                                            color: 'rgba(255,255,255,0.85)',
-                                            fontSize: '0.75rem',
-                                            fontWeight: 500,
-                                            fontFamily: 'Montserrat',
-                                            mb: 1,
-                                            letterSpacing: '0.5px'
-                                        }}
-                                    >
-                                        Donation Type
+                                <Box sx={{ width: '100%', textAlign: 'center', mb: 1 }}>
+                                    <Typography variant="h5" sx={{ color: 'white', fontWeight: 700, fontFamily: 'Montserrat', mb: 0.5 }}>
+                                        Quick Donate
                                     </Typography>
-                                    <Typography
-                                        sx={{
-                                            color: 'white',
-                                            fontWeight: 700,
-                                            fontSize: '1.5rem',
-                                            fontFamily: 'Montserrat',
-                                            textAlign: 'right'
-                                        }}
-                                    >
-                                        Jakat fund
+                                    <Typography variant="body2" sx={{ color: 'rgba(255,255,255,0.8)', fontFamily: 'Montserrat' }}>
+                                        Make a difference instantly
                                     </Typography>
                                 </Box>
 
-                                {/* Name */}
+                                {/* Preset Amounts */}
+                                <ButtonGroup variant="outlined" sx={{ width: '100%', justifyContent: 'center', mb: 1 }}>
+                                    {['500', '1000', '2000'].map((amt) => (
+                                        <Button
+                                            key={amt}
+                                            onClick={() => handlePresetClick(amt)}
+                                            sx={{
+                                                color: 'white',
+                                                borderColor: 'rgba(255,255,255,0.4)',
+                                                fontFamily: 'Montserrat',
+                                                fontWeight: 600,
+                                                flexGrow: 1,
+                                                '&:hover': {
+                                                    borderColor: 'white',
+                                                    bgcolor: 'rgba(255,255,255,0.1)'
+                                                },
+                                                bgcolor: amount === amt ? 'rgba(255,255,255,0.2)' : 'transparent'
+                                            }}
+                                        >
+                                            ৳{amt}
+                                        </Button>
+                                    ))}
+                                    <Button
+                                        onClick={() => setAmount('')} // Clear to allow custom
+                                        sx={{
+                                            color: 'white',
+                                            borderColor: 'rgba(255,255,255,0.4)',
+                                            fontFamily: 'Montserrat',
+                                            fontWeight: 600,
+                                            flexGrow: 1,
+                                            '&:hover': {
+                                                borderColor: 'white',
+                                                bgcolor: 'rgba(255,255,255,0.1)'
+                                            },
+                                            bgcolor: (!['500', '1000', '2000'].includes(amount) && amount !== '') ? 'rgba(255,255,255,0.2)' : 'transparent'
+                                        }}
+                                    >
+                                        Custom
+                                    </Button>
+                                </ButtonGroup>
+
+                                {/* Inputs */}
                                 <TextField
                                     fullWidth
-                                    placeholder="Name"
-                                    variant="standard"
+                                    placeholder="Amount (BDT)"
+                                    value={amount}
+                                    onChange={(e) => setAmount(e.target.value)}
+                                    variant="outlined"
+                                    type="number"
                                     sx={{
-                                        maxWidth: '300px',
-                                        input: {
-                                            '::placeholder': {
-                                                color: 'rgba(255,255,255,0.75)',
-                                                opacity: 1,
-                                                fontWeight: 400,
-                                                textAlign: 'right',
-                                                fontFamily: 'Montserrat'
-                                            }
-                                        }
-                                    }}
-                                    InputProps={{
-                                        disableUnderline: true,
-                                        sx: {
+                                        '& .MuiOutlinedInput-root': {
+                                            borderRadius: '15px',
+                                            bgcolor: 'rgba(255,255,255,0.1)',
                                             color: 'white',
-                                            fontSize: '0.95rem',
-                                            borderBottom: '1.5px solid rgba(255,255,255,0.4)',
-                                            py: 0.8,
-                                            px: 1,
-                                            fontWeight: 400,
-                                            fontFamily: 'Montserrat',
-                                            textAlign: 'right',
-                                            '& input': { textAlign: 'right' }
-                                        }
+                                            '& fieldset': { borderColor: 'rgba(255,255,255,0.3)' },
+                                            '&:hover fieldset': { borderColor: 'white' },
+                                            '&.Mui-focused fieldset': { borderColor: '#F39C12' },
+                                        },
+                                        input: { '::placeholder': { color: 'rgba(255,255,255,0.6)' } }
                                     }}
                                 />
 
-                                {/* Phone */}
+                                <TextField
+                                    fullWidth
+                                    placeholder="Your Name (Optional)"
+                                    variant="outlined"
+                                    sx={{
+                                        '& .MuiOutlinedInput-root': {
+                                            borderRadius: '15px',
+                                            bgcolor: 'rgba(255,255,255,0.1)',
+                                            color: 'white',
+                                            '& fieldset': { borderColor: 'rgba(255,255,255,0.3)' },
+                                            '&:hover fieldset': { borderColor: 'white' },
+                                            '&.Mui-focused fieldset': { borderColor: '#F39C12' },
+                                        },
+                                        input: { '::placeholder': { color: 'rgba(255,255,255,0.6)' } }
+                                    }}
+                                />
+
                                 <TextField
                                     fullWidth
                                     placeholder="Phone Number"
-                                    variant="standard"
+                                    variant="outlined"
                                     sx={{
-                                        maxWidth: '300px',
-                                        input: {
-                                            '::placeholder': {
-                                                color: 'rgba(255,255,255,0.75)',
-                                                opacity: 1,
-                                                fontWeight: 400,
-                                                textAlign: 'right',
-                                                fontFamily: 'Montserrat'
-                                            }
-                                        }
-                                    }}
-                                    InputProps={{
-                                        disableUnderline: true,
-                                        sx: {
+                                        '& .MuiOutlinedInput-root': {
+                                            borderRadius: '15px',
+                                            bgcolor: 'rgba(255,255,255,0.1)',
                                             color: 'white',
-                                            fontSize: '0.95rem',
-                                            borderBottom: '1.5px solid rgba(255,255,255,0.4)',
-                                            py: 0.8,
-                                            px: 1,
-                                            fontWeight: 400,
-                                            fontFamily: 'Montserrat',
-                                            textAlign: 'right',
-                                            '& input': { textAlign: 'right' }
-                                        }
-                                    }}
-                                />
-
-                                {/* Amount */}
-                                <TextField
-                                    fullWidth
-                                    placeholder="Amount"
-                                    variant="standard"
-                                    sx={{
-                                        maxWidth: '300px',
-                                        input: {
-                                            '::placeholder': {
-                                                color: 'rgba(255,255,255,0.75)',
-                                                opacity: 1,
-                                                fontWeight: 400,
-                                                textAlign: 'right',
-                                                fontFamily: 'Montserrat'
-                                            }
-                                        }
-                                    }}
-                                    InputProps={{
-                                        disableUnderline: true,
-                                        sx: {
-                                            color: 'white',
-                                            fontSize: '0.95rem',
-                                            borderBottom: '1.5px solid rgba(255,255,255,0.4)',
-                                            py: 0.8,
-                                            px: 1,
-                                            fontWeight: 400,
-                                            fontFamily: 'Montserrat',
-                                            textAlign: 'right',
-                                            '& input': { textAlign: 'right' }
-                                        }
+                                            '& fieldset': { borderColor: 'rgba(255,255,255,0.3)' },
+                                            '&:hover fieldset': { borderColor: 'white' },
+                                            '&.Mui-focused fieldset': { borderColor: '#F39C12' },
+                                        },
+                                        input: { '::placeholder': { color: 'rgba(255,255,255,0.6)' } }
                                     }}
                                 />
 
                                 {/* Donate Button */}
                                 <Button
+                                    fullWidth
                                     variant="contained"
                                     endIcon={<Favorite sx={{ fontSize: 18 }} />}
                                     sx={{
-                                        mt: 1.5,
-                                        maxWidth: '200px',
-                                        background: '#F39C12 !important',
-                                        color: 'white',
+                                        mt: 1,
+                                        background: 'linear-gradient(45deg, #F39C12 30%, #F7DC6F 90%)',
+                                        color: '#333',
                                         borderRadius: '50px',
-                                        py: 1,
-                                        px: 4,
-                                        fontWeight: 700,
+                                        py: 1.5,
+                                        fontWeight: 800,
                                         fontFamily: 'Montserrat',
                                         textTransform: 'none',
-                                        fontSize: '1rem',
-                                        boxShadow: '0 4px 15px rgba(243, 156, 18, 0.3)',
+                                        fontSize: '1.1rem',
+                                        boxShadow: '0 4px 15px rgba(243, 156, 18, 0.4)',
                                         '&:hover': {
-                                            background: '#d68910 !important',
-                                            boxShadow: '0 6px 20px rgba(214, 137, 16, 0.4)'
+                                            background: 'linear-gradient(45deg, #D68910 30%, #F1C40F 90%)',
+                                            boxShadow: '0 6px 20px rgba(214, 137, 16, 0.5)'
                                         }
                                     }}
                                 >
-                                    Donate
+                                    Donate Now
                                 </Button>
 
+                                {/* Payment Icons Placeholder */}
+                                <Box sx={{ mt: 2, display: 'flex', gap: 2, justifyContent: 'center', opacity: 0.8 }}>
+                                    <Box sx={{ color: 'white', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                                        <CreditCard fontSize="small" />
+                                        <Typography variant="caption" sx={{ fontSize: '0.6rem' }}>Cards</Typography>
+                                    </Box>
+                                    <Box sx={{ color: 'white', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                                        <Box component="span" sx={{ fontWeight: 900, fontSize: '1.2rem', lineHeight: 1 }}>b</Box>
+                                        <Typography variant="caption" sx={{ fontSize: '0.6rem' }}>bKash</Typography>
+                                    </Box>
+                                    <Box sx={{ color: 'white', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                                        <Box component="span" sx={{ fontWeight: 900, fontSize: '1.2rem', lineHeight: 1, color: '#F15A24' }}>N</Box>
+                                        <Typography variant="caption" sx={{ fontSize: '0.6rem' }}>Nagad</Typography>
+                                    </Box>
+                                </Box>
                             </Box>
                         </Box>
                     </Grid>
