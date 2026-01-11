@@ -14,33 +14,30 @@ import 'swiper/css/effect-fade';
 const stories = [
     {
         id: 1,
-        name: "Rabbi's Journey",
-        age: "3 Years Old",
-        condition: "Stage 3 Blood Cancer",
-        image: "/story-rabbi.jpg", // Placeholder, will fallback or need asset
-        quote: "BANCAT stepped in to help cover critical support when we needed it most.",
-        raised: 125000,
+        name: "Adopt a patient",
+        category: "Patient Sponsorship",
+        image: "/story-placeholder.jpg",
+        quote: "You can directly fund different medical expenses for critical care through targeted donations starting from a small amount. Mid to long-term adoption options are also available.",
+        raised: 150000,
         goal: 500000
     },
     {
         id: 2,
-        name: "Ayesha's Fight",
-        age: "8 Years Old",
-        condition: "Leukemia",
-        image: "/story-ayesha.jpg",
-        quote: "I want to go back to school and play with my friends. BANCAT is helping me get there.",
-        raised: 80000,
-        goal: 300000
+        name: "Fight Cancer in this Ramadan",
+        category: "Zakat Fund",
+        image: "/story-placeholder.jpg",
+        quote: "Fund life-saving treatments for underprivileged patients this Ramadan. Your Zakat and Sadaqa provide essential medical care and hope.",
+        raised: 850000,
+        goal: 2000000
     },
     {
         id: 3,
-        name: "Kamal's Hope",
-        age: "45 Years Old",
-        condition: "Lung Cancer",
-        image: "/story-kamal.jpg",
-        quote: "The counseling support gave me the strength to keep fighting for my family.",
-        raised: 45000,
-        goal: 200000
+        name: "Save a Mother",
+        category: "Breast Cancer Awareness",
+        image: "/story-placeholder.jpg",
+        quote: "Support “Maa Bachao, Bachao Desh” to help early detection programs for breast cancer. Your contribution provides life-saving screenings and essential medical support.",
+        raised: 320000,
+        goal: 1000000
     }
 ];
 
@@ -148,7 +145,7 @@ export const PatientStoriesCarousel = () => {
                                             {story.name}
                                         </Typography>
                                         <Typography variant="body2" sx={{ color: 'rgba(255,255,255,0.9)' }}>
-                                            {story.condition}
+                                            {story.category}
                                         </Typography>
                                     </Box>
                                 </Box>

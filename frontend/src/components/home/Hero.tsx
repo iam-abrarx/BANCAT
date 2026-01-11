@@ -5,6 +5,7 @@ import heroImage from '../../assets/hero-new.jpg';
 
 export const Hero = () => {
     const [amount, setAmount] = useState<string>('');
+    const [donationType, setDonationType] = useState<string>('General Fund');
 
     const handlePresetClick = (value: string) => {
         setAmount(value);
@@ -149,6 +150,37 @@ export const Hero = () => {
                                     </Typography>
                                 </Box>
 
+                                {/* Donation Type Selector */}
+                                <Box sx={{ width: '100%' }}>
+                                    <TextField
+                                        select
+                                        fullWidth
+                                        value={donationType}
+                                        onChange={(e) => setDonationType(e.target.value)}
+                                        SelectProps={{
+                                            native: true,
+                                        }}
+                                        variant="outlined"
+                                        sx={{
+                                            '& .MuiOutlinedInput-root': {
+                                                borderRadius: '15px',
+                                                bgcolor: 'rgba(255,255,255,0.15)',
+                                                color: 'white',
+                                                '& fieldset': { borderColor: 'rgba(255,255,255,0.3)' },
+                                                '&:hover fieldset': { borderColor: 'white' },
+                                                '&.Mui-focused fieldset': { borderColor: '#F39C12' },
+                                                '& svg': { color: 'white' }
+                                            }
+                                        }}
+                                    >
+                                        <option value="General Fund" style={{ color: 'black' }}>General Fund</option>
+                                        <option value="Zakat Fund" style={{ color: 'black' }}>Zakat Fund</option>
+                                        <option value="Sadaqah" style={{ color: 'black' }}>Sadaqah</option>
+                                        <option value="Emergency Relief" style={{ color: 'black' }}>Emergency Relief</option>
+                                        <option value="Meal Program" style={{ color: 'black' }}>Meal Program</option>
+                                    </TextField>
+                                </Box>
+
                                 {/* Preset Amounts */}
                                 <ButtonGroup variant="outlined" sx={{ width: '100%', justifyContent: 'center', mb: 1 }}>
                                     {['500', '1000', '2000'].map((amt) => (
@@ -284,6 +316,36 @@ export const Hero = () => {
                                         <Box component="span" sx={{ fontWeight: 900, fontSize: '1.2rem', lineHeight: 1, color: '#F15A24' }}>N</Box>
                                         <Typography variant="caption" sx={{ fontSize: '0.6rem' }}>Nagad</Typography>
                                     </Box>
+                                </Box>
+
+                                {/* FAQ Link */}
+                                <Box sx={{ mt: 1, textAlign: 'center' }}>
+                                    <Button
+                                        href="/faq"
+                                        startIcon={<Box component="span" sx={{
+                                            border: '1px solid currentColor',
+                                            borderRadius: '50%',
+                                            width: 16,
+                                            height: 16,
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            justifyContent: 'center',
+                                            fontSize: '10px'
+                                        }}>?</Box>}
+                                        sx={{
+                                            color: 'rgba(255,255,255,0.7)',
+                                            textTransform: 'none',
+                                            fontSize: '0.875rem',
+                                            fontFamily: 'Montserrat',
+                                            '&:hover': {
+                                                color: 'white',
+                                                bgcolor: 'transparent',
+                                                textDecoration: 'underline'
+                                            }
+                                        }}
+                                    >
+                                        Donation FAQ
+                                    </Button>
                                 </Box>
                             </Box>
                         </Box>

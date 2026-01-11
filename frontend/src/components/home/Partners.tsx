@@ -1,4 +1,4 @@
-import { Box, Container } from '@mui/material';
+import { Box, Container, Typography } from '@mui/material';
 
 // Import partner logos
 import logo1 from '../../assets/partners/Asset 11@5x.png';
@@ -12,8 +12,27 @@ const partners = [logo1, logo2, logo3, logo4, logo5, logo6];
 
 export const Partners = () => {
     return (
-        <Box sx={{ bgcolor: 'white', py: 6, borderBottom: '1px solid #eee' }}>
+        <Box sx={{ bgcolor: 'white', py: 8 }}>
             <Container maxWidth="lg">
+                {/* Our Partners Heading */}
+                <Box sx={{ textAlign: 'center', mb: 6 }}>
+                    <Typography
+                        variant="h3"
+                        sx={{
+                            fontWeight: 700,
+                            fontFamily: "'Montserrat', sans-serif",
+                            color: '#333',
+                            mb: 1
+                        }}
+                    >
+                        Our Partners
+                    </Typography>
+                    <Typography variant="body1" color="text.secondary">
+                        Trusted collaborators making a difference together
+                    </Typography>
+                </Box>
+
+                {/* Partner Logos */}
                 <Box
                     sx={{
                         display: 'flex',
@@ -30,11 +49,11 @@ export const Partners = () => {
                             src={logo}
                             alt={`Partner ${index + 1}`}
                             sx={{
-                                height: index === 1 ? { xs: 30, md: 45 } : { xs: 40, md: 60 }, // Keep 2nd logo same, increase others
+                                height: index === 1 ? { xs: 30, md: 45 } : { xs: 40, md: 60 },
                                 width: 'auto',
                                 objectFit: 'contain',
-                                filter: 'none', // True color
-                                opacity: 1,     // Full opacity
+                                filter: 'none',
+                                opacity: 1,
                                 transition: 'all 0.3s',
                                 '&:hover': {
                                     transform: 'scale(1.1)'

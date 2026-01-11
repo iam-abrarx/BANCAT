@@ -3,7 +3,7 @@ import react from '@vitejs/plugin-react';
 import { resolve } from 'path';
 
 export default defineConfig(({ command }) => ({
-  base: '/admin/',
+  base: '/BANCAT/admin/',
   build: {
     outDir: 'dist',
     emptyOutDir: true,
@@ -18,6 +18,13 @@ export default defineConfig(({ command }) => ({
     port: 5174,
     host: true, // Listen on all addresses
     allowedHosts: ['.ngrok-free.app', '.loca.lt', '.trycloudflare.com'], // Allow tunnel services
+    proxy: {
+      '/api': {
+        target: 'http://localhost:8000',
+        changeOrigin: true,
+        secure: false,
+      },
+    },
   },
   test: {
     globals: true,
