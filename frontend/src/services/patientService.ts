@@ -14,7 +14,7 @@ const api = axios.create({
 });
 
 export const patientService = {
-    getAll: async (params?: { featured?: boolean; cancer_type?: string; page?: number; district?: string; search?: string; sort?: string }) => {
+    getAll: async (params?: { featured?: boolean; cancer_type?: string; page?: number; per_page?: number; district?: string; search?: string; sort?: string }) => {
         const response = await api.get<{ data: Patient[], links: any, meta: any }>('/patients', { params });
         return response.data;
     },

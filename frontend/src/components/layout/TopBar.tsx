@@ -79,7 +79,7 @@ export const TopBar = () => {
                         <Button
                             variant="contained"
                             component={RouterLink}
-                            to="/support-patient"
+                            to="/patients"
                             sx={{
                                 fontFamily: 'Montserrat',
                                 background: '#914aaf !important',

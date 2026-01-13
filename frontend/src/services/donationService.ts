@@ -14,12 +14,14 @@ export interface DonationInitData {
     amount: number;
     payment_method: string;
     donor_name: string;
-    donor_email: string;
+    donor_email?: string;
     donor_phone?: string;
     patient_id?: number;
     campaign_id?: number;
+    program_id?: number;
     message?: string;
-    donation_type?: 'general' | 'campaign' | 'patient';
+    category: string;
+    donation_type?: 'one_time' | 'monthly';
 }
 
 export interface DonationResponse {

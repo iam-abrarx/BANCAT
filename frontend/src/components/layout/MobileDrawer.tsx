@@ -163,8 +163,16 @@ export const MobileDrawer = ({ open, onClose }: MobileDrawerProps) => {
                 justifyContent: 'space-between',
                 borderBottom: '1px solid rgba(0,0,0,0.08)',
             }}>
-                <Typography variant="h6" color="primary.main" fontWeight="bold">
-                    BANcat
+                <Typography
+                    variant="h6"
+                    sx={{
+                        color: '#6A1B9A',
+                        fontWeight: 800,
+                        fontFamily: 'Montserrat',
+                        letterSpacing: '1px'
+                    }}
+                >
+                    BANCAT
                 </Typography>
                 <IconButton onClick={onClose}>
                     <CloseIcon />
@@ -176,14 +184,20 @@ export const MobileDrawer = ({ open, onClose }: MobileDrawerProps) => {
                 <Button
                     fullWidth
                     variant="contained"
-                    color="primary"
                     size="large"
                     onClick={handleDonateClick}
                     sx={{
                         py: 1.5,
-                        fontWeight: 600,
-                        background: 'linear-gradient(45deg, #1976D2 30%, #42A5F5 90%)',
-                        boxShadow: '0 3px 15px rgba(25, 118, 210, 0.3)',
+                        fontWeight: 700,
+                        fontFamily: 'Montserrat',
+                        bgcolor: '#f5aa21 !important',
+                        color: '#fff',
+                        borderRadius: '12px',
+                        textTransform: 'none',
+                        boxShadow: '0 4px 14px rgba(245, 170, 33, 0.3)',
+                        '&:hover': {
+                            bgcolor: '#d48f1c !important',
+                        }
                     }}
                 >
                     {t('nav.donate', 'Donate Now')}

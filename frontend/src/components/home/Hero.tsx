@@ -1,14 +1,48 @@
 import { Box, Button, Container, Grid, TextField, Typography, ButtonGroup } from '@mui/material';
 import { Favorite, CreditCard } from '@mui/icons-material';
 import { useState } from 'react';
+import { useMutation } from '@tanstack/react-query';
+import { donationService } from '../../services/donationService';
 import heroImage from '../../assets/hero-new.jpg';
 
 export const Hero = () => {
     const [amount, setAmount] = useState<string>('');
-    const [donationType, setDonationType] = useState<string>('General Fund');
+    const [donationType, setDonationType] = useState<string>('general');
+    const [donorName, setDonorName] = useState<string>('');
+    const [donorPhone, setDonorPhone] = useState<string>('');
+    const [error, setError] = useState<string>('');
+
+    const donationMutation = useMutation({
+        mutationFn: donationService.initiate,
+        onSuccess: (data) => {
+            window.location.href = data.payment_url;
+        },
+        onError: (err: any) => {
+            setError(err.response?.data?.message || 'Failed to process donation');
+        }
+    });
 
     const handlePresetClick = (value: string) => {
         setAmount(value);
+    };
+
+    const handleDonate = (e: React.FormEvent) => {
+        e.preventDefault();
+        setError('');
+
+        if (!amount || Number(amount) < 10) {
+            setError('Please enter a valid amount (min ৳10)');
+            return;
+        }
+
+        donationMutation.mutate({
+            amount: Number(amount),
+            payment_method: 'bkash', // Default for quick donate
+            donor_name: donorName || 'Anonymous',
+            donor_phone: donorPhone || undefined,
+            category: donationType,
+            donation_type: 'one_time',
+        });
     };
 
     return (
@@ -56,18 +90,18 @@ export const Hero = () => {
                 <Grid container spacing={4} alignItems="center">
                     {/* Left Content */}
                     <Grid item xs={12} md={7} lg={6}>
-                        <Box sx={{ pl: { md: '10%', lg: '15%' } }}>
+                        <Box sx={{ pl: { xs: 0, md: '10%', lg: '15%' }, textAlign: { xs: 'center', md: 'left' } }}>
                             <Typography
                                 variant="h1"
                                 sx={{
                                     fontWeight: 700,
                                     fontFamily: "'Montserrat', sans-serif",
                                     color: 'white',
-                                    lineHeight: 0.95,
-                                    fontSize: { xs: '2.5rem', md: '3.5rem', lg: '4.5rem' },
+                                    lineHeight: { xs: 1.1, md: 0.95 },
+                                    fontSize: { xs: '2.5rem', sm: '3.5rem', md: '3.5rem', lg: '4.5rem' },
                                     textTransform: 'uppercase',
-                                    letterSpacing: '-1px',
-                                    mb: 4,
+                                    letterSpacing: { xs: '1px', md: '-1px' },
+                                    mb: { xs: 2, md: 4 },
                                     textShadow: '0 4px 20px rgba(0,0,0,0.3)'
                                 }}
                             >
@@ -80,10 +114,11 @@ export const Hero = () => {
                                 sx={{
                                     color: 'rgba(255,255,255,0.95)',
                                     fontFamily: "'Montserrat', sans-serif",
-                                    mb: 5,
+                                    mb: { xs: 4, md: 5 },
+                                    mx: { xs: 'auto', md: 0 },
                                     maxWidth: '550px',
                                     fontWeight: 500,
-                                    fontSize: { xs: '1rem', md: '1.1rem' },
+                                    fontSize: { xs: '0.95rem', md: '1.1rem' },
                                     lineHeight: 1.6
                                 }}
                             >
@@ -173,13 +208,19 @@ export const Hero = () => {
                                             }
                                         }}
                                     >
-                                        <option value="General Fund" style={{ color: 'black' }}>General Fund</option>
-                                        <option value="Zakat Fund" style={{ color: 'black' }}>Zakat Fund</option>
-                                        <option value="Sadaqah" style={{ color: 'black' }}>Sadaqah</option>
-                                        <option value="Emergency Relief" style={{ color: 'black' }}>Emergency Relief</option>
-                                        <option value="Meal Program" style={{ color: 'black' }}>Meal Program</option>
+                                        <option value="general" style={{ color: 'black' }}>General Fund</option>
+                                        <option value="zakat" style={{ color: 'black' }}>Zakat Fund</option>
+                                        <option value="sadaqah" style={{ color: 'black' }}>Sadaqah</option>
+                                        <option value="emergency" style={{ color: 'black' }}>Emergency Relief</option>
+                                        <option value="meal" style={{ color: 'black' }}>Meal Program</option>
                                     </TextField>
                                 </Box>
+
+                                {error && (
+                                    <Typography variant="caption" sx={{ color: '#FF7675', fontWeight: 600 }}>
+                                        {error}
+                                    </Typography>
+                                )}
 
                                 {/* Preset Amounts */}
                                 <ButtonGroup variant="outlined" sx={{ width: '100%', justifyContent: 'center', mb: 1 }}>
@@ -246,6 +287,8 @@ export const Hero = () => {
                                 <TextField
                                     fullWidth
                                     placeholder="Your Name (Optional)"
+                                    value={donorName}
+                                    onChange={(e) => setDonorName(e.target.value)}
                                     variant="outlined"
                                     sx={{
                                         '& .MuiOutlinedInput-root': {
@@ -263,6 +306,8 @@ export const Hero = () => {
                                 <TextField
                                     fullWidth
                                     placeholder="Phone Number"
+                                    value={donorPhone}
+                                    onChange={(e) => setDonorPhone(e.target.value)}
                                     variant="outlined"
                                     sx={{
                                         '& .MuiOutlinedInput-root': {
@@ -281,6 +326,8 @@ export const Hero = () => {
                                 <Button
                                     fullWidth
                                     variant="contained"
+                                    onClick={handleDonate}
+                                    disabled={donationMutation.isPending}
                                     endIcon={<Favorite sx={{ fontSize: 18 }} />}
                                     sx={{
                                         mt: 1,
@@ -299,7 +346,7 @@ export const Hero = () => {
                                         }
                                     }}
                                 >
-                                    Donate Now
+                                    {donationMutation.isPending ? 'Processing...' : 'Donate Now'}
                                 </Button>
 
                                 {/* Payment Icons Placeholder */}

@@ -9,8 +9,6 @@ interface DropdownMenuProps {
     anchorEl: HTMLElement | null;
     open: boolean;
     onClose: () => void;
-    onMouseEnter: () => void;
-    onMouseLeave: () => void;
 }
 
 const containerVariants = {
@@ -30,9 +28,9 @@ export const DropdownMenu = ({
     anchorEl,
     open,
     onClose,
-    onMouseEnter,
-    onMouseLeave,
 }: DropdownMenuProps) => {
+    // Defense against top-left rendering glitch
+    if (open && !anchorEl) return null;
 
     return (
         <Popper
@@ -51,8 +49,6 @@ export const DropdownMenu = ({
                         initial="hidden"
                         animate="visible"
                         exit="exit"
-                        onMouseEnter={onMouseEnter}
-                        onMouseLeave={onMouseLeave}
                         elevation={8}
                         sx={{
                             minWidth: 220,

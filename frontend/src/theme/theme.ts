@@ -3,16 +3,16 @@ import { createTheme, responsiveFontSizes } from '@mui/material/styles';
 // Brand Colors
 const colors = {
     primary: {
-        main: '#1976D2', // Blue - Trust & Stability
-        light: '#42A5F5',
-        dark: '#1565C0',
+        main: '#6A1B9A', // Deep Purple - Brand Primary
+        light: '#914AAF',
+        dark: '#4A148C',
         contrastText: '#FFFFFF',
     },
     secondary: {
-        main: '#00897B', // Teal - Healing & Growth
-        light: '#4DB6AC',
-        dark: '#00695C',
-        contrastText: '#FFFFFF',
+        main: '#f5aa21', // Amber - Brand Action
+        light: '#f7bb4d',
+        dark: '#e09a1a',
+        contrastText: '#2c0e45',
     },
     background: {
         default: '#F5F5F5',

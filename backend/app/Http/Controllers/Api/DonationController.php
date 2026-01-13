@@ -55,9 +55,11 @@ class DonationController extends Controller
         $validator = Validator::make($request->all(), [
             'amount' => 'required|numeric|min:10',
             'payment_method' => 'required|string',
-            'patient_id' => 'required_without_all:campaign_id,program_id|exists:patients,id',
-            'campaign_id' => 'required_without_all:patient_id,program_id|exists:campaigns,id',
-            'program_id' => 'required_without_all:patient_id,campaign_id|exists:programs,id',
+            'category' => 'required|string',
+            // Only require a target if the category is NOT general or zakat
+            'patient_id' => 'required_if:category,patient|exists:patients,id',
+            'campaign_id' => 'required_if:category,campaign|exists:campaigns,id',
+            'program_id' => 'required_if:category,program|exists:programs,id',
         ]);
 
         if ($validator->fails()) {
@@ -97,8 +99,8 @@ class DonationController extends Controller
             Log::error('Failed to send donation receipt: ' . $e->getMessage());
         }
 
-        // Redirect to Frontend Success Page
-        $frontendUrl = env('FRONTEND_URL', 'http://localhost:5173');
+        // Redirect to Frontend Success Page - Use environment variable or relative path
+        $frontendUrl = rtrim(env('FRONTEND_URL', 'http://localhost:5173'), '/');
         return redirect("$frontendUrl/donation/success?trxId=$transactionId");
     }
 

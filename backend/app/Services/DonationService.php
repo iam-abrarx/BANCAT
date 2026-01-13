@@ -112,7 +112,7 @@ class DonationService
                 if ($patient) {
                     $totalOnline = $patient->donations()
                         ->where('payment_status', 'completed')
-                        ->where('status', 'approved') // Only count approved donations
+                        ->where('status', 'approved')
                         ->sum('amount');
                     $patient->treatment_cost_raised = $totalOnline + ($patient->fund_raised ?? 0);
                     $patient->save();
@@ -120,13 +120,29 @@ class DonationService
             } elseif ($donation->campaign_id) {
                 $campaign = Campaign::lockForUpdate()->find($donation->campaign_id);
                 if ($campaign) {
-                    $campaign->increment('raised_amount', $donation->amount);
-                    // Or recalculate if consistent with Patient logic
+                    $totalApproved = $campaign->donations()
+                        ->where('payment_status', 'completed')
+                        ->where('status', 'approved')
+                        ->sum('amount');
+                    $campaign->raised_amount = $totalApproved;
+                    $campaign->save();
                 }
             } elseif ($donation->program_id) {
-                // Logic for Program milestones if they exist
-                // $program = Program::lockForUpdate()->find($donation->program_id);
-                // $program->increment('raised_amount', $donation->amount);
+                $program = Program::lockForUpdate()->find($donation->program_id);
+                if ($program) {
+                    // Logic for Program milestones/impact metrics if needed
+                    // For now, tracking total raised for the program
+                    $totalApproved = Donation::where('program_id', $program->id)
+                        ->where('payment_status', 'completed')
+                        ->where('status', 'approved')
+                        ->sum('amount');
+                    
+                    // Update impact metrics if they track financial support
+                    $metrics = $program->impact_metrics ?? [];
+                    $metrics['total_raised'] = $totalApproved;
+                    $program->impact_metrics = $metrics;
+                    $program->save();
+                }
             }
         });
 

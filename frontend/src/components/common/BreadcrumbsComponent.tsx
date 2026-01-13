@@ -6,8 +6,8 @@ export const BreadcrumbsComponent = () => {
     const location = useLocation();
     const pathnames = location.pathname.split('/').filter((x) => x);
 
-    // Don't show on home page
-    if (pathnames.length === 0) {
+    // Don't show on home page or donation page
+    if (pathnames.length === 0 || location.pathname === '/donate') {
         return null;
     }
 

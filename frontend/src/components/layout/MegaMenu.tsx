@@ -9,8 +9,6 @@ interface MegaMenuProps {
     anchorEl: HTMLElement | null;
     open: boolean;
     onClose: () => void;
-    onMouseEnter: () => void;
-    onMouseLeave: () => void;
     featuredImage?: {
         src: string;
         caption?: string;
@@ -34,10 +32,10 @@ export const MegaMenu = ({
     anchorEl,
     open,
     onClose,
-    onMouseEnter,
-    onMouseLeave,
     featuredImage,
 }: MegaMenuProps) => {
+    // Defense against top-left rendering glitch
+    if (open && !anchorEl) return null;
 
     return (
         <Popper
@@ -56,8 +54,6 @@ export const MegaMenu = ({
                         initial="hidden"
                         animate="visible"
                         exit="exit"
-                        onMouseEnter={onMouseEnter}
-                        onMouseLeave={onMouseLeave}
                         elevation={8}
                         sx={{
                             minWidth: sections.length === 2 ? 600 : 900,

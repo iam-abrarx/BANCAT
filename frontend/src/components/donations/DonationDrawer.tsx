@@ -45,9 +45,9 @@ export const DonationDrawer = () => {
         enabled: donationType === 'patient',
     });
 
-    const campaigns = campaignsData?.data || [];
-    const programs = Array.isArray(programsData) ? programsData : (programsData?.data || []);
-    const patients = patientsData?.data || [];
+    const campaigns = (campaignsData as any) || [];
+    const programs = (programsData as any) || [];
+    const patients = (patientsData as any)?.data || [];
 
     // Donation mutation
     const donationMutation = useMutation({
@@ -210,7 +210,7 @@ export const DonationDrawer = () => {
                                 >
                                     {campaigns.map((campaign: any) => (
                                         <MenuItem key={campaign.id} value={campaign.id}>
-                                            {campaign.title_en}
+                                            {campaign.name_en}
                                         </MenuItem>
                                     ))}
                                 </Select>
@@ -229,7 +229,7 @@ export const DonationDrawer = () => {
                                 >
                                     {programs.map((program: any) => (
                                         <MenuItem key={program.id} value={program.id}>
-                                            {program.title_en}
+                                            {program.name_en}
                                         </MenuItem>
                                     ))}
                                 </Select>

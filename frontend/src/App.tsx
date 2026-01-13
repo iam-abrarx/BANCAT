@@ -24,6 +24,7 @@ import { CampaignDetail } from './pages/CampaignDetail';
 import { StartCampaign } from './pages/StartCampaign';
 import { DonationSuccess } from './pages/DonationSuccess';
 import { ZakatCalculator } from './pages/ZakatCalculator';
+import { DonationPage } from './pages/DonationPage';
 // Dashboard removed
 import { VolunteerPage } from './pages/VolunteerPage';
 import { ContactPage } from './pages/ContactPage';
@@ -38,7 +39,23 @@ import { FAQPage } from './pages/FAQPage';
 // Admin imports removed
 
 
+import { useState, useEffect } from 'react';
+import { LoadingPage } from './components/common/LoadingPage';
+
 function App() {
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 1500); // Premium splash effect
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (isLoading) {
+    return <LoadingPage />;
+  }
+
   return (
     <ErrorBoundary>
       <Layout>
@@ -86,6 +103,7 @@ function App() {
           <Route path="/programs/:slug" element={<DynamicPage />} />
           <Route path="/projects/:slug" element={<DynamicPage />} />
           <Route path="/partnerships/:slug" element={<DynamicPage />} />
+          <Route path="/donate" element={<DonationPage />} />
           <Route path="/donate/:slug" element={<DynamicPage />} />
 
           <Route path="/media" element={<DynamicPage slug="media" />} />

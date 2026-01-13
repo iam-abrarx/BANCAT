@@ -1,6 +1,6 @@
 import { AppBar, Box, Button, Container, IconButton, Toolbar, useMediaQuery, useTheme } from '@mui/material';
 import { Menu as MenuIcon, KeyboardArrowDown, Search } from '@mui/icons-material';
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { Link as RouterLink, useLocation } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 import { LanguageToggle } from '../common/LanguageToggle';
@@ -9,6 +9,7 @@ import { MegaMenu } from './MegaMenu';
 import { DropdownMenu } from './DropdownMenu';
 import { menuConfig } from './menuConfig';
 import { TopBar } from './TopBar';
+import logo from '../../assets/logo.png';
 
 export const Navbar = () => {
     const theme = useTheme();
@@ -20,7 +21,6 @@ export const Navbar = () => {
     const [activeMenu, setActiveMenu] = useState<string | null>(null);
     const [menuAnchors, setMenuAnchors] = useState<Record<string, HTMLElement | null>>({});
     const [scrolled, setScrolled] = useState(false);
-    const closeTimerRef = useRef<NodeJS.Timeout | null>(null);
 
     useEffect(() => {
         const handleScroll = () => {
@@ -34,18 +34,17 @@ export const Navbar = () => {
         logout();
     };
 
-    const handleMenuOpen = (menuId: string, event: React.MouseEvent<HTMLElement>) => {
-        if (closeTimerRef.current) clearTimeout(closeTimerRef.current);
-        setMenuAnchors(prev => ({ ...prev, [menuId]: event.currentTarget }));
-        setActiveMenu(menuId);
+    const handleMenuToggle = (menuId: string, event: React.MouseEvent<HTMLElement>) => {
+        if (activeMenu === menuId) {
+            setActiveMenu(null);
+        } else {
+            setMenuAnchors(prev => ({ ...prev, [menuId]: event.currentTarget }));
+            setActiveMenu(menuId);
+        }
     };
 
     const handleMenuClose = () => {
-        closeTimerRef.current = setTimeout(() => setActiveMenu(null), 100);
-    };
-
-    const handleMenuEnter = () => {
-        if (closeTimerRef.current) clearTimeout(closeTimerRef.current);
+        setActiveMenu(null);
     };
 
     return (
@@ -62,7 +61,14 @@ export const Navbar = () => {
                 }}
             >
                 <Container maxWidth="xl">
-                    <Toolbar disableGutters sx={{ justifyContent: 'space-between', minHeight: { xs: 64, lg: 60 } }}>
+                    <Toolbar disableGutters sx={{ justifyContent: 'space-between', minHeight: { xs: 64, lg: 60 }, px: { xs: 2, lg: 0 } }}>
+                        {/* Mobile Logo */}
+                        {isMobile && (
+                            <Box component={RouterLink} to="/" sx={{ display: 'flex', alignItems: 'center' }}>
+                                <img src={logo} alt="BANCAT" style={{ height: '35px', width: 'auto' }} />
+                            </Box>
+                        )}
+
                         <Box sx={{ flexGrow: 1 }} />
 
                         {/* Desktop Navigation */}
@@ -98,11 +104,10 @@ export const Navbar = () => {
                                     return (
                                         <Box
                                             key={item.id}
-                                            onMouseEnter={(e) => handleMenuOpen(item.id, e)}
-                                            onMouseLeave={handleMenuClose}
                                             sx={{ position: 'relative' }}
                                         >
                                             <Button
+                                                onClick={(e) => handleMenuToggle(item.id, e)}
                                                 sx={{
                                                     color: 'white',
                                                     textTransform: 'none',
@@ -124,25 +129,21 @@ export const Navbar = () => {
                                                 {item.label}
                                             </Button>
 
-                                            {item.type === 'dropdown' && item.items && (
+                                            {item.type === 'dropdown' && item.items && menuAnchors[item.id] && (
                                                 <DropdownMenu
                                                     items={item.items}
                                                     anchorEl={menuAnchors[item.id]}
                                                     open={activeMenu === item.id}
                                                     onClose={handleMenuClose}
-                                                    onMouseEnter={handleMenuEnter}
-                                                    onMouseLeave={handleMenuClose}
                                                 />
                                             )}
 
-                                            {item.type === 'mega' && item.sections && (
+                                            {item.type === 'mega' && item.sections && menuAnchors[item.id] && (
                                                 <MegaMenu
                                                     sections={item.sections}
                                                     anchorEl={menuAnchors[item.id]}
                                                     open={activeMenu === item.id}
                                                     onClose={handleMenuClose}
-                                                    onMouseEnter={handleMenuEnter}
-                                                    onMouseLeave={handleMenuClose}
                                                     featuredImage={item.featuredImage}
                                                 />
                                             )}
@@ -157,22 +158,28 @@ export const Navbar = () => {
                             {/* Search Pill */}
                             {!isMobile && (
                                 <Box sx={{
-                                    bgcolor: 'rgba(255, 255, 255, 0.12)',
+                                    bgcolor: 'rgba(255, 255, 255, 0.15)',
+                                    backdropFilter: 'blur(10px)',
                                     borderRadius: '50px',
-                                    px: 2,
-                                    py: 0.6,
+                                    px: 2.5,
+                                    py: 0.8,
                                     display: 'flex',
                                     alignItems: 'center',
-                                    transition: 'all 0.2s',
-                                    border: '1px solid rgba(255, 255, 255, 0.15)',
+                                    transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                                    border: '1px solid rgba(255, 255, 255, 0.25)',
+                                    boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
                                     '&:hover': {
-                                        bgcolor: 'rgba(255, 255, 255, 0.2)',
-                                        borderColor: 'rgba(255, 255, 255, 0.3)'
+                                        bgcolor: 'rgba(255, 255, 255, 0.25)',
+                                        borderColor: 'rgba(255, 255, 255, 0.4)',
+                                        boxShadow: '0 6px 16px rgba(0, 0, 0, 0.15)',
+                                        transform: 'translateY(-1px)'
                                     },
                                     '&:focus-within': {
                                         bgcolor: 'white',
-                                        '& input': { color: '#2c0e45' },
-                                        '& .search-icon': { color: '#8E44AD' }
+                                        borderColor: 'white',
+                                        boxShadow: '0 8px 32px rgba(0, 0, 0, 0.2)',
+                                        '& input': { color: '#4A148C' },
+                                        '& .search-icon': { color: '#6A1B9A' }
                                     }
                                 }}>
                                     <input
@@ -182,13 +189,24 @@ export const Navbar = () => {
                                             border: 'none',
                                             color: 'white',
                                             outline: 'none',
-                                            fontSize: '0.85rem',
-                                            fontWeight: 600,
-                                            width: '140px',
+                                            fontSize: '0.9rem',
+                                            fontWeight: 500,
+                                            width: '160px',
+                                            fontFamily: "'Montserrat', sans-serif",
                                             transition: 'color 0.2s'
                                         }}
                                     />
-                                    <Search className="search-icon" sx={{ color: 'white', fontSize: 20, cursor: 'pointer', transition: 'color 0.2s' }} />
+                                    <Search
+                                        className="search-icon"
+                                        sx={{
+                                            color: 'rgba(255, 255, 255, 0.8)',
+                                            fontSize: 20,
+                                            cursor: 'pointer',
+                                            transition: 'all 0.2s',
+                                            ml: 1,
+                                            '&:hover': { transform: 'scale(1.1)', color: 'white' }
+                                        }}
+                                    />
                                 </Box>
                             )}
 
