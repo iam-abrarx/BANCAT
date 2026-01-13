@@ -5,7 +5,7 @@ import { visualizer } from 'rollup-plugin-visualizer'
 
 // https://vite.dev/config/
 export default defineConfig(({ command }) => ({
-  base: command === 'build' ? '/BANCAT/' : '/',
+  base: '/',
   plugins: [
     react(),
     // Bundle size analysis - run 'npm run build' to generate stats.html
