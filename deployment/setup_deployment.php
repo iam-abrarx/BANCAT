@@ -75,6 +75,16 @@ try {
     Artisan::call('migrate', ['--force' => true]);
     echo Artisan::output();
     echo "<span style='color:green'>Done.</span>\n";
+    
+    // 3.1 Run Seeder
+    echo "<h2>3.1 Seeding Database...</h2>";
+    try {
+        Artisan::call('db:seed', ['--force' => true]);
+        echo Artisan::output();
+        echo "<span style='color:green'>Database Seeded.</span>\n";
+    } catch (\Exception $e) {
+        echo "<span style='color:orange'>Seeding skipped or failed (might already be seeded): " . $e->getMessage() . "</span>\n";
+    }
 
     // 4. Link Storage
     echo "<h2>4. Linking Storage...</h2>";
