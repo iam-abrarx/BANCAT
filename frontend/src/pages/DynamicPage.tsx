@@ -4,6 +4,7 @@ import { Container, Typography, Box, CircularProgress, Paper, useTheme, alpha } 
 import { Helmet } from 'react-helmet-async';
 import axios from 'axios';
 import { motion } from 'framer-motion';
+import { NotFound } from './NotFound';
 
 interface PageData {
     title_en: string;
@@ -61,13 +62,7 @@ export const DynamicPage = ({ slug: propSlug }: DynamicPageProps) => {
     }
 
     if (error || !page) {
-        return (
-            <Container sx={{ py: 20, textAlign: 'center' }}>
-                <Typography variant="h3" color="error" fontWeight="bold">
-                    {error || 'Page not found'}
-                </Typography>
-            </Container>
-        );
+        return <NotFound />;
     }
 
     return (

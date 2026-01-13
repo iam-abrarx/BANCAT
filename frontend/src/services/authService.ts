@@ -1,4 +1,4 @@
-import api from './patientService';
+import api from '../lib/axios';
 
 export interface User {
     id: number;

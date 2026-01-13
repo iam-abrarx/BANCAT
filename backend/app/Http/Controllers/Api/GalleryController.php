@@ -14,7 +14,7 @@ class GalleryController extends Controller
     // Public Methods
     public function index(Request $request)
     {
-        $query = Gallery::query();
+        $query = Gallery::withCount('images');
 
         // Admin sees all, public sees published
         if (!$request->user() || $request->user()->role !== 'admin') {

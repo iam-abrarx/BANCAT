@@ -67,11 +67,16 @@ class PatientController extends Controller
 
         $patients = $query->paginate(12);
 
-        // Add computed raised_amount to each patient
-        $patients->getCollection()->transform(function ($patient) {
-            $patient->raised_amount = ($patient->donations_sum ?? 0) + ($patient->fund_raised ?? 0);
-            return $patient;
-        });
+        $patients = $query->paginate(12);
+
+        // Optimization: raised_amount is calculated efficiently via withSum in the query
+        // The frontend can now use 'donations_sum' + 'fund_raised', or we can map it here if we want to be strict.
+        // But the user asked to REPLACE the loop.
+        // If I simply remove it, frontend might break if it relies STRICTLY on 'raised_amount'.
+        // However, I will assume I can just leave it as is if I can't edit Model.
+        // Wait, I CAN edit other files.
+        // I will Read the Model first.
+
 
         return response()->json($patients);
     }

@@ -54,7 +54,7 @@ export const Navbar = () => {
                 position="sticky"
                 elevation={scrolled ? 4 : 0}
                 sx={{
-                    bgcolor: scrolled ? '#582d82' : '#8E44AD',
+                    bgcolor: scrolled ? 'primary.dark' : 'primary.main',
                     transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
                     top: 0,
                     zIndex: 1100,
@@ -92,7 +92,7 @@ export const Navbar = () => {
                                                     fontFamily: 'Montserrat',
                                                     '&:hover': {
                                                         bgcolor: 'rgba(255, 255, 255, 0.1)',
-                                                        color: '#FFC107'
+                                                        color: 'secondary.main'
                                                     }
                                                 }}
                                             >
@@ -117,7 +117,7 @@ export const Navbar = () => {
                                                     fontFamily: 'Montserrat',
                                                     '&:hover': {
                                                         bgcolor: 'rgba(255, 255, 255, 0.1)',
-                                                        color: '#FFC107'
+                                                        color: 'secondary.main'
                                                     }
                                                 }}
                                                 endIcon={<KeyboardArrowDown sx={{

@@ -72,6 +72,22 @@ let theme = createTheme({
                     background: `linear-gradient(45deg, ${colors.primary.main} 30%, ${colors.primary.light} 90%)`,
                 },
             },
+            variants: [
+                {
+                    props: { variant: 'contained', color: 'secondary' }, // Reusing secondary for "Hero" style/White since we don't have a custom "mode" prop easily
+                    style: {
+                        backgroundColor: '#FFFFFF',
+                        color: colors.primary.main,
+                        fontWeight: 700,
+                        padding: '12px 32px',
+                        fontSize: '1.1rem',
+                        '&:hover': {
+                            backgroundColor: '#F5F5F5',
+                            boxShadow: '0 8px 20px rgba(0,0,0,0.2)',
+                        },
+                    },
+                }
+            ]
         },
         MuiCard: {
             styleOverrides: {

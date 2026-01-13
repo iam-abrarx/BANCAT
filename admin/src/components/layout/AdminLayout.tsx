@@ -20,7 +20,8 @@ import {
     Settings as SettingsIcon,
     Handshake as HandshakeIcon,
     ContactMail as ContactIcon,
-    MenuBook as MenuBookIcon
+    MenuBook as MenuBookIcon,
+    RssFeed as RssFeedIcon
 } from '@mui/icons-material';
 import { Link, Outlet, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
@@ -63,12 +64,12 @@ export const AdminLayout = () => {
     const menuItems = [
         { text: 'General', icon: <DashboardIcon />, path: '/' },
         { text: 'Patients', icon: <PeopleIcon />, path: '/patients' },
+        { text: 'Blogs', icon: <RssFeedIcon />, path: '/blogs' },
         { text: 'Stories', icon: <ArticleIcon />, path: '/stories' },
         { text: 'Campaigns', icon: <CampaignIcon />, path: '/campaigns' },
         { text: 'Programs', icon: <VolunteerIcon />, path: '/programs' },
         { text: 'Donations', icon: <VolunteerIcon />, path: '/donations' },
         { text: 'Partners', icon: <BusinessIcon />, path: '/partners' },
-        { text: 'Pages', icon: <ArticleIcon />, path: '/pages' },
         { text: 'Gallery', icon: <DashboardIcon />, path: '/gallery' },
         { text: 'Testimonials', icon: <RateReviewIcon />, path: '/testimonials' },
         { text: 'Team', icon: <PeopleIcon />, path: '/team' },

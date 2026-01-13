@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { API_BASE_URL } from '../config/api';
 import {
     Box,
     Container,
@@ -28,7 +29,7 @@ export const Partners = () => {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         try {
-            const response = await fetch('http://127.0.0.1:8000/api/v1/partnership', {
+            const response = await fetch(`${API_BASE_URL}/partnership`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

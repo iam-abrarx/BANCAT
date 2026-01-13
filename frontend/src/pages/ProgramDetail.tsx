@@ -1,4 +1,5 @@
 import { useParams, Link as RouterLink } from 'react-router-dom';
+import { getAssetUrl } from '../config/api';
 import { Container, Typography, Box, Button, Stack, Paper, Grid, useTheme, alpha } from '@mui/material';
 import { useProgram } from '../hooks/useProgramsCampaigns';
 import { LoadingSpinner } from '../components/common/LoadingSpinner';
@@ -20,7 +21,7 @@ export const ProgramDetail = () => {
     const getImageUrl = (path: string | null) => {
         if (!path) return 'https://placehold.co/1200x600?text=Program+Banner';
         if (path.startsWith('http')) return path;
-        return `http://127.0.0.1:8000${path}`;
+        return getAssetUrl(path) || '';
     };
 
     const heroImage = getImageUrl(program.banner_image);

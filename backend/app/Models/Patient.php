@@ -44,6 +44,16 @@ class Patient extends Model
     // Removed raised_amount accessor to prevent N+1 queries
     // Use eager loading with withSum in controllers instead
 
+    // Accessor to replace controller loop calculation
+    public function getRaisedAmountAttribute()
+    {
+        // donations_sum is injected by withSum query in Controller
+        // attributes['donations_sum'] handles the case where it's loaded
+        return ($this->attributes['donations_sum'] ?? 0) + ($this->fund_raised ?? 0);
+    }
+
+    protected $appends = ['raised_amount'];
+
     public function updates()
     {
         return $this->hasMany(PatientUpdate::class);

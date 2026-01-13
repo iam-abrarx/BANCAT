@@ -72,7 +72,7 @@ class ProgramSeeder extends Seeder
             [
                 'name_en' => 'Holistic Care',
                 'name_bn' => 'হোলিস্টিক কেয়ার',
-                'slug' => 'holistic-care',
+                'slug' => 'holistic-support',
                 'tagline_en' => 'Healing Beyond Medicine',
                 'tagline_bn' => 'ঔষধের বাইরে নিরাময়',
                 'description_en' => "

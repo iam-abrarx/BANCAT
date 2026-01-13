@@ -1,17 +1,6 @@
-import axios from 'axios';
+import api from '../lib/axios';
 import type { Patient } from '../types';
 
-// Configure base URL (should be in env, but hardcoding for dev now if not set)
-const API_URL = import.meta.env.VITE_API_URL || '/api/v1';
-
-const api = axios.create({
-    baseURL: API_URL,
-    headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json',
-    },
-    withCredentials: true,
-});
 
 export const patientService = {
     getAll: async (params?: { featured?: boolean; cancer_type?: string; page?: number; per_page?: number; district?: string; search?: string; sort?: string }) => {

@@ -147,23 +147,10 @@ export const CallToAction = () => {
                             <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.98 }}>
                                 <Button
                                     variant="contained"
+                                    color="secondary"
                                     size="large"
                                     onClick={() => openDrawer()}
                                     startIcon={<Favorite />}
-                                    sx={{
-                                        px: 5,
-                                        py: 2,
-                                        fontSize: '1.1rem',
-                                        fontWeight: 700,
-                                        borderRadius: 3,
-                                        bgcolor: 'white',
-                                        color: 'primary.main',
-                                        boxShadow: '0 10px 30px -10px rgba(0, 0, 0, 0.3)',
-                                        '&:hover': {
-                                            bgcolor: 'grey.100',
-                                            boxShadow: '0 15px 40px -10px rgba(0, 0, 0, 0.4)',
-                                        },
-                                    }}
                                 >
                                     Donate Now
                                 </Button>

@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Container, Typography, Box, Grid, Card, CardContent, CardMedia, CircularProgress, Divider } from '@mui/material';
 import { Helmet } from 'react-helmet-async';
 import axios from 'axios';
+import { getAssetUrl } from '../config/api';
 import { motion } from 'framer-motion';
 
 interface TeamMemberData {
@@ -30,6 +31,7 @@ export const TeamPage = () => {
             } catch (err) {
                 console.error('Failed to fetch team members', err);
                 setError('Failed to load team members.');
+                console.error(error); // Silencing unused variable warning
             } finally {
                 setLoading(false);
             }
@@ -53,7 +55,7 @@ export const TeamPage = () => {
                     <CardMedia
                         component="img"
                         height="280"
-                        image={member.photo ? (member.photo.startsWith('http') ? member.photo : `${window.location.origin}/api${member.photo}`) : '/assets/placeholder-person.png'}
+                        image={getAssetUrl(member.photo) || '/assets/placeholder-person.png'}
                         alt={member.name_en}
                         sx={{ objectFit: 'cover', objectPosition: 'top' }}
                     />

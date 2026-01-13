@@ -34,3 +34,26 @@ export interface PatientUpdate {
     update_date: string;
     created_at: string;
 }
+
+export interface Blog {
+    id: number;
+    title_en: string;
+    title_bn?: string;
+    content_en: string;
+    content_bn?: string;
+    slug: string;
+    image?: string;
+    author?: string;
+    is_published: boolean;
+    published_at: string;
+    views: number;
+    created_at: string;
+}
+
+export interface PaginatedResponse<T> {
+    data: T[];
+    current_page: number;
+    last_page: number;
+    total: number;
+    per_page: number;
+}

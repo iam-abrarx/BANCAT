@@ -114,7 +114,7 @@ export const menuConfig: NavItem[] = [
                 title: 'Categories',
                 items: [
                     { label: 'Impact Stories', path: '/stories?category=impact' },
-                    { label: 'Testimonials', path: '/stories?category=testimonials' },
+                    { label: 'Testimonials', path: '/testimonials' },
                 ],
             },
             {

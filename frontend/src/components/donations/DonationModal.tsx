@@ -5,6 +5,7 @@ import {
 } from '@mui/material';
 import { useState } from 'react';
 import { useMutation } from '@tanstack/react-query';
+import { useSnackbar } from 'notistack';
 import { donationService } from '../../services/donationService';
 
 interface DonationModalProps {
@@ -18,6 +19,7 @@ interface DonationModalProps {
 const PRESET_AMOUNTS = [100, 500, 1000, 5000];
 
 export const DonationModal = ({ open, onClose, title, targetId, targetType }: DonationModalProps) => {
+    const { enqueueSnackbar } = useSnackbar();
     const [amount, setAmount] = useState<number | string>(500);
     const [method, setMethod] = useState('bkash');
 
@@ -29,7 +31,7 @@ export const DonationModal = ({ open, onClose, title, targetId, targetType }: Do
         },
         onError: (error) => {
             console.error('Donation failed', error);
-            alert('Failed to initiate donation');
+            enqueueSnackbar('Failed to initiate donation. Please try again.', { variant: 'error' });
         }
     });
 
@@ -41,6 +43,8 @@ export const DonationModal = ({ open, onClose, title, targetId, targetType }: Do
             payment_method: method,
             patient_id: targetType === 'patient' ? targetId : undefined,
             campaign_id: targetType === 'campaign' ? targetId : undefined,
+            donor_name: 'Anonymous', // Placeholder until auth context is fully connected here
+            category: 'general',
         });
     };
 

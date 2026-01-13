@@ -13,7 +13,7 @@
         "test": "vitest",
         "test:ui": "vitest --ui",
         "test:coverage": "vitest --coverage",
-        "predeploy": "npm run build && cd ../admin && npm run build && cd ../frontend && mkdir -p dist/admin && cp -r ../admin/dist/* dist/admin/",
+        "predeploy": "npm run build",
         "deploy": "gh-pages -d dist -b gh-pages"
     },
     "dependencies": {
@@ -32,10 +32,9 @@
         "framer-motion": "^10.16.16",
         "i18next": "^23.7.8",
         "i18next-browser-languagedetector": "^7.2.0",
-        "lodash": "^4.17.21",
+        "notistack": "^3.0.2",
         "react": "^18.2.0",
         "react-dom": "^18.2.0",
-        "react-h5-audio-player": "^3.9.1",
         "react-helmet-async": "^2.0.4",
         "react-hook-form": "^7.49.2",
         "react-i18next": "^13.5.0",

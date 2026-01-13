@@ -17,16 +17,17 @@ import { AdminTeamList } from './pages/admin/team/AdminTeamList';
 import { AdminTeamForm } from './pages/admin/team/AdminTeamForm';
 import { AdminImpactList } from './pages/admin/impact/AdminImpactList';
 import { AdminImpactForm } from './pages/admin/impact/AdminImpactForm';
-import { AdminPageList } from './pages/admin/pages/AdminPageList';
-import { AdminPageForm } from './pages/admin/pages/AdminPageForm';
 import { AdminPartnerList } from './pages/admin/partners/AdminPartnerList';
 import Testimonials from './pages/Testimonials';
 import AdminGalleryList from './pages/admin/gallery/AdminGalleryList';
 import AdminGalleryForm from './pages/admin/gallery/AdminGalleryForm';
+import { AdminBlogList } from './pages/admin/blogs/AdminBlogList';
+import { AdminBlogForm } from './pages/admin/blogs/AdminBlogForm';
 
 import { AdminSettings } from './pages/admin/settings/AdminSettings';
 import { AdminContactList } from './pages/admin/contacts/AdminContactList';
 import { ErrorBoundary } from './components/ErrorBoundary';
+import { NotFound } from './pages/NotFound';
 
 function App() {
   return (
@@ -65,13 +66,13 @@ function App() {
           <Route path="impact/new" element={<AdminImpactForm />} />
           <Route path="impact/:id" element={<AdminImpactForm />} />
 
-          <Route path="pages" element={<AdminPageList />} />
-          <Route path="pages/new" element={<AdminPageForm />} />
-          <Route path="pages/:id" element={<AdminPageForm />} />
-
           <Route path="gallery" element={<AdminGalleryList />} />
           <Route path="gallery/new" element={<AdminGalleryForm />} />
           <Route path="gallery/:id" element={<AdminGalleryForm />} />
+
+          <Route path="blogs" element={<AdminBlogList />} />
+          <Route path="blogs/new" element={<AdminBlogForm />} />
+          <Route path="blogs/:id/edit" element={<AdminBlogForm />} />
 
           <Route path="partners" element={<AdminPartnerList />} />
           <Route path="contacts" element={<AdminContactList />} />
@@ -80,6 +81,9 @@ function App() {
           <Route path="users" element={<Navigate to="/admin/settings" replace />} />
 
           <Route path="testimonials" element={<Testimonials />} />
+
+          {/* Catch-all route */}
+          <Route path="*" element={<NotFound />} />
         </Route>
 
       </Routes>

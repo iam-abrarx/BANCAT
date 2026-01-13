@@ -7,7 +7,6 @@ use App\Http\Controllers\Api\CampaignController;
 use App\Http\Controllers\Api\DonationController;
 use App\Http\Controllers\Api\TeamMemberController;
 use App\Http\Controllers\Api\ImpactMetricController;
-use App\Http\Controllers\Api\PageController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\DashboardController;
 use App\Http\Controllers\Api\VolunteerController;
@@ -46,13 +45,16 @@ Route::prefix('v1')->group(function () {
     Route::get('/campaigns', [CampaignController::class, 'index']);
     Route::get('/campaigns/{slug}', [CampaignController::class, 'show']);
 
-    Route::get('/pages/{slug}', [PageController::class, 'show']);
-
     Route::get('/testimonials', [TestimonialController::class, 'index']);
     Route::get('/galleries', [GalleryController::class, 'index']);
     Route::get('/galleries/{slug}', [GalleryController::class, 'show']);
     Route::get('/team-members', [TeamMemberController::class, 'index']);
     Route::get('/team-members/{id}', [TeamMemberController::class, 'show']);
+
+    Route::get('/team-members/{id}', [TeamMemberController::class, 'show']);
+    
+    Route::get('/blogs', [\App\Http\Controllers\Api\BlogController::class, 'index']);
+    Route::get('/blogs/{slug}', [\App\Http\Controllers\Api\BlogController::class, 'show']);
 
     // Public SEO Settings (for frontend)
     Route::get('/settings/seo', [SettingsController::class, 'getSeoSettings']);
@@ -138,13 +140,6 @@ Route::prefix('v1')->group(function () {
              Route::put('/impact-metrics/{id}', [ImpactMetricController::class, 'update']);
              Route::delete('/impact-metrics/{id}', [ImpactMetricController::class, 'destroy']);
 
-             // Page Management
-             Route::get('/pages', [PageController::class, 'index']);
-             Route::post('/pages', [PageController::class, 'store']);
-             Route::get('/pages/{id}', [PageController::class, 'showAdmin']);
-             Route::put('/pages/{id}', [PageController::class, 'update']);
-             Route::delete('/pages/{id}', [PageController::class, 'destroy']);
-
              // Partner Management
              Route::get('/partners', [PartnerApplicationController::class, 'index']);
              Route::put('/partners/{id}', [PartnerApplicationController::class, 'update']);
@@ -171,6 +166,15 @@ Route::prefix('v1')->group(function () {
              Route::delete('/galleries/{id}', [GalleryController::class, 'destroy']);
              Route::post('/galleries/{id}/images', [GalleryController::class, 'addImages']);
              Route::delete('/galleries/{id}/images/{imageId}', [GalleryController::class, 'removeImage']);
+
+             // Blog Management
+             Route::get('/blogs', [\App\Http\Controllers\Api\BlogController::class, 'index']);
+             Route::get('/blogs/{id}', [\App\Http\Controllers\Api\BlogController::class, 'show']); // Admin specific if needed, but using public generally
+             Route::post('/blogs', [\App\Http\Controllers\Api\BlogController::class, 'store']);
+             Route::put('/blogs/{id}', [\App\Http\Controllers\Api\BlogController::class, 'update']);
+             Route::delete('/blogs/{id}', [\App\Http\Controllers\Api\BlogController::class, 'destroy']);
         });
     });
-});
+// End of Admin Routes
+        });
+
