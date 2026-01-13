@@ -1,8 +1,7 @@
 {
     "name": "bancat-admin",
     "version": "1.0.0",
-    "description": "BANcat Frontend - React SPA for cancer awareness and patient support platform",
-    "type": "module",
+    "homepage": "https://new.bancat.org.bd/admin/",
     "scripts": {
         "dev": "vite",
         "build": "tsc && vite build",

@@ -42,6 +42,23 @@ For the best security and ease of maintenance, we recommend using separate subdo
 2. Create a folder *outside* `public_html` if possible, e.g., `bancat-api`. If you must use `public_html`, create `public_html/api-core`.
 3. Upload and extract your zip file into this folder.
 
+### 6. Deployment Helper
+
+The `setup_deployment.php` script handles extraction and migration.
+
+**After Uploading:**
+
+1. Visit `yourdomain.com/deployment/setup_deployment.php`
+2. This will:
+   * Extract the zip files
+   * Boot Laravel and migrate database
+   * Link storage
+   * Clear caches
+3. **IMPORTANT**: After setup, you must manually:
+   * Copy `deployment/frontend_htaccess` to root `.htaccess`
+   * Copy `deployment/admin_htaccess` to `admin/.htaccess`
+   * Delete `setup_deployment.php` and zip files for security.
+
 ### Step 3.3: Configure Database
 
 1. Go to cPanel -> **MySQL® Database Wizard**.
@@ -137,7 +154,8 @@ Follow the same steps as the Frontend:
 
 ## Summary Checklist
 
-- [ ] Database credentials configured in Backend `.env`
+* [ ] Database credentials configured in Backend `.env`
+
 * [ ] Backend migrations run
 * [ ] Backend `storage` permissions set to 775
 * [ ] Frontend `.env.production` points to HTTPS API URL
