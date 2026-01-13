@@ -6,7 +6,7 @@ if (import.meta.env.PROD && !import.meta.env.VITE_API_URL) {
 export const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000/v1';
 
 // Remove /api/v1 AND any trailing slashes to get the pure base URL
-export const BASE_URL = API_BASE_URL.replace(/\/api\/v1\/?$/, '').replace(/\/$/, '');
+export const BASE_URL = API_BASE_URL.replace(/\/v1\/?$/, '').replace(/\/$/, '');
 
 /**
  * Helper to get the full URL for an asset (image, etc.)
