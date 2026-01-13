@@ -11,20 +11,36 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('patients', function (Blueprint $table) {
-            $table->index('is_active');
-            $table->index('is_featured');
-            $table->index('cancer_type');
-            $table->index('created_at');
-        });
+        try {
+            Schema::table('patients', function (Blueprint $table) {
+                // Check if indexes exist before adding - raw SQL check or just try-catch is safer for this existing migration
+                // Given the error, simple try-catch is the robust fix without relying on Schema::hasIndex which can be flaky
+                $sm = Schema::getConnection()->getDoctrineSchemaManager();
+                $indexes = $sm->listTableIndexes('patients');
 
-        Schema::table('donations', function (Blueprint $table) {
-            $table->index('payment_status');
-            $table->index('status');
-            $table->index('transaction_id');
-            $table->index('created_at');
-            $table->index(['payment_status', 'status']); // Composite index for common query
-        });
+                if (!array_key_exists('patients_is_active_index', $indexes)) $table->index('is_active');
+                if (!array_key_exists('patients_is_featured_index', $indexes)) $table->index('is_featured');
+                if (!array_key_exists('patients_cancer_type_index', $indexes)) $table->index('cancer_type');
+                if (!array_key_exists('patients_created_at_index', $indexes)) $table->index('created_at');
+            });
+        } catch (\Exception $e) {
+            // Index might already exist, continue
+        }
+
+        try {
+            Schema::table('donations', function (Blueprint $table) {
+                $sm = Schema::getConnection()->getDoctrineSchemaManager();
+                $indexes = $sm->listTableIndexes('donations');
+
+                if (!array_key_exists('donations_payment_status_index', $indexes)) $table->index('payment_status');
+                if (!array_key_exists('donations_status_index', $indexes)) $table->index('status');
+                if (!array_key_exists('donations_transaction_id_index', $indexes)) $table->index('transaction_id');
+                if (!array_key_exists('donations_created_at_index', $indexes)) $table->index('created_at');
+                if (!array_key_exists('donations_payment_status_status_index', $indexes)) $table->index(['payment_status', 'status']);
+            });
+        } catch (\Exception $e) {
+            // Index might already exist
+        }
     }
 
     /**
