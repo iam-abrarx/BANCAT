@@ -18,7 +18,11 @@ import {
     People as PeopleIcon,
     Campaign as CampaignIcon,
     Category as ProgramIcon,
-    MonetizationOn as DonationIcon
+    MonetizationOn as DonationIcon,
+    VolunteerActivism as VolunteerIcon,
+    Article as StoryIcon,
+    TrendingUp as GrowthIcon,
+    AccessTime as RecentIcon
 } from '@mui/icons-material';
 
 export const AdminDashboard = () => {
@@ -32,8 +36,10 @@ export const AdminDashboard = () => {
     const kpiCards = [
         { label: 'Total Patients', value: stats?.total_patients || 0, icon: <PeopleIcon sx={{ color: '#4318FF' }} />, color: '#F4F7FE' },
         { label: 'Total Campaigns', value: stats?.total_campaigns || 0, icon: <CampaignIcon sx={{ color: '#FFB547' }} />, color: '#FFF7E8' },
-        { label: 'Programs', value: stats?.total_programs || 0, icon: <ProgramIcon sx={{ color: '#05CD99' }} />, color: '#E6FAF5' },
+        { label: 'Active Programs', value: stats?.total_programs || 0, icon: <ProgramIcon sx={{ color: '#05CD99' }} />, color: '#E6FAF5' },
         { label: 'Total Donations', value: `৳${(stats?.total_donated || 0).toLocaleString()}`, icon: <DonationIcon sx={{ color: '#E31A1A' }} />, color: '#FEEEEE' },
+        { label: 'Pending Volunteers', value: stats?.pending_volunteers || 0, icon: <VolunteerIcon sx={{ color: '#805AD5' }} />, color: '#F3EFFC' },
+        { label: 'Published Stories', value: stats?.total_stories || 0, icon: <StoryIcon sx={{ color: '#00B5D8' }} />, color: '#E6F7FA' },
     ];
 
     return (
@@ -54,7 +60,7 @@ export const AdminDashboard = () => {
             {/* KPI Cards */}
             <Grid container spacing={3} sx={{ mb: 4 }}>
                 {kpiCards.map((kpi, index) => (
-                    <Grid item xs={12} sm={6} md={3} key={index}>
+                    <Grid item xs={12} sm={6} md={4} lg={2} key={index}>
                         <Card sx={{ borderRadius: '20px', boxShadow: '0px 4px 20px rgba(112, 144, 176, 0.08)', height: '100%' }}>
                             <CardContent sx={{ display: 'flex', alignItems: 'center', p: 3 }}>
                                 <Box
@@ -171,15 +177,108 @@ export const AdminDashboard = () => {
                     </Paper>
                 </Grid>
 
+                {/* Impact Milestones */}
                 <Grid item xs={12} md={6}>
-                    {/* Placeholder for future analytics or milestones */}
-                    <Paper sx={{ p: 3, borderRadius: '20px', boxShadow: '0px 4px 20px rgba(112, 144, 176, 0.08)' }}>
-                        <Typography variant="h6" fontWeight="bold" sx={{ mb: 2 }}>
+                    <Paper sx={{ p: 3, borderRadius: '20px', boxShadow: '0px 4px 20px rgba(112, 144, 176, 0.08)', height: '100%' }}>
+                        <Typography variant="h6" fontWeight="bold" sx={{ mb: 3 }}>
                             Impact Milestones
                         </Typography>
-                        <Typography variant="body2" color="text.secondary">
-                            Detailed impact metrics and milestones will appear here.
+                        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+                            <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+                                <Box sx={{
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    width: 48,
+                                    height: 48,
+                                    borderRadius: '12px',
+                                    bgcolor: '#E6F7FA'
+                                }}>
+                                    <GrowthIcon sx={{ color: '#00B5D8', fontSize: 28 }} />
+                                </Box>
+                                <Box>
+                                    <Typography variant="body2" color="text.secondary">Monthly Growth</Typography>
+                                    <Typography variant="h6" fontWeight="bold" color={stats?.monthly_growth && stats.monthly_growth > 0 ? 'success.main' : 'error.main'}>
+                                        {stats?.monthly_growth || 0}%
+                                    </Typography>
+                                </Box>
+                            </Box>
+                            <Divider />
+                            <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+                                <Box sx={{
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    width: 48,
+                                    height: 48,
+                                    borderRadius: '12px',
+                                    bgcolor: '#FFF7E8'
+                                }}>
+                                    <RecentIcon sx={{ color: '#FFB547', fontSize: 28 }} />
+                                </Box>
+                                <Box>
+                                    <Typography variant="body2" color="text.secondary">Last 7 Days Donations</Typography>
+                                    <Typography variant="h6" fontWeight="bold">৳{(stats?.recent_donations_amount || 0).toLocaleString()}</Typography>
+                                </Box>
+                            </Box>
+                            <Divider />
+                            <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+                                <Box sx={{
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    width: 48,
+                                    height: 48,
+                                    borderRadius: '12px',
+                                    bgcolor: '#E6FAF5'
+                                }}>
+                                    <StoryIcon sx={{ color: '#05CD99', fontSize: 28 }} />
+                                </Box>
+                                <Box>
+                                    <Typography variant="body2" color="text.secondary">Content Created</Typography>
+                                    <Typography variant="h6" fontWeight="bold">{(stats?.total_stories || 0) + (stats?.total_blogs || 0)} Items</Typography>
+                                </Box>
+                            </Box>
+                        </Box>
+                    </Paper>
+                </Grid>
+
+                {/* Recent Activity Feed */}
+                <Grid item xs={12}>
+                    <Paper sx={{ p: 3, borderRadius: '20px', boxShadow: '0px 4px 20px rgba(112, 144, 176, 0.08)' }}>
+                        <Typography variant="h6" fontWeight="bold" sx={{ mb: 3 }}>
+                            Recent Donations
                         </Typography>
+                        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+                            {stats?.recent_activity && stats.recent_activity.length > 0 ? (
+                                stats.recent_activity.map((donation) => (
+                                    <Box key={donation.id} sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', p: 2, bgcolor: '#F7FAFC', borderRadius: 2 }}>
+                                        <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+                                            <Typography variant="body1" fontWeight="600">
+                                                {donation.donor_name || 'Anonymous'}
+                                            </Typography>
+                                            <Typography variant="body2" color="text.secondary">
+                                                {donation.patient?.name_en || donation.campaign?.name_en || 'General Donation'}
+                                            </Typography>
+                                            <Typography variant="caption" color="text.secondary">
+                                                {new Date(donation.created_at).toLocaleDateString('en-US', {
+                                                    month: 'short',
+                                                    day: 'numeric',
+                                                    year: 'numeric',
+                                                    hour: '2-digit',
+                                                    minute: '2-digit'
+                                                })}
+                                            </Typography>
+                                        </Box>
+                                        <Typography variant="h6" fontWeight="bold" color="primary">
+                                            ৳{parseFloat(donation.amount).toLocaleString()}
+                                        </Typography>
+                                    </Box>
+                                ))
+                            ) : (
+                                <Typography color="text.secondary">No recent donations.</Typography>
+                            )}
+                        </Box>
                     </Paper>
                 </Grid>
             </Grid>

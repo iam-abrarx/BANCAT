@@ -32,6 +32,11 @@ export interface AdminStats {
     total_patients: number;
     total_campaigns: number;
     total_programs: number;
+    pending_volunteers: number;
+    total_stories: number;
+    total_blogs: number;
+    recent_donations_amount: number;
+    monthly_growth: number;
     top_campaigns: Array<{
         id: number;
         name_en: string;
@@ -48,6 +53,21 @@ export interface AdminStats {
         month: string;
         total: number;
     }>;
+    recent_activity: Array<{
+        id: number;
+        amount: string;
+        created_at: string;
+        donor_name: string;
+        patient?: {
+            id: number;
+            name_en: string;
+        };
+        campaign?: {
+            id: number;
+            name_en: string;
+        };
+    }>;
+    error?: string;
 }
 
 export const dashboardService = {
@@ -56,7 +76,7 @@ export const dashboardService = {
         return response.data;
     },
     getAdminStats: async () => {
-        const response = await api.get<DashboardStats & { pending_volunteers: number }>('/admin/stats');
+        const response = await api.get<AdminStats>('/admin/stats');
         return response.data;
     },
     getDonations: async (page = 1) => {
