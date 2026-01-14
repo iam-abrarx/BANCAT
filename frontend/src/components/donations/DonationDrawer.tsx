@@ -9,7 +9,6 @@ import { useState, useEffect } from 'react';
 import { useQuery, useMutation } from '@tanstack/react-query';
 import { campaignService } from '../../services/campaignService';
 import { patientService } from '../../services/patientService';
-import { programService } from '../../services/programService';
 import { donationService } from '../../services/donationService';
 import type { Patient } from '../../types';
 
@@ -19,9 +18,8 @@ export const DonationDrawer = () => {
     const [email, setEmail] = useState('');
     const [phone, setPhone] = useState('');
     const [amount, setAmount] = useState('');
-    const [donationType, setDonationType] = useState<'general' | 'campaign' | 'patient' | 'program' | 'zakat'>('general');
+    const [donationType, setDonationType] = useState<'general' | 'campaign' | 'patient' | 'zakat'>('general');
     const [selectedCampaign, setSelectedCampaign] = useState<string | number>('');
-    const [selectedProgram, setSelectedProgram] = useState<string | number>('');
     const [selectedPatient, setSelectedPatient] = useState<Patient | null>(null);
     const [message, setMessage] = useState('');
     const [error, setError] = useState('');
@@ -32,12 +30,6 @@ export const DonationDrawer = () => {
         queryFn: () => campaignService.getAll(),
     });
 
-    // Fetch programs
-    const { data: programsData } = useQuery({
-        queryKey: ['programs'],
-        queryFn: () => programService.getAll(),
-    });
-
     // Fetch patients for selection
     const { data: patientsData } = useQuery({
         queryKey: ['patients-for-donation'],
@@ -46,7 +38,6 @@ export const DonationDrawer = () => {
     });
 
     const campaigns = (campaignsData as any) || [];
-    const programs = (programsData as any) || [];
     const patients = (patientsData as any)?.data || [];
 
     // Donation mutation
@@ -67,16 +58,10 @@ export const DonationDrawer = () => {
             if (initialData.type) setDonationType(initialData.type as any);
             if (initialData.amount) setAmount(initialData.amount.toString());
             if (initialData.campaignId) setSelectedCampaign(initialData.campaignId);
-            if (initialData.programId) setSelectedProgram(initialData.programId);
             if (initialData.patientId) {
-                // For patient, we might need to fetch the patient details if not already loaded, 
-                // but for now we just handle the ID if we had a mechanism, 
-                // simply setting ID might not be enough for the Autocomplete if it expects an object.
-                // We will skip complex patient object hydration for now unless requested.
+                // For patientId logic
             }
         } else if (!isOpen) {
-            // Reset form on close if needed, but usually controlled by user interaction
-            // We can clear errors
             setError('');
         }
     }, [initialData, isOpen]);
@@ -96,13 +81,11 @@ export const DonationDrawer = () => {
             category: donationType,
         };
 
-        // Add campaign or patient or program ID
+        // Add campaign or patient ID
         if (donationType === 'campaign' && selectedCampaign) {
             donationData.campaign_id = Number(selectedCampaign);
         } else if (donationType === 'patient' && selectedPatient) {
             donationData.patient_id = selectedPatient.id;
-        } else if (donationType === 'program' && selectedProgram) {
-            donationData.program_id = Number(selectedProgram);
         }
 
         // Submit donation
@@ -159,7 +142,6 @@ export const DonationDrawer = () => {
                                     setDonationType(e.target.value as any);
                                     setSelectedCampaign('');
                                     setSelectedPatient(null);
-                                    setSelectedProgram('');
                                 }}
                                 label="Donation Type"
                                 required
@@ -167,7 +149,6 @@ export const DonationDrawer = () => {
                                 <MenuItem value="general">General Donation</MenuItem>
                                 <MenuItem value="zakat">Zakat</MenuItem>
                                 <MenuItem value="campaign">Support a Campaign</MenuItem>
-                                <MenuItem value="program">Support a Program</MenuItem>
                                 <MenuItem value="patient">Donate to a Patient</MenuItem>
                             </Select>
                         </FormControl>
@@ -217,24 +198,7 @@ export const DonationDrawer = () => {
                             </FormControl>
                         )}
 
-                        {/* Program Selection */}
-                        {donationType === 'program' && (
-                            <FormControl fullWidth sx={{ mb: 3 }}>
-                                <InputLabel>Select Program</InputLabel>
-                                <Select
-                                    value={selectedProgram}
-                                    onChange={(e) => setSelectedProgram(e.target.value)}
-                                    label="Select Program"
-                                    required
-                                >
-                                    {programs.map((program: any) => (
-                                        <MenuItem key={program.id} value={program.id}>
-                                            {program.name_en}
-                                        </MenuItem>
-                                    ))}
-                                </Select>
-                            </FormControl>
-                        )}
+
 
                         {/* Patient Selection with Search */}
                         {donationType === 'patient' && (
