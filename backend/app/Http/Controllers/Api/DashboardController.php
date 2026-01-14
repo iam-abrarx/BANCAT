@@ -42,7 +42,6 @@ class DashboardController extends Controller
                 $totalDonated = Donation::where('status', 'completed')->sum('amount');
                 $totalPatients = Patient::count();
                 $totalCampaigns = \App\Models\Campaign::count();
-                $totalPrograms = \App\Models\Program::count();
                 
                 // Additional metrics
                 $pendingVolunteers = Volunteer::where('status', 'pending')->count();
@@ -73,11 +72,6 @@ class DashboardController extends Controller
                 $topCampaigns = \App\Models\Campaign::orderBy('raised_amount', 'desc')
                     ->take(5)
                     ->get(['id', 'name_en', 'raised_amount', 'goal_amount', 'status']);
-
-                // Current Programs
-                $currentPrograms = \App\Models\Program::where('is_active', true)
-                    ->take(5)
-                    ->get(['id', 'name_en', 'is_active']);
 
                 // Donation Trends (Last 6 Months) - Database agnostic
                 // Use Laravel's date formatting instead of database-specific functions

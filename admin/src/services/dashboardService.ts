@@ -31,7 +31,6 @@ export interface AdminStats {
     total_donated: number;
     total_patients: number;
     total_campaigns: number;
-    total_programs: number;
     pending_volunteers: number;
     total_stories: number;
     total_blogs: number;
@@ -44,11 +43,7 @@ export interface AdminStats {
         goal_amount: number;
         status: string;
     }>;
-    current_programs: Array<{
-        id: number;
-        name_en: string;
-        is_active: boolean;
-    }>;
+
     donation_trends: Array<{
         month: string;
         total: number;
