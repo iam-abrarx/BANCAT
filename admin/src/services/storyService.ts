@@ -34,9 +34,7 @@ export const storyService = {
     // Admin Methods
     // Admin Methods
     createStory: async (data: any) => {
-        const response = await api.post('/admin/stories', data, {
-            headers: { 'Content-Type': 'multipart/form-data' }
-        });
+        const response = await api.post('/admin/stories', data);
         return response.data;
     },
 
@@ -44,9 +42,7 @@ export const storyService = {
         // If data is FormData, we must use POST with _method: PUT because PHP has trouble with PUT/PATCH and multipart/form-data
         if (data instanceof FormData) {
             data.append('_method', 'PUT');
-            const response = await api.post(`/admin/stories/${id}`, data, {
-                headers: { 'Content-Type': 'multipart/form-data' }
-            });
+            const response = await api.post(`/admin/stories/${id}`, data);
             return response.data;
         }
 

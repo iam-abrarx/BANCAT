@@ -62,8 +62,8 @@ const StatCard = ({ title, value, icon, color, trend }: any) => (
 export const DashboardOverview = () => {
     const { user } = useAuth();
     const { data: stats, isLoading: statsLoading } = useQuery({
-        queryKey: ['dashboard-stats'],
-        queryFn: dashboardService.getStats
+        queryKey: ['admin-dashboard-stats'],
+        queryFn: dashboardService.getAdminStats
     });
 
     const { data: donationsData, isLoading: donationsLoading } = useQuery({
@@ -103,34 +103,34 @@ export const DashboardOverview = () => {
                         value={`৳${stats?.total_donated.toLocaleString() ?? 0}`}
                         icon={<AttachMoney fontSize="large" />}
                         color="#4318FF"
-                        trend="+12%"
+                        trend={`+${stats?.monthly_growth ?? 0}%`}
                     />
                 </Grid>
                 <Grid item xs={12} sm={6} md={3}>
                     <StatCard
-                        title="Active Donors"
-                        value={stats?.donation_count ?? 0}
+                        title="Total Patients"
+                        value={stats?.total_patients ?? 0}
                         icon={<VolunteerActivism fontSize="large" />}
                         color="#05CD99"
-                        trend="+5%"
+                        trend="Active"
                     />
                 </Grid>
                 <Grid item xs={12} sm={6} md={3}>
                     <StatCard
-                        title="Lives Impacted"
-                        value={stats?.impact_count ?? 0}
+                        title="Total Stories"
+                        value={stats?.total_stories ?? 0}
                         icon={<Favorite fontSize="large" />}
                         color="#EE5D50"
-                        trend="+18%"
+                        trend="Published"
                     />
                 </Grid>
                 <Grid item xs={12} sm={6} md={3}>
                     <StatCard
-                        title="New Campaigns"
-                        value="12"
+                        title="Active Campaigns"
+                        value={stats?.total_campaigns ?? 0}
                         icon={<TrendingUp fontSize="large" />}
                         color="#FFB547"
-                        trend="+2"
+                        trend="Running"
                     />
                 </Grid>
             </Grid>

@@ -128,13 +128,7 @@ export const AdminPatientForm = () => {
 
     const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files[0]) {
-            const file = e.target.files[0];
-            if (file.size > 2 * 1024 * 1024) {
-                alert('File size must be less than 2MB');
-                e.target.value = ''; // Reset input
-                return;
-            }
-            setSelectedFile(file);
+            setSelectedFile(e.target.files[0]);
         }
     };
 

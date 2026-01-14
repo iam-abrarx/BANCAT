@@ -4,6 +4,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useNavigate, useParams } from 'react-router-dom';
 import { storyService } from '../../../services/storyService';
 import { LoadingSpinner } from '../../../components/common/LoadingSpinner';
+import { getAssetUrl } from '../../../config/api';
 import { useState, useEffect, type ChangeEvent } from 'react';
 
 interface StoryFormData {
@@ -116,13 +117,7 @@ export const AdminStoryForm = () => {
 
     const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files[0]) {
-            const file = e.target.files[0];
-            if (file.size > 2 * 1024 * 1024) {
-                alert('File size must be less than 2MB');
-                e.target.value = '';
-                return;
-            }
-            setSelectedFile(file);
+            setSelectedFile(e.target.files[0]);
         }
     };
 
@@ -235,7 +230,7 @@ export const AdminStoryForm = () => {
                                         <Box sx={{ position: 'relative', display: 'inline-block' }}>
                                             <Box
                                                 component="img"
-                                                src={selectedFile ? URL.createObjectURL(selectedFile) : (currentPhotoUrl ? (currentPhotoUrl.startsWith('http') ? currentPhotoUrl : `${import.meta.env.VITE_API_URL?.replace('/api/v1', '')}${currentPhotoUrl}`) : '')}
+                                                src={selectedFile ? URL.createObjectURL(selectedFile) : getAssetUrl(currentPhotoUrl)}
                                                 alt="Preview"
                                                 sx={{ width: 200, height: 200, objectFit: 'cover', borderRadius: 2, mb: 2 }}
                                                 onError={(e: any) => { if (!e.target.dataset.errored) { e.target.dataset.errored = 'true'; e.target.src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'%3E%3Crect fill='%23e0e0e0' width='200' height='200'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' fill='%23999' font-size='16' font-family='sans-serif'%3ENo Image%3C/text%3E%3C/svg%3E"; } }}

@@ -36,6 +36,8 @@ class DashboardController extends Controller
     public function adminStats(Request $request)
     {
         try {
+            // Cache dashboard stats for 5 minutes to reduce database load
+            return \Illuminate\Support\Facades\Cache::remember('admin_dashboard_stats', 300, function () {
                 // Basic counts
                 $totalDonated = Donation::where('status', 'completed')->sum('amount');
                 $totalPatients = Patient::count();
@@ -119,6 +121,7 @@ class DashboardController extends Controller
                     'donation_trends' => $donationTrends,
                     'recent_activity' => $recentDonationsList
                 ];
+            });
         } catch (\Exception $e) {
             // Log the error for debugging
             \Log::error('Dashboard stats error: ' . $e->getMessage());

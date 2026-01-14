@@ -22,6 +22,7 @@ import {
 import { Add, Delete, Edit } from '@mui/icons-material';
 import { useForm } from 'react-hook-form';
 import { getTestimonials, createTestimonial, updateTestimonial, deleteTestimonial } from '../services/testimonialService';
+import { getAssetUrl } from '../config/api';
 
 interface Testimonial {
     id: number;
@@ -44,8 +45,6 @@ const Testimonials = () => {
     const [editingId, setEditingId] = useState<number | null>(null);
     const { register, handleSubmit, reset, setValue } = useForm<TestimonialForm>();
     const [previewImage, setPreviewImage] = useState<string | null>(null);
-
-    const [isSubmitting, setIsSubmitting] = useState(false);
 
     useEffect(() => {
         fetchTestimonials();
@@ -79,12 +78,9 @@ const Testimonials = () => {
         setOpen(false);
         reset();
         setEditingId(null);
-        setIsSubmitting(false);
     };
 
     const onSubmit = async (data: TestimonialForm) => {
-        if (isSubmitting) return;
-        setIsSubmitting(true);
         try {
             const formData = new FormData();
             formData.append('name', data.name);
@@ -101,11 +97,8 @@ const Testimonials = () => {
             }
             fetchTestimonials();
             handleClose();
-        } catch (error: any) {
+        } catch (error) {
             console.error('Failed to save testimonial', error);
-            alert(`Failed to save: ${error.response?.data?.message || error.message}`);
-        } finally {
-            setIsSubmitting(false);
         }
     };
 
@@ -148,7 +141,7 @@ const Testimonials = () => {
                         {testimonials.map((testimonial) => (
                             <TableRow key={testimonial.id}>
                                 <TableCell>
-                                    <Avatar src={testimonial.image ? `http://localhost:8000${testimonial.image}` : undefined} alt={testimonial.name} />
+                                    <Avatar src={getAssetUrl(testimonial.image)} alt={testimonial.name} />
                                 </TableCell>
                                 <TableCell>{testimonial.name}</TableCell>
                                 <TableCell>{testimonial.role}</TableCell>
@@ -219,16 +212,16 @@ const Testimonials = () => {
                         {previewImage && (
                             <Box display="flex" justifyContent="center" mb={2}>
                                 <Avatar
-                                    src={previewImage.startsWith('blob:') ? previewImage : `http://localhost:8000${previewImage}`}
+                                    src={previewImage.startsWith('blob:') ? previewImage : getAssetUrl(previewImage)}
                                     sx={{ width: 100, height: 100 }}
                                 />
                             </Box>
                         )}
                     </DialogContent>
                     <DialogActions>
-                        <Button onClick={handleClose} disabled={isSubmitting}>Cancel</Button>
-                        <Button type="submit" variant="contained" disabled={isSubmitting}>
-                            {isSubmitting ? 'Saving...' : 'Save'}
+                        <Button onClick={handleClose}>Cancel</Button>
+                        <Button type="submit" variant="contained">
+                            Save
                         </Button>
                     </DialogActions>
                 </form>

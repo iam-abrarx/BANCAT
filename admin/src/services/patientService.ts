@@ -58,12 +58,9 @@ export const patientService = {
     },
 
     updatePatient: async (id: number, data: any) => {
-        let payload = data;
-
         if (data instanceof FormData) {
-            payload.append('_method', 'PUT');
-            // Use POST for FormData updates in Laravel, let Axios handle headers
-            const response = await api.post(`/admin/patients/${id}`, payload);
+            data.append('_method', 'PUT');
+            const response = await api.post(`/admin/patients/${id}`, data);
             return response.data;
         }
 

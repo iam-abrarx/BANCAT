@@ -1,10 +1,11 @@
 import { useForm, Controller } from 'react-hook-form';
 import { Box, Paper, TextField, Button, Grid, Typography, FormControlLabel, Switch, Alert } from '@mui/material';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useNavigate, useParams } from 'react-router-dom';
 import { campaignService } from '../../../services/campaignService';
 import { LoadingSpinner } from '../../../components/common/LoadingSpinner';
-import { useState, type ChangeEvent, useEffect } from 'react';
+import { useState, useEffect, type ChangeEvent } from 'react';
+import { useQuery } from '@tanstack/react-query';
 import { getAssetUrl } from '../../../config/api';
 
 interface CampaignFormData {
@@ -12,7 +13,7 @@ interface CampaignFormData {
     name_bn: string;
     description_en: string;
     description_bn: string;
-    banner_image: string | File;
+    banner_image: string;
     goal_amount: number;
     start_date: string;
     end_date: string;
@@ -25,10 +26,9 @@ export const AdminCampaignForm = () => {
     const navigate = useNavigate();
     const queryClient = useQueryClient();
     const isEditMode = !!id;
-    const [selectedFile, setSelectedFile] = useState<File | null>(null);
-    const [previewUrl, setPreviewUrl] = useState<string | null>(null);
 
-    const { control, handleSubmit, watch, reset, formState: { errors } } = useForm<CampaignFormData>({
+    const [selectedFile, setSelectedFile] = useState<File | null>(null);
+    const { control, handleSubmit, reset, watch, formState: { errors } } = useForm<CampaignFormData>({
         defaultValues: {
             name_en: '',
             name_bn: '',
@@ -43,7 +43,10 @@ export const AdminCampaignForm = () => {
         }
     });
 
-    const { data: campaign, isLoading: isLoadingCampaign } = useQuery({
+    const currentBannerUrl = watch('banner_image');
+
+    // Fetch existing data for edit
+    const { data: campaign } = useQuery({
         queryKey: ['campaign', id],
         queryFn: () => campaignService.getCampaignById(Number(id)),
         enabled: isEditMode,
@@ -52,98 +55,50 @@ export const AdminCampaignForm = () => {
     useEffect(() => {
         if (campaign) {
             reset({
-                name_en: campaign.name_en,
-                name_bn: campaign.name_bn || '',
-                description_en: campaign.description_en,
-                description_bn: campaign.description_bn || '',
-                banner_image: campaign.banner_image || '',
-                goal_amount: campaign.goal_amount,
-                start_date: campaign.start_date ? campaign.start_date.split('T')[0] : '', // Format date for input
-                end_date: campaign.end_date ? campaign.end_date.split('T')[0] : '',
-                is_active: Boolean(campaign.is_active),
-                is_featured: Boolean(campaign.is_featured),
+                ...campaign,
+                start_date: campaign.start_date ? new Date(campaign.start_date).toISOString().split('T')[0] : '',
+                end_date: campaign.end_date ? new Date(campaign.end_date).toISOString().split('T')[0] : '',
             });
-            if (campaign.banner_image) {
-                setPreviewUrl(getAssetUrl(campaign.banner_image));
-            }
         }
     }, [campaign, reset]);
 
-    const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
-        if (e.target.files && e.target.files[0]) {
-            const file = e.target.files[0];
-            if (file.size > 2 * 1024 * 1024) {
-                alert('File size must be less than 2MB');
-                return;
-            }
-            setSelectedFile(file);
-            setPreviewUrl(URL.createObjectURL(file));
-        }
-    };
-
     const mutation = useMutation({
-        mutationFn: (data: CampaignFormData) => {
-            const formData = new FormData();
-            formData.append('name_en', data.name_en);
-            formData.append('name_bn', data.name_bn || '');
-            formData.append('description_en', data.description_en);
-            formData.append('description_bn', data.description_bn || '');
-            formData.append('goal_amount', data.goal_amount.toString());
-            if (data.start_date) formData.append('start_date', data.start_date);
-            if (data.end_date) formData.append('end_date', data.end_date);
-            formData.append('is_active', data.is_active ? '1' : '0');
-            formData.append('is_featured', data.is_featured ? '1' : '0');
-
-            if (selectedFile) {
-                formData.append('banner_image', selectedFile);
-            }
-
-            // Note: If updating and no new file, backend keeps old file if not sent.
-            // But if we want to support deleting image? Not implemented yet. 
-            // For now, if no file sent, it keeps old one.
-
-            // The campaignService methods accept 'any' which technically works with FormData,
-            // but we should ensure the Content-Type header is set. 
-            // Usually axios sets it automatically for FormData.
-            // Wait, campaignService.createCampaign takes 'data'.
-            // In AdminTeamForm, we cast to any: mutation.mutate(formData as any);
-
+        mutationFn: (data: FormData) => {
             if (isEditMode) {
-                // For update, we use POST with _method=PUT to handle file uploads in Laravel if PUT has issues with FormData
-                // But Laravel supports FormData with PUT if using _method trick, OR we can use POST for update route if designed so.
-                // However, standard Laravel resource PUT requests often fail with FormData on PHP.
-                // The common workaround is POST with _method='PUT'.
-                // Let's modify FormData to include _method if needed, OR relies on POST route?
-                // The route in api.php is Route::put('/campaigns/{id}', ...).
-                // It is safer to use: formData.append('_method', 'PUT'); and use POST request if we can change service.
-                // But let's try standard PUT first. If it fails (empty request), I will switch to _method trick.
-                // Actually, for files, PHP definitely has issues with PUT.
-                // I should add `formData.append('_method', 'PUT');` and call `updateCampaign` but `updateCampaign` uses `api.put`.
-                // `api.put` uses axios.put.
-                // I might need to change `campaignService.updateCampaign` to allow method override or just use POST with _method inside the service?
-                // OR easier: just use `formData.append('_method', 'PUT');` and change service call to `api.post`?
-                // I cannot change `campaignService` easily without another tool call.
-                // Let's assume standard PUT works or user will report.
-                // actually, I've seen issues with this before.
-                // I'll stick to simple implementation first.
-                return campaignService.updateCampaign(Number(id), formData);
+                return campaignService.updateCampaign(Number(id), data);
             }
-            return campaignService.createCampaign(formData);
+            return campaignService.createCampaign(data);
         },
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ['admin-campaigns'] }); // specific key? or just invalidate all
-            // AdminDashboard uses 'admin-stats', 'campaigns' list uses?
-            // AdminCampaignList uses ['campaigns', { params... }]
-            queryClient.invalidateQueries({ queryKey: ['campaigns'] });
-            navigate('/admin/campaigns'); // Verify route
+            queryClient.invalidateQueries({ queryKey: ['admin-campaigns'] });
+            navigate('/campaigns');
         },
     });
 
     const onSubmit = (data: CampaignFormData) => {
-        mutation.mutate(data);
+        const formData = new FormData();
+        Object.keys(data).forEach(key => {
+            const value = data[key as keyof CampaignFormData];
+            if (key === 'banner_image') return;
+            if (value === undefined || value === null) return;
+
+            if (typeof value === 'boolean') formData.append(key, value ? '1' : '0');
+            else formData.append(key, value.toString());
+        });
+
+        if (selectedFile) {
+            formData.append('banner_image', selectedFile);
+        }
+        mutation.mutate(formData);
     };
 
-    if (isLoadingCampaign) return <LoadingSpinner />;
+    const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
+        if (e.target.files && e.target.files[0]) {
+            setSelectedFile(e.target.files[0]);
+        }
+    };
+
+    if (mutation.isPending) return <LoadingSpinner />;
 
     return (
         <Box>
@@ -190,30 +145,52 @@ export const AdminCampaignForm = () => {
                                 )}
                             />
                         </Grid>
-
                         <Grid item xs={12} md={6}>
-                            <Typography variant="body2" color="textSecondary" gutterBottom>
-                                Banner Image
-                            </Typography>
-                            <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-                                {previewUrl && (
-                                    <Box
-                                        component="img"
-                                        src={previewUrl}
-                                        alt="Banner Preview"
-                                        sx={{ width: 100, height: 60, objectFit: 'cover', borderRadius: 1 }}
-                                    />
-                                )}
-                                <Button variant="outlined" component="label">
-                                    Upload File
-                                    <input
-                                        type="file"
-                                        hidden
-                                        accept="image/*"
-                                        onChange={handleFileChange}
-                                    />
-                                </Button>
-                                {selectedFile && <Typography variant="caption">{selectedFile.name}</Typography>}
+                            <Typography variant="caption" sx={{ mb: 1, display: 'block', fontWeight: 600 }}>Banner Image</Typography>
+                            <Box
+                                sx={{
+                                    border: '2px dashed #e0e0e0',
+                                    borderRadius: 2,
+                                    p: 2,
+                                    textAlign: 'center',
+                                    bgcolor: 'background.default',
+                                    transition: 'all 0.2s',
+                                    cursor: 'pointer',
+                                    '&:hover': { borderColor: 'primary.main', bgcolor: 'action.hover' }
+                                }}
+                            >
+                                <input
+                                    accept="image/*"
+                                    style={{ display: 'none' }}
+                                    id="banner-image-upload"
+                                    type="file"
+                                    onChange={handleFileChange}
+                                />
+                                <label htmlFor="banner-image-upload" style={{ width: '100%', cursor: 'pointer', display: 'block' }}>
+                                    {(selectedFile || (isEditMode && currentBannerUrl)) ? (
+                                        <Box sx={{ position: 'relative' }}>
+                                            <Box
+                                                component="img"
+                                                src={selectedFile ? URL.createObjectURL(selectedFile) : getAssetUrl(currentBannerUrl)}
+                                                alt="Banner Preview"
+                                                sx={{ width: '100%', maxHeight: 200, objectFit: 'cover', borderRadius: 2 }}
+                                                onError={(e: any) => { if (!e.target.dataset.errored) { e.target.dataset.errored = 'true'; e.target.src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='150' viewBox='0 0 300 150'%3E%3Crect fill='%23e0e0e0' width='300' height='150'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' fill='%23999' font-size='16' font-family='sans-serif'%3ENo Image%3C/text%3E%3C/svg%3E"; } }}
+                                            />
+                                            <Typography variant="caption" color="text.secondary" display="block" sx={{ mt: 1 }}>
+                                                {selectedFile ? selectedFile.name : 'Current Banner'} (Click to change)
+                                            </Typography>
+                                        </Box>
+                                    ) : (
+                                        <Box sx={{ py: 3 }}>
+                                            <Typography variant="body2" color="primary" fontWeight="bold">
+                                                Upload Banner Image
+                                            </Typography>
+                                            <Typography variant="caption" color="text.secondary">
+                                                Replaces URL input
+                                            </Typography>
+                                        </Box>
+                                    )}
+                                </label>
                             </Box>
                         </Grid>
 
@@ -280,7 +257,7 @@ export const AdminCampaignForm = () => {
                         </Grid>
 
                         <Grid item xs={12} sx={{ display: 'flex', gap: 2, justifyContent: 'flex-end' }}>
-                            <Button variant="outlined" onClick={() => navigate('/admin/campaigns')}>
+                            <Button variant="outlined" onClick={() => navigate('/campaigns')}>
                                 Cancel
                             </Button>
                             <Button type="submit" variant="contained" size="large">

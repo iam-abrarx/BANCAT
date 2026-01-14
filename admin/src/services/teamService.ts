@@ -28,24 +28,14 @@ export const teamService = {
     },
 
     create: async (data: any) => {
-        const config = {
-            headers: {
-                'Content-Type': 'multipart/form-data',
-            },
-        };
-        const response = await api.post('/admin/team-members', data, config);
+        const response = await api.post('/admin/team-members', data);
         return response.data;
     },
 
     update: async (id: number, data: any) => {
         if (data instanceof FormData) {
             data.append('_method', 'PUT');
-            const config = {
-                headers: {
-                    'Content-Type': 'multipart/form-data',
-                },
-            };
-            const response = await api.post(`/admin/team-members/${id}`, data, config);
+            const response = await api.post(`/admin/team-members/${id}`, data);
             return response.data;
         }
         const response = await api.put(`/admin/team-members/${id}`, data);
