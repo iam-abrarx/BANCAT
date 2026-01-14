@@ -91,7 +91,11 @@ export const AdminPatientList = () => {
                                 <TableCell>
                                     <Box
                                         component="img"
-                                        src={getAssetUrl(patient.photo) || "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='50' height='50' viewBox='0 0 50 50'%3E%3Crect fill='%23e0e0e0' width='50' height='50'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' fill='%23999' font-size='8' font-family='sans-serif'%3ENo Img%3C/text%3E%3C/svg%3E"}
+                                        src={(() => {
+                                            const url = getAssetUrl(patient.photo);
+                                            console.log(`Patient [${patient.id}] Photo: ${patient.photo} -> URL: ${url}`);
+                                            return url || "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='50' height='50' viewBox='0 0 50 50'%3E%3Crect fill='%23e0e0e0' width='50' height='50'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' fill='%23999' font-size='8' font-family='sans-serif'%3ENo Img%3C/text%3E%3C/svg%3E";
+                                        })()}
                                         alt={patient.name_en}
                                         sx={{ width: 50, height: 50, objectFit: 'cover', borderRadius: '50%' }}
                                         onError={(e: any) => { if (!e.target.dataset.errored) { e.target.dataset.errored = 'true'; e.target.src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='50' height='50' viewBox='0 0 50 50'%3E%3Crect fill='%23ffebee' width='50' height='50'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' fill='%23c62828' font-size='8' font-family='sans-serif'%3EError%3C/text%3E%3C/svg%3E"; } }}
