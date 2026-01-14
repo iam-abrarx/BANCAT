@@ -57,13 +57,14 @@ export const Partners = () => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
-    const mockPartners = [
-        "https://via.placeholder.com/150x80?text=Bank+Asia",
-        "https://via.placeholder.com/150x80?text=Grameenphone",
-        "https://via.placeholder.com/150x80?text=BRAC",
-        "https://via.placeholder.com/150x80?text=Square+Pharma",
-        "https://via.placeholder.com/150x80?text=City+Bank",
-        "https://via.placeholder.com/150x80?text=Beximco"
+    // Partner logos - these can be replaced with actual logo URLs when available
+    const partners = [
+        { name: "Bank Asia", logo: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='150' height='80'%3E%3Crect width='150' height='80' fill='%23e8e8e8'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-family='Arial, sans-serif' font-size='14' fill='%23666'%3EBank Asia%3C/text%3E%3C/svg%3E" },
+        { name: "Grameenphone", logo: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='150' height='80'%3E%3Crect width='150' height='80' fill='%23e8e8e8'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-family='Arial, sans-serif' font-size='14' fill='%23666'%3EGrameenphone%3C/text%3E%3C/svg%3E" },
+        { name: "BRAC", logo: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='150' height='80'%3E%3Crect width='150' height='80' fill='%23e8e8e8'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-family='Arial, sans-serif' font-size='14' fill='%23666'%3EBRAC%3C/text%3E%3C/svg%3E" },
+        { name: "Square Pharma", logo: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='150' height='80'%3E%3Crect width='150' height='80' fill='%23e8e8e8'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-family='Arial, sans-serif' font-size='14' fill='%23666'%3ESquare Pharma%3C/text%3E%3C/svg%3E" },
+        { name: "City Bank", logo: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='150' height='80'%3E%3Crect width='150' height='80' fill='%23e8e8e8'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-family='Arial, sans-serif' font-size='14' fill='%23666'%3ECity Bank%3C/text%3E%3C/svg%3E" },
+        { name: "Beximco", logo: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='150' height='80'%3E%3Crect width='150' height='80' fill='%23e8e8e8'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-family='Arial, sans-serif' font-size='14' fill='%23666'%3EBeximco%3C/text%3E%3C/svg%3E" }
     ];
 
     return (
@@ -97,7 +98,7 @@ export const Partners = () => {
                 </Typography>
 
                 <Grid container spacing={4} justifyContent="center" alignItems="center">
-                    {mockPartners.map((logo, index) => (
+                    {partners.map((partner, index) => (
                         <Grid item xs={6} sm={4} md={2} key={index}>
                             <Paper
                                 elevation={0}
@@ -111,7 +112,7 @@ export const Partners = () => {
                                     '&:hover': { filter: 'grayscale(0%)', boxShadow: 3 }
                                 }}
                             >
-                                <img src={logo} alt={`Partner ${index + 1}`} style={{ maxWidth: '100%', height: 'auto' }} />
+                                <img src={partner.logo} alt={partner.name} style={{ maxWidth: '100%', height: 'auto' }} />
                             </Paper>
                         </Grid>
                     ))}
