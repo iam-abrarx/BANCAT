@@ -51,5 +51,10 @@ export const campaignService = {
     updateStatus: async (id: number, data: { status: string; is_active: boolean }) => {
         const response = await api.put(`/admin/campaigns/${id}`, data);
         return response.data;
+    },
+
+    getCampaignById: async (id: number) => {
+        const response = await api.get<Campaign>(`/admin/campaigns/${id}`);
+        return response.data;
     }
 };

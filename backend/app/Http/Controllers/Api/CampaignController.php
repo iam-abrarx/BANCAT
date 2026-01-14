@@ -35,6 +35,10 @@ class CampaignController extends Controller
             ->firstOrFail();
     }
 
+    public function showAdmin($id) {
+        return Campaign::findOrFail($id);
+    }
+
     // Admin Methods
 
     public function store(Request $request)
@@ -44,7 +48,7 @@ class CampaignController extends Controller
             'name_bn' => 'nullable|string',
             'description_en' => 'required|string',
             'description_bn' => 'nullable|string',
-            'banner_image' => 'nullable|string',
+            'banner_image' => 'nullable', // Allow file
             'goal_amount' => 'required|numeric',
             'start_date' => 'nullable|date',
             'end_date' => 'nullable|date',
@@ -52,9 +56,16 @@ class CampaignController extends Controller
             'is_featured' => 'boolean',
         ]);
 
+        if ($request->hasFile('banner_image')) {
+            $path = $request->file('banner_image')->store('campaigns', 'public');
+            $data['banner_image'] = '/storage/' . $path;
+        }
+
         $data['slug'] = Str::slug($data['name_en']) . '-' . Str::random(6);
         $data['raised_amount'] = 0;
         $data['status'] = 'approved';
+        $data['is_active'] = filter_var($request->input('is_active', false), FILTER_VALIDATE_BOOLEAN);
+        $data['is_featured'] = filter_var($request->input('is_featured', false), FILTER_VALIDATE_BOOLEAN);
 
         $campaign = Campaign::create($data);
 
@@ -106,7 +117,7 @@ class CampaignController extends Controller
             'name_bn' => 'nullable|string',
             'description_en' => 'sometimes|string',
             'description_bn' => 'nullable|string',
-            'banner_image' => 'nullable|string',
+            'banner_image' => 'nullable', // Allow file
             'goal_amount' => 'sometimes|numeric',
             'start_date' => 'nullable|date',
             'end_date' => 'nullable|date',
@@ -114,8 +125,20 @@ class CampaignController extends Controller
             'is_featured' => 'boolean',
         ]);
 
+        if ($request->hasFile('banner_image')) {
+            $path = $request->file('banner_image')->store('campaigns', 'public');
+            $data['banner_image'] = '/storage/' . $path;
+        }
+
         if (isset($data['name_en']) && $data['name_en'] !== $campaign->name_en) {
              $data['slug'] = Str::slug($data['name_en']) . '-' . Str::random(6);
+        }
+
+        if ($request->has('is_active')) {
+            $data['is_active'] = filter_var($request->input('is_active'), FILTER_VALIDATE_BOOLEAN);
+        }
+        if ($request->has('is_featured')) {
+            $data['is_featured'] = filter_var($request->input('is_featured'), FILTER_VALIDATE_BOOLEAN);
         }
 
         $campaign->update($data);

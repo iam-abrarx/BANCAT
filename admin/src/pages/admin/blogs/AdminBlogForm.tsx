@@ -100,7 +100,7 @@ export const AdminBlogForm = () => {
                 meta_keywords: blog.meta_keywords || '',
             });
             if (blog.image) {
-                setPreviewUrl(getAssetUrl(blog.image));
+                setPreviewUrl(getAssetUrl(blog.image) || null);
             }
         }
     }, [blog, reset]);
@@ -159,6 +159,11 @@ export const AdminBlogForm = () => {
     const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files[0]) {
             const file = e.target.files[0];
+            if (file.size > 2 * 1024 * 1024) {
+                alert('File size must be less than 2MB');
+                e.target.value = '';
+                return;
+            }
             setSelectedFile(file);
             setPreviewUrl(URL.createObjectURL(file));
         }

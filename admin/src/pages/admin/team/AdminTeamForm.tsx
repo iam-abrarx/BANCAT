@@ -85,12 +85,12 @@ export const AdminTeamForm = () => {
         formData.append('order', String(data.order));
         formData.append('is_active', data.is_active ? '1' : '0');
 
-        if (data.name_bn) formData.append('name_bn', data.name_bn);
-        if (data.role_bn) formData.append('role_bn', data.role_bn);
-        if (data.bio_en) formData.append('bio_en', data.bio_en);
-        if (data.bio_bn) formData.append('bio_bn', data.bio_bn);
-        if (data.email) formData.append('email', data.email);
-        if (data.linkedin) formData.append('linkedin', data.linkedin);
+        formData.append('name_bn', data.name_bn || '');
+        formData.append('role_bn', data.role_bn || '');
+        formData.append('bio_en', data.bio_en || '');
+        formData.append('bio_bn', data.bio_bn || '');
+        formData.append('email', data.email || '');
+        formData.append('linkedin', data.linkedin || '');
 
         if (data.photo instanceof File) {
             formData.append('photo', data.photo);
@@ -207,6 +207,11 @@ export const AdminTeamForm = () => {
                                                     onChange={(e) => {
                                                         const file = e.target.files?.[0];
                                                         if (file) {
+                                                            if (file.size > 2 * 1024 * 1024) {
+                                                                alert('File size must be less than 2MB');
+                                                                e.target.value = '';
+                                                                return;
+                                                            }
                                                             onChange(file);
                                                         }
                                                     }}

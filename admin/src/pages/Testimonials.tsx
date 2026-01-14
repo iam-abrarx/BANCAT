@@ -45,6 +45,8 @@ const Testimonials = () => {
     const { register, handleSubmit, reset, setValue } = useForm<TestimonialForm>();
     const [previewImage, setPreviewImage] = useState<string | null>(null);
 
+    const [isSubmitting, setIsSubmitting] = useState(false);
+
     useEffect(() => {
         fetchTestimonials();
     }, []);
@@ -77,9 +79,12 @@ const Testimonials = () => {
         setOpen(false);
         reset();
         setEditingId(null);
+        setIsSubmitting(false);
     };
 
     const onSubmit = async (data: TestimonialForm) => {
+        if (isSubmitting) return;
+        setIsSubmitting(true);
         try {
             const formData = new FormData();
             formData.append('name', data.name);
@@ -96,8 +101,11 @@ const Testimonials = () => {
             }
             fetchTestimonials();
             handleClose();
-        } catch (error) {
+        } catch (error: any) {
             console.error('Failed to save testimonial', error);
+            alert(`Failed to save: ${error.response?.data?.message || error.message}`);
+        } finally {
+            setIsSubmitting(false);
         }
     };
 
@@ -218,9 +226,9 @@ const Testimonials = () => {
                         )}
                     </DialogContent>
                     <DialogActions>
-                        <Button onClick={handleClose}>Cancel</Button>
-                        <Button type="submit" variant="contained">
-                            Save
+                        <Button onClick={handleClose} disabled={isSubmitting}>Cancel</Button>
+                        <Button type="submit" variant="contained" disabled={isSubmitting}>
+                            {isSubmitting ? 'Saving...' : 'Save'}
                         </Button>
                     </DialogActions>
                 </form>

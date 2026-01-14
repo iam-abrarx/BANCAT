@@ -8,6 +8,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useForm, Controller } from 'react-hook-form';
 import { galleryService, type Gallery } from '../../../services/galleryService';
 import { ImageUpload } from '../../../components/common/ImageUpload';
+import { LoadingSpinner } from '../../../components/common/LoadingSpinner';
 
 const AdminGalleryForm = () => {
     const navigate = useNavigate();
@@ -17,6 +18,7 @@ const AdminGalleryForm = () => {
     const [newImages, setNewImages] = useState<File[]>([]);
     const [featuredFile, setFeaturedFile] = useState<File | null>(null);
     const [featuredPreview, setFeaturedPreview] = useState<string>('');
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
     const { control, handleSubmit, reset } = useForm({
         defaultValues: {
@@ -58,29 +60,26 @@ const AdminGalleryForm = () => {
     };
 
     const onSubmit = async (data: any) => {
-        console.log('Submitting Gallery Form', data);
-        const formData = new FormData();
-        formData.append('title_en', data.title_en);
-        if (data.title_bn) formData.append('title_bn', data.title_bn);
-        if (data.description_en) formData.append('description_en', data.description_en);
-        if (data.description_bn) formData.append('description_bn', data.description_bn);
-        if (data.date) formData.append('date', data.date);
-        formData.append('is_published', data.is_published ? '1' : '0');
-
-        if (featuredFile) {
-            formData.append('featured_image', featuredFile);
-        }
-
+        if (isSubmitting) return;
+        setIsSubmitting(true);
         try {
-            if (isEdit && id) {
-                // For update, we append _method=PUT to url or here, but service handles standard update.
-                // However, our service update takes FormData now and adds _method=PUT to URL query or body.
-                // Let's add it to body to be safe if service relies on body.
-                formData.append('_method', 'PUT');
-                const updated = await galleryService.update(parseInt(id), formData);
-                console.log('Gallery Updated', updated);
+            console.log('Submitting Gallery Form', data);
+            const formData = new FormData();
+            formData.append('title_en', data.title_en);
+            if (data.title_bn) formData.append('title_bn', data.title_bn);
+            if (data.description_en) formData.append('description_en', data.description_en);
+            if (data.description_bn) formData.append('description_bn', data.description_bn);
+            if (data.date) formData.append('date', data.date);
+            formData.append('is_published', data.is_published ? '1' : '0');
 
-                // Handle new images separately for update
+            if (featuredFile) {
+                formData.append('featured_image', featuredFile);
+            }
+
+            if (isEdit && id) {
+                formData.append('_method', 'PUT');
+                await galleryService.update(parseInt(id), formData);
+
                 if (newImages.length > 0) {
                     const imgFormData = new FormData();
                     newImages.forEach((file) => {
@@ -89,14 +88,12 @@ const AdminGalleryForm = () => {
                     await galleryService.addImage(parseInt(id), imgFormData);
                 }
             } else {
-                // For create
                 if (newImages.length > 0) {
                     newImages.forEach((file) => {
                         formData.append('images[]', file);
                     });
                 }
                 const created = await galleryService.create(formData);
-                console.log('Gallery Created', created);
                 if (created.id) {
                     navigate('/gallery');
                     return;
@@ -113,6 +110,8 @@ const AdminGalleryForm = () => {
             } else {
                 alert(`Error: ${message}`);
             }
+        } finally {
+            setIsSubmitting(false);
         }
     };
 
@@ -260,9 +259,10 @@ const AdminGalleryForm = () => {
                             type="submit"
                             variant="contained"
                             size="large"
-                            startIcon={<SaveIcon />}
+                            disabled={isSubmitting}
+                            startIcon={isSubmitting ? <LoadingSpinner size={20} /> : <SaveIcon />}
                         >
-                            {isEdit ? 'Update Gallery' : 'Create Gallery'}
+                            {isSubmitting ? 'Saving...' : (isEdit ? 'Update Gallery' : 'Create Gallery')}
                         </Button>
                     </Box>
                 </form>

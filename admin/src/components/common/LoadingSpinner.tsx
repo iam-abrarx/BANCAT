@@ -3,9 +3,10 @@ import { CircularProgress, Box, Typography } from '@mui/material';
 interface LoadingSpinnerProps {
     message?: string;
     fullScreen?: boolean;
+    size?: number;
 }
 
-export const LoadingSpinner = ({ message, fullScreen = false }: LoadingSpinnerProps) => {
+export const LoadingSpinner = ({ message, fullScreen = false, size = 48 }: LoadingSpinnerProps) => {
     return (
         <Box
             sx={{
@@ -18,7 +19,7 @@ export const LoadingSpinner = ({ message, fullScreen = false }: LoadingSpinnerPr
                 gap: 2,
             }}
         >
-            <CircularProgress color="primary" size={48} thickness={4} />
+            <CircularProgress color="primary" size={size} thickness={4} />
             {message && (
                 <Typography variant="body1" color="text.secondary">
                     {message}

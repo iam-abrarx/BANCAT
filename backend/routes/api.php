@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\Api\PatientController;
 use App\Http\Controllers\Api\StoryController;
-use App\Http\Controllers\Api\ProgramController;
+
 use App\Http\Controllers\Api\CampaignController;
 use App\Http\Controllers\Api\DonationController;
 use App\Http\Controllers\Api\TeamMemberController;
@@ -39,8 +39,7 @@ Route::prefix('v1')->group(function () {
     Route::get('/stories', [StoryController::class, 'index']);
     Route::get('/stories/{slug}', [StoryController::class, 'show']);
 
-    Route::get('/programs', [ProgramController::class, 'index']);
-    Route::get('/programs/{slug}', [ProgramController::class, 'show']);
+
 
     Route::get('/campaigns', [CampaignController::class, 'index']);
     Route::get('/campaigns/{slug}', [CampaignController::class, 'show']);
@@ -116,15 +115,12 @@ Route::prefix('v1')->group(function () {
              Route::delete('/volunteers/{id}', [VolunteerController::class, 'destroy']);
 
              // Campaign Management
+             Route::get('/campaigns/{id}', [CampaignController::class, 'showAdmin']);
              Route::post('/campaigns', [CampaignController::class, 'store']);
              Route::put('/campaigns/{id}', [CampaignController::class, 'update']);
              Route::delete('/campaigns/{id}', [CampaignController::class, 'destroy']);
 
-             // Program Management
-             Route::get('/programs/{id}', [ProgramController::class, 'showAdmin']);
-             Route::post('/programs', [ProgramController::class, 'store']);
-             Route::put('/programs/{id}', [ProgramController::class, 'update']);
-             Route::delete('/programs/{id}', [ProgramController::class, 'destroy']);
+
 
              // Team Member Management
              Route::get('/team-members', [TeamMemberController::class, 'index']);
