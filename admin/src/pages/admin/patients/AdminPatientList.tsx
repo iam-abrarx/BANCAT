@@ -7,6 +7,7 @@ import { patientService } from '../../../services/patientService';
 import type { Patient } from '../../../types';
 import { LoadingSpinner } from '../../../components/common/LoadingSpinner';
 import { PatientDetailModal } from '../../../components/patients/PatientDetailModal';
+import { getAssetUrl } from '../../../config/api';
 
 export const AdminPatientList = () => {
     const navigate = useNavigate();
@@ -90,7 +91,7 @@ export const AdminPatientList = () => {
                                 <TableCell>
                                     <Box
                                         component="img"
-                                        src={patient.photo ? (patient.photo.startsWith('http') ? patient.photo : `${import.meta.env.VITE_API_URL?.replace('/api/v1', '')}${patient.photo}`) : "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='50' height='50' viewBox='0 0 50 50'%3E%3Crect fill='%23e0e0e0' width='50' height='50'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' fill='%23999' font-size='8' font-family='sans-serif'%3ENo Img%3C/text%3E%3C/svg%3E"}
+                                        src={getAssetUrl(patient.photo) || "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='50' height='50' viewBox='0 0 50 50'%3E%3Crect fill='%23e0e0e0' width='50' height='50'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' fill='%23999' font-size='8' font-family='sans-serif'%3ENo Img%3C/text%3E%3C/svg%3E"}
                                         alt={patient.name_en}
                                         sx={{ width: 50, height: 50, objectFit: 'cover', borderRadius: '50%' }}
                                         onError={(e: any) => { if (!e.target.dataset.errored) { e.target.dataset.errored = 'true'; e.target.src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='50' height='50' viewBox='0 0 50 50'%3E%3Crect fill='%23ffebee' width='50' height='50'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' fill='%23c62828' font-size='8' font-family='sans-serif'%3EError%3C/text%3E%3C/svg%3E"; } }}
