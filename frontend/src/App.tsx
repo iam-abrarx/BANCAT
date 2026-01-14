@@ -19,8 +19,6 @@ import { Patients } from './pages/Patients';
 import { PatientDetail } from './pages/PatientDetail';
 import { Stories } from './pages/Stories';
 import { StoryDetail } from './pages/StoryDetail';
-import { Programs } from './pages/Programs';
-import { ProgramDetail } from './pages/ProgramDetail';
 import { Campaigns } from './pages/Campaigns';
 import { CampaignDetail } from './pages/CampaignDetail';
 import { StartCampaign } from './pages/StartCampaign';
@@ -82,10 +80,10 @@ function App() {
                         <Route path="/patients/:code" element={<PatientDetail />} />
                         <Route path="/stories" element={<Stories />} />
                         <Route path="/stories/:slug" element={<StoryDetail />} />
-                        <Route path="/programs" element={<Programs />} />
+                        {/* Programs routes removed */}
                         <Route path="/programs/mental-health-support" element={<MentalHealthPage />} />
                         <Route path="/programs/holistic-support" element={<HolisticSupportPage />} />
-                        <Route path="/programs/:slug" element={<ProgramDetail />} />
+
                         <Route path="/campaigns" element={<Campaigns />} />
                         <Route path="/campaigns/start" element={<StartCampaign />} />
                         <Route path="/campaigns/:slug" element={<CampaignDetail />} />
@@ -124,8 +122,6 @@ function App() {
 
                         {/* Projects Mapping */}
                         <Route path="/projects/mosabbir-alok-nibash-2" element={<AlokNibash />} /> {/* Placeholder */}
-                        <Route path="/projects/alok-kantha" element={<Programs />} />
-                        <Route path="/projects/alokon" element={<Programs />} />
                         <Route path="/projects/rehabilitation" element={<RehabilitationPage />} />
 
                         <Route path="/donate" element={<DonationPage />} />
