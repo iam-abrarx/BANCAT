@@ -10,8 +10,6 @@ import { AdminVolunteerList } from './pages/admin/volunteers/AdminVolunteerList'
 import { AdminVolunteerDetail } from './pages/admin/volunteers/AdminVolunteerDetail';
 import { AdminCampaignList } from './pages/admin/campaigns/AdminCampaignList';
 import { AdminCampaignForm } from './pages/admin/campaigns/AdminCampaignForm';
-import { AdminProgramList } from './pages/admin/programs/AdminProgramList';
-import { AdminProgramForm } from './pages/admin/programs/AdminProgramForm';
 import { AdminDonationList } from './pages/admin/donations/AdminDonationList';
 import { AdminTeamList } from './pages/admin/team/AdminTeamList';
 import { AdminTeamForm } from './pages/admin/team/AdminTeamForm';
@@ -51,10 +49,6 @@ function App() {
           <Route path="campaigns" element={<AdminCampaignList />} />
           <Route path="campaigns/new" element={<AdminCampaignForm />} />
           <Route path="campaigns/:id/edit" element={<AdminCampaignForm />} />
-
-          <Route path="programs" element={<AdminProgramList />} />
-          <Route path="programs/new" element={<AdminProgramForm />} />
-          <Route path="programs/:id/edit" element={<AdminProgramForm />} />
 
           <Route path="donations" element={<AdminDonationList />} />
 

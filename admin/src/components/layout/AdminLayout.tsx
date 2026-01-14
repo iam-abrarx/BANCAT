@@ -67,7 +67,6 @@ export const AdminLayout = () => {
         { text: 'Blogs', icon: <RssFeedIcon />, path: '/blogs' },
         { text: 'Stories', icon: <ArticleIcon />, path: '/stories' },
         { text: 'Campaigns', icon: <CampaignIcon />, path: '/campaigns' },
-        { text: 'Programs', icon: <VolunteerIcon />, path: '/programs' },
         { text: 'Donations', icon: <VolunteerIcon />, path: '/donations' },
         { text: 'Partners', icon: <BusinessIcon />, path: '/partners' },
         { text: 'Gallery', icon: <DashboardIcon />, path: '/gallery' },
