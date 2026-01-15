@@ -1,5 +1,8 @@
 import { Box, Container, Typography, Button } from '@mui/material';
 import { Link as RouterLink } from 'react-router-dom';
+import { useRef, useEffect } from 'react';
+import { useInView, animate } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 
 
 const Counter = ({ from, to }: { from: number; to: number }) => {
@@ -24,6 +27,8 @@ const Counter = ({ from, to }: { from: number; to: number }) => {
 };
 
 export const StatsBanner = () => {
+    const { t } = useTranslation();
+
     return (
         <Box
             sx={{
@@ -53,7 +58,7 @@ export const StatsBanner = () => {
                             display: 'block'
                         }}
                     >
-                        THE TIME TO ACT IS NOW
+                        {t('home.stats.subtitle')}
                     </Typography>
 
                     {/* Main Stat */}
@@ -68,7 +73,7 @@ export const StatsBanner = () => {
                             mb: 2
                         }}
                     >
-                        Over 116,000
+                        {t('home.stats.count')}
                     </Typography>
 
                     {/* Subtitle */}
@@ -83,7 +88,7 @@ export const StatsBanner = () => {
                             mx: 'auto'
                         }}
                     >
-                        Bangladeshis will die from cancer this year
+                        {t('home.stats.description')}
                     </Typography>
 
                     {/* CTA Button */}
@@ -108,7 +113,7 @@ export const StatsBanner = () => {
                             }
                         }}
                     >
-                        Make An Impact
+                        {t('home.stats.cta')}
                     </Button>
                 </Box>
             </Container>

@@ -1,7 +1,59 @@
 {
     "hero": {
-        "headline": "Fighting Cancer Together",
-        "subtext": "Join BANcat in our mission to support cancer patients with hope, care, and financial aid."
+        "headline": "FIGHTING CANCER TOGETHER",
+        "subtext": "Join BANCAT in our mission to support cancer patients with hope, care, and financial aid. Your contribution can save a life today.",
+        "cta": "Get Involved",
+        "quick_donate": "Quick Donate",
+        "make_diff": "Make a difference instantly",
+        "funds": {
+            "general": "General Fund",
+            "zakat": "Zakat Fund",
+            "sadaqah": "Sadaqah",
+            "emergency": "Emergency Relief",
+            "meal": "Meal Program"
+        },
+        "amount_placeholder": "Amount (BDT)",
+        "name_placeholder": "Your Name (Optional)",
+        "phone_placeholder": "Phone Number",
+        "custom_amount": "Custom",
+        "donate_now": "Donate Now",
+        "processing": "Processing...",
+        "donation_faq": "Donation FAQ",
+        "valid_amount_error": "Please enter a valid amount (min ৳10)"
+    },
+    "home": {
+        "about": {
+            "title": "A Comprehensive Cancer Care Approach",
+            "description": "Bangladesh Cancer Aid Trust (BANCAT) is a community-driven organization providing care beyond treatment through awareness, advocacy, facilitated cancer scopes, and a safe sanctuary of support for patients and their families.",
+            "vision_title": "Our Vision",
+            "vision_desc": "To advance societal impact through compassionate, community-driven cancer care and support.",
+            "mission_title": "Our Mission",
+            "mission_desc": "Develop a cancer well-being ecosystem in Bangladesh.",
+            "partners_title": "Our Partners"
+        },
+        "stats": {
+            "subtitle": "THE TIME TO ACT IS NOW",
+            "count": "Over 116,000",
+            "description": "Bangladeshis will die from cancer this year",
+            "cta": "Make An Impact"
+        }
+    },
+    "join_us": {
+        "title": "Join with Us",
+        "description": "Bangladesh Cancer Aid Trust (BANCAT) is a community-driven organization providing care beyond treatment through awareness, advocacy, facilitated cancer scopes, and a safe sanctuary of support for patients and their families.",
+        "regular_donor": "Regular Donor",
+        "become_partner": "Become a Partner",
+        "lifetime_donor": "Life Time Donor",
+        "volunteer": "Volunteer",
+        "career": "Career"
+    },
+    "story": {
+        "rabbi": {
+            "title": "HELP RABBI",
+            "description": "My three year old son, Rabbi, is a stage 3 cancer patient. When he was first diagnosed, our entire world turned upside down. We did not have the financial means to fight this battle on our own. BANCAT stepped in to help cover critical support when we needed it most. Rabbi's Mother",
+            "cta_profile": "See Full Profile",
+            "cta_donate": "Donate"
+        }
     },
     "nav": {
         "home": "Home",

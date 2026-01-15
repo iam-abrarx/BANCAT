@@ -4,8 +4,10 @@ import { useState } from 'react';
 import { useMutation } from '@tanstack/react-query';
 import { donationService } from '../../services/donationService';
 import heroImage from '../../assets/hero-new.jpg';
+import { useTranslation } from 'react-i18next';
 
 export const Hero = () => {
+    const { t } = useTranslation();
     const [amount, setAmount] = useState<string>('');
     const [donationType, setDonationType] = useState<string>('general');
     const [donorName, setDonorName] = useState<string>('');
@@ -31,7 +33,7 @@ export const Hero = () => {
         setError('');
 
         if (!amount || Number(amount) < 10) {
-            setError('Please enter a valid amount (min ৳10)');
+            setError(t('hero.valid_amount_error'));
             return;
         }
 
@@ -107,9 +109,7 @@ export const Hero = () => {
                                     textShadow: '0 4px 20px rgba(0,0,0,0.3)'
                                 }}
                             >
-                                FIGHTING<br />
-                                CANCER<br />
-                                TOGETHER
+                                <span dangerouslySetInnerHTML={{ __html: t('hero.headline').replace(/\s/g, '<br />') }} />
                             </Typography>
                             <Typography
                                 variant="h6"
@@ -124,7 +124,7 @@ export const Hero = () => {
                                     lineHeight: 1.6
                                 }}
                             >
-                                Join BANCAT in our mission to support cancer patients with hope, care, and financial aid. Your contribution can save a life today.
+                                {t('hero.subtext')}
                             </Typography>
                             <Button
                                 variant="outlined"
@@ -145,7 +145,7 @@ export const Hero = () => {
                                     }
                                 }}
                             >
-                                Get Involved
+                                {t('hero.cta')}
                             </Button>
                         </Box>
                     </Grid>
@@ -180,10 +180,10 @@ export const Hero = () => {
                             }}>
                                 <Box sx={{ width: '100%', textAlign: 'center', mb: 1 }}>
                                     <Typography variant="h5" sx={{ color: 'white', fontWeight: 700, fontFamily: 'Montserrat', mb: 0.5 }}>
-                                        Quick Donate
+                                        {t('hero.quick_donate')}
                                     </Typography>
                                     <Typography variant="body2" sx={{ color: 'rgba(255,255,255,0.8)', fontFamily: 'Montserrat' }}>
-                                        Make a difference instantly
+                                        {t('hero.make_diff')}
                                     </Typography>
                                 </Box>
 
@@ -210,11 +210,11 @@ export const Hero = () => {
                                             }
                                         }}
                                     >
-                                        <option value="general" style={{ color: 'black' }}>General Fund</option>
-                                        <option value="zakat" style={{ color: 'black' }}>Zakat Fund</option>
-                                        <option value="sadaqah" style={{ color: 'black' }}>Sadaqah</option>
-                                        <option value="emergency" style={{ color: 'black' }}>Emergency Relief</option>
-                                        <option value="meal" style={{ color: 'black' }}>Meal Program</option>
+                                        <option value="general" style={{ color: 'black' }}>{t('hero.funds.general')}</option>
+                                        <option value="zakat" style={{ color: 'black' }}>{t('hero.funds.zakat')}</option>
+                                        <option value="sadaqah" style={{ color: 'black' }}>{t('hero.funds.sadaqah')}</option>
+                                        <option value="emergency" style={{ color: 'black' }}>{t('hero.funds.emergency')}</option>
+                                        <option value="meal" style={{ color: 'black' }}>{t('hero.funds.meal')}</option>
                                     </TextField>
                                 </Box>
 
@@ -261,14 +261,14 @@ export const Hero = () => {
                                             bgcolor: (!['500', '1000', '2000'].includes(amount) && amount !== '') ? 'rgba(255,255,255,0.2)' : 'transparent'
                                         }}
                                     >
-                                        Custom
+                                        {t('hero.custom_amount')}
                                     </Button>
                                 </ButtonGroup>
 
                                 {/* Inputs */}
                                 <TextField
                                     fullWidth
-                                    placeholder="Amount (BDT)"
+                                    placeholder={t('hero.amount_placeholder')}
                                     value={amount}
                                     onChange={(e) => setAmount(e.target.value)}
                                     variant="outlined"
@@ -288,7 +288,7 @@ export const Hero = () => {
 
                                 <TextField
                                     fullWidth
-                                    placeholder="Your Name (Optional)"
+                                    placeholder={t('hero.name_placeholder')}
                                     value={donorName}
                                     onChange={(e) => setDonorName(e.target.value)}
                                     variant="outlined"
@@ -307,7 +307,7 @@ export const Hero = () => {
 
                                 <TextField
                                     fullWidth
-                                    placeholder="Phone Number"
+                                    placeholder={t('hero.phone_placeholder')}
                                     value={donorPhone}
                                     onChange={(e) => setDonorPhone(e.target.value)}
                                     variant="outlined"
@@ -348,7 +348,7 @@ export const Hero = () => {
                                         }
                                     }}
                                 >
-                                    {donationMutation.isPending ? 'Processing...' : 'Donate Now'}
+                                    {donationMutation.isPending ? t('hero.processing') : t('hero.donate_now')}
                                 </Button>
 
                                 {/* Payment Icons Placeholder */}
@@ -393,7 +393,7 @@ export const Hero = () => {
                                             }
                                         }}
                                     >
-                                        Donation FAQ
+                                        {t('hero.donation_faq')}
                                     </Button>
                                 </Box>
                             </Box>

@@ -2,8 +2,11 @@ import { Box, Button, Container, Typography } from '@mui/material';
 import { Favorite } from '@mui/icons-material';
 import { Link as RouterLink } from 'react-router-dom';
 import bibiParallax from '../../assets/bibi_paralax.webp';
+import { useTranslation } from 'react-i18next';
 
 export const ParallaxStory = () => {
+    const { t } = useTranslation();
+
     return (
         <Box
             sx={{
@@ -42,7 +45,7 @@ export const ParallaxStory = () => {
                             textTransform: 'uppercase'
                         }}
                     >
-                        HELP RABBI
+                        {t('story.rabbi.title')}
                     </Typography>
 
                     <Typography
@@ -56,11 +59,7 @@ export const ParallaxStory = () => {
                             textShadow: '0 1px 2px rgba(255,255,255,0.5)' // Text shadow for readability on image
                         }}
                     >
-                        My three year old son, Rabbi, is a stage 3 cancer patient. When he
-                        was first diagnosed, our entire world turned upside down. We did
-                        not have the financial means to fight this battle on our own.
-                        BANCAT stepped in to help cover critical support when we
-                        needed it most. Rabbi's Mother
+                        {t('story.rabbi.description')}
                     </Typography>
 
                     <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap' }}>
@@ -84,7 +83,7 @@ export const ParallaxStory = () => {
                                 }
                             }}
                         >
-                            See Full Profile
+                            {t('story.rabbi.cta_profile')}
                         </Button>
 
                         <Button
@@ -108,7 +107,7 @@ export const ParallaxStory = () => {
                                 }
                             }}
                         >
-                            Donate
+                            {t('story.rabbi.cta_donate')}
                         </Button>
                     </Box>
                 </Box>

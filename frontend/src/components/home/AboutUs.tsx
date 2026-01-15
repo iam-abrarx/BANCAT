@@ -16,6 +16,7 @@ import p17 from '../../assets/corporate_logos/ispahani logo.png';
 
 import p19 from '../../assets/corporate_logos/logo-dark3.png';
 import p20 from '../../assets/corporate_logos/orion_logo.jpg';
+import { useTranslation } from 'react-i18next';
 
 
 const partners = [
@@ -34,6 +35,8 @@ const partners = [
 ];
 
 export const AboutUs = () => {
+    const { t } = useTranslation();
+
     return (
         <Box sx={{
             bgcolor: '#582d82',
@@ -50,10 +53,10 @@ export const AboutUs = () => {
                         BANCAT
                     </Typography>
                     <Typography variant="h3" sx={{ fontWeight: 700, fontFamily: "'Montserrat', sans-serif", mb: 3 }}>
-                        A Comprehensive Cancer Care Approach
+                        {t('home.about.title')}
                     </Typography>
                     <Typography variant="body1" sx={{ color: '#fff', lineHeight: 1.7, opacity: 0.9 }}>
-                        Bangladesh Cancer Aid Trust (BANCAT) is a community-driven organization providing care beyond treatment through awareness, advocacy, facilitated cancer scopes, and a safe sanctuary of support for patients and their families.
+                        {t('home.about.description')}
                     </Typography>
                 </Box>
 
@@ -86,10 +89,10 @@ export const AboutUs = () => {
                                         </svg>
                                     </Box>
                                     <Typography variant="h5" sx={{ fontWeight: 700, fontFamily: "'Montserrat', sans-serif", mb: 2 }}>
-                                        Our Vision
+                                        {t('home.about.vision_title')}
                                     </Typography>
                                     <Typography variant="body2" sx={{ color: '#fff', lineHeight: 1.7 }}>
-                                        To advance societal impact through compassionate, community-driven cancer care and support.
+                                        {t('home.about.vision_desc')}
                                     </Typography>
                                 </Box>
                             </Grid>
@@ -118,10 +121,10 @@ export const AboutUs = () => {
                                         </svg>
                                     </Box>
                                     <Typography variant="h5" sx={{ fontWeight: 700, fontFamily: "'Montserrat', sans-serif", mb: 2 }}>
-                                        Our Mission
+                                        {t('home.about.mission_title')}
                                     </Typography>
                                     <Typography variant="body2" sx={{ color: '#fff', lineHeight: 1.7, mb: 2 }}>
-                                        Develop a cancer well-being ecosystem in Bangladesh.
+                                        {t('home.about.mission_desc')}
                                     </Typography>
                                 </Box>
                             </Grid>
@@ -151,7 +154,7 @@ export const AboutUs = () => {
                                 fontSize: '0.9rem'
                             }}
                         >
-                            Our Partners
+                            {t('home.about.partners_title')}
                         </Typography>
                         {/* <Typography variant="body1" color="#fff" sx={{ mb: 4 }}>
                             Trusted collaborators making a difference together

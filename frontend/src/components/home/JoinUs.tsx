@@ -1,6 +1,7 @@
 import { Box, Container, Typography, Grid, Paper } from '@mui/material';
 import { VolunteerActivism, Handshake, Spa, Person, Star } from '@mui/icons-material';
 import joinBg from '../../assets/join_bg_17734.jpg';
+import { useTranslation } from 'react-i18next';
 
 const cardStyle = {
     position: 'relative',
@@ -51,6 +52,8 @@ const cardStyle = {
 };
 
 const JoinUs = () => {
+    const { t } = useTranslation();
+
     return (
         <Box
             id="join-us-section"
@@ -96,12 +99,10 @@ const JoinUs = () => {
                 <Container maxWidth="lg">
                     <Box sx={{ textAlign: 'center', mb: 8, maxWidth: '800px', mx: 'auto' }}>
                         <Typography variant="h3" sx={{ fontWeight: 700, fontFamily: "'Montserrat', sans-serif", mb: 2 }}>
-                            Join with Us
+                            {t('join_us.title')}
                         </Typography>
                         <Typography sx={{ lineHeight: 1.6 }}>
-                            Bangladesh Cancer Aid Trust (BANCAT) is a community-driven organization providing care beyond
-                            treatment through awareness, advocacy, facilitated cancer scopes, and a safe sanctuary of support for
-                            patients and their families.
+                            {t('join_us.description')}
                         </Typography>
                     </Box>
 
@@ -114,7 +115,7 @@ const JoinUs = () => {
                             >
                                 <VolunteerActivism sx={{ fontSize: 60, mb: 2 }} />
                                 <Typography variant="h5" sx={{ fontWeight: 700, fontFamily: "'Montserrat', sans-serif" }}>
-                                    Regular Donor
+                                    {t('join_us.regular_donor')}
                                 </Typography>
                             </Paper>
                         </Grid>
@@ -125,7 +126,7 @@ const JoinUs = () => {
                             >
                                 <Handshake sx={{ fontSize: 60, mb: 2 }} />
                                 <Typography variant="h5" sx={{ fontWeight: 700, fontFamily: "'Montserrat', sans-serif" }}>
-                                    Become a Partner
+                                    {t('join_us.become_partner')}
                                 </Typography>
                             </Paper>
                         </Grid>
@@ -140,7 +141,7 @@ const JoinUs = () => {
                             >
                                 <Spa sx={{ fontSize: 40, mb: 1 }} />
                                 <Typography variant="h6" sx={{ fontWeight: 600 }}>
-                                    Life Time Donor
+                                    {t('join_us.lifetime_donor')}
                                 </Typography>
                             </Paper>
                         </Grid>
@@ -151,7 +152,7 @@ const JoinUs = () => {
                             >
                                 <Person sx={{ fontSize: 40, mb: 1 }} />
                                 <Typography variant="h6" sx={{ fontWeight: 600 }}>
-                                    Volunteer
+                                    {t('join_us.volunteer')}
                                 </Typography>
                             </Paper>
                         </Grid>
@@ -162,7 +163,7 @@ const JoinUs = () => {
                             >
                                 <Star sx={{ fontSize: 40, mb: 1 }} />
                                 <Typography variant="h6" sx={{ fontWeight: 600 }}>
-                                    Career
+                                    {t('join_us.career')}
                                 </Typography>
                             </Paper>
                         </Grid>
