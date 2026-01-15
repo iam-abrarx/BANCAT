@@ -55,6 +55,27 @@
             "cta_donate": "Donate"
         }
     },
+    "impact": {
+        "holistic": "Patients served Holistically",
+        "bed_facility": "Bed Facility in care home",
+        "counseling": "Monthly Free Counseling",
+        "handmade": "Handmade items stitched by attendants"
+    },
+    "video_section": {
+        "title": "Know About BANCAT"
+    },
+    "stories": {
+        "subtitle": "STORIES OF HOPE",
+        "title": "Lives We Are Touching",
+        "read_full": "Read Full Story",
+        "raised": "Raised",
+        "goal": "Goal"
+    },
+    "campaign_banner": {
+        "featured": "Featured Campaign",
+        "donate": "Donate Now",
+        "view_all": "View All"
+    },
     "nav": {
         "home": "Home",
         "menu_about": "About",

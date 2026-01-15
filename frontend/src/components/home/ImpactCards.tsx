@@ -1,6 +1,7 @@
 import { Box, Container, Grid, Typography, Card, CardContent } from '@mui/material';
 import { useEffect, useRef } from 'react';
 import { animate, useInView } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 
 // Import logos (assuming order based on filenames, can be swapped)
 import logo1 from '../../assets/impact_cards/Asset 6@5x.png';
@@ -16,9 +17,11 @@ const Counter = ({ from, to, suffix = '' }: { from: number; to: number; suffix?:
         const node = nodeRef.current;
         if (!node || !inView) return;
 
+        // Ensure we handle locale string conversion inside update if needed, but for animation numbers are better raw
         const controls = animate(from, to, {
             duration: 2.5,
             onUpdate(value) {
+                // Formatting number for display
                 node.textContent = Math.round(value).toLocaleString() + suffix;
             }
         });
@@ -29,34 +32,36 @@ const Counter = ({ from, to, suffix = '' }: { from: number; to: number; suffix?:
     return <span ref={nodeRef} />;
 };
 
-const stats = [
-    {
-        number: 2000,
-        suffix: '+',
-        label: 'Patients served Holistically',
-        branding: { logo: logo1, height: 60 }
-    },
-    {
-        number: 90,
-        suffix: '+',
-        label: 'Bed Facility in care home',
-        branding: { logo: logo2, height: 60 }
-    },
-    {
-        number: 300,
-        suffix: '+',
-        label: 'Monthly Free Counseling',
-        branding: { logo: logo3, height: 85 }
-    },
-    {
-        number: 400,
-        suffix: '+',
-        label: 'Handmade items stitched by attendants',
-        branding: { logo: logo4, height: 65 }
-    }
-];
-
 export const ImpactCards = () => {
+    const { t } = useTranslation();
+
+    const stats = [
+        {
+            number: 2000,
+            suffix: '+',
+            label: t('impact.holistic'),
+            branding: { logo: logo1, height: 60 }
+        },
+        {
+            number: 90,
+            suffix: '+',
+            label: t('impact.bed_facility'),
+            branding: { logo: logo2, height: 60 }
+        },
+        {
+            number: 300,
+            suffix: '+',
+            label: t('impact.counseling'),
+            branding: { logo: logo3, height: 85 }
+        },
+        {
+            number: 400,
+            suffix: '+',
+            label: t('impact.handmade'),
+            branding: { logo: logo4, height: 65 }
+        }
+    ];
+
     return (
         <Box sx={{ bgcolor: '#582d82', py: 20 }}>
             <Container maxWidth="lg">
@@ -147,3 +152,5 @@ export const ImpactCards = () => {
         </Box>
     );
 };
+
+export default ImpactCards;

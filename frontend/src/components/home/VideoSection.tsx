@@ -1,8 +1,10 @@
 import { Box, Container, Typography, Modal, IconButton } from '@mui/material';
 import { PlayArrow, Close } from '@mui/icons-material';
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 export const VideoSection = () => {
+    const { t } = useTranslation();
     const [open, setOpen] = useState(false);
     const videoId = 'jBhLyIYY3AY';
     const thumbnailUrl = `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
@@ -22,7 +24,7 @@ export const VideoSection = () => {
                         fontFamily: "'Montserrat', sans-serif"
                     }}
                 >
-                    Know About BANCAT
+                    {t('video_section.title')}
                 </Typography>
             </Box>
 

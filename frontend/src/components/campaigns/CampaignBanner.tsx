@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { VolunteerActivism } from '@mui/icons-material';
 
 export const CampaignBanner = () => {
-    const { i18n } = useTranslation();
+    const { t, i18n } = useTranslation();
     const isBn = i18n.language === 'bn';
     const { data: campaigns } = useCampaigns({ featured: true });
 
@@ -42,7 +42,7 @@ export const CampaignBanner = () => {
 
                     <Box sx={{ flex: 1, p: { xs: 4, md: 8 }, display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
                         <Typography variant="overline" sx={{ opacity: 0.8, mb: 1 }}>
-                            Featured Campaign
+                            {t('campaign_banner.featured')}
                         </Typography>
                         <Typography variant="h3" fontWeight="bold" gutterBottom>
                             {isBn ? campaign.name_bn : campaign.name_en}
@@ -76,7 +76,7 @@ export const CampaignBanner = () => {
                                 component={RouterLink}
                                 to={`/campaigns/${campaign.slug}`}
                             >
-                                Donate Now
+                                {t('campaign_banner.donate')}
                             </Button>
                             <Button
                                 variant="outlined"
@@ -85,7 +85,7 @@ export const CampaignBanner = () => {
                                 component={RouterLink}
                                 to="/campaigns"
                             >
-                                View All
+                                {t('campaign_banner.view_all')}
                             </Button>
                         </Stack>
                     </Box>

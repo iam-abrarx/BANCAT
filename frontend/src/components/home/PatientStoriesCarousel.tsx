@@ -3,6 +3,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, Pagination } from 'swiper/modules';
 import { ArrowForward } from '@mui/icons-material';
 import { Link as RouterLink } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 // Import Swiper styles
 import 'swiper/css';
@@ -60,6 +61,8 @@ const stories = [
 ];
 
 export const PatientStoriesCarousel = () => {
+    const { t } = useTranslation();
+
     return (
         <Box sx={{ py: 10, bgcolor: '#f9f9f9' }}>
             <Container maxWidth="xl">
@@ -74,7 +77,7 @@ export const PatientStoriesCarousel = () => {
                             mb: 1
                         }}
                     >
-                        STORIES OF HOPE
+                        {t('stories.subtitle')}
                     </Typography>
                     <Typography
                         variant="h2"
@@ -85,7 +88,7 @@ export const PatientStoriesCarousel = () => {
                             fontSize: { xs: '2rem', md: '3rem' }
                         }}
                     >
-                        Lives We Are Touching
+                        {t('stories.title')}
                     </Typography>
                 </Box>
 
@@ -234,10 +237,10 @@ export const PatientStoriesCarousel = () => {
                                         <Box sx={{ mt: 'auto' }}>
                                             <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 1 }}>
                                                 <Typography variant="caption" fontWeight="bold" color="primary">
-                                                    Raised: ৳{story.raised.toLocaleString()}
+                                                    {t('stories.raised')}: ৳{story.raised.toLocaleString()}
                                                 </Typography>
                                                 <Typography variant="caption" color="text.secondary">
-                                                    Goal: ৳{story.goal.toLocaleString()}
+                                                    {t('stories.goal')}: ৳{story.goal.toLocaleString()}
                                                 </Typography>
                                             </Box>
                                             <Box sx={{ width: '100%', height: '8px', bgcolor: '#eee', borderRadius: '4px', overflow: 'hidden' }}>
@@ -263,7 +266,7 @@ export const PatientStoriesCarousel = () => {
                                                     }
                                                 }}
                                             >
-                                                Read Full Story
+                                                {t('stories.read_full')}
                                             </Button>
                                         </Box>
                                     </CardContent>
