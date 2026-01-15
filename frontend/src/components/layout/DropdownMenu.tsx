@@ -2,6 +2,7 @@ import { Box, Paper, Typography, Fade, Popper, alpha } from '@mui/material';
 import { Link as RouterLink } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { KeyboardArrowRight } from '@mui/icons-material';
+import { useTranslation } from 'react-i18next';
 import type { MenuItem } from './menuConfig';
 
 interface DropdownMenuProps {
@@ -29,6 +30,7 @@ export const DropdownMenu = ({
     open,
     onClose,
 }: DropdownMenuProps) => {
+    const { t } = useTranslation();
     // Defense against top-left rendering glitch
     if (open && !anchorEl) return null;
 
@@ -84,7 +86,7 @@ export const DropdownMenu = ({
                                     }}
                                 >
                                     <Typography variant="body2" sx={{ fontWeight: 600 }}>
-                                        {item.label}
+                                        {t(item.label)}
                                     </Typography>
                                     <KeyboardArrowRight className="arrow" sx={{ fontSize: 18, opacity: 0, transform: 'translateX(-5px)', transition: 'all 0.2s' }} />
                                 </Box>

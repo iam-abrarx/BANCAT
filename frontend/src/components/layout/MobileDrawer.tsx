@@ -67,7 +67,7 @@ export const MobileDrawer = ({ open, onClose }: MobileDrawerProps) => {
                 sx={{ pl: indent ? 4 : 2 }}
             >
                 <ListItemText
-                    primary={item.label}
+                    primary={t(item.label)}
                     secondary={item.description}
                     primaryTypographyProps={{
                         fontSize: indent ? '0.875rem' : '1rem',
@@ -95,7 +95,7 @@ export const MobileDrawer = ({ open, onClose }: MobileDrawerProps) => {
                     mt: 1,
                 }}
             >
-                {section.title}
+                {t(section.title)}
             </Typography>
             {section.items.map(subItem => renderMenuItem(subItem, true))}
         </Box>
@@ -114,7 +114,7 @@ export const MobileDrawer = ({ open, onClose }: MobileDrawerProps) => {
                 <ListItem key={item.id} disablePadding>
                     <ListItemButton component={RouterLink} to={item.path!} onClick={onClose}>
                         <ListItemIcon sx={{ minWidth: 40 }}>{getMenuIcon(item.id)}</ListItemIcon>
-                        <ListItemText primary={item.label} />
+                        <ListItemText primary={t(item.label)} />
                     </ListItemButton>
                 </ListItem>
             );
@@ -125,7 +125,7 @@ export const MobileDrawer = ({ open, onClose }: MobileDrawerProps) => {
                 <ListItem disablePadding>
                     <ListItemButton onClick={() => toggleExpanded(item.id)}>
                         <ListItemIcon sx={{ minWidth: 40 }}>{getMenuIcon(item.id)}</ListItemIcon>
-                        <ListItemText primary={item.label} />
+                        <ListItemText primary={t(item.label)} />
                         {isExpanded ? <ExpandLess /> : <ExpandMore />}
                     </ListItemButton>
                 </ListItem>
@@ -230,7 +230,7 @@ export const MobileDrawer = ({ open, onClose }: MobileDrawerProps) => {
                         <ListItem key={item.path} disablePadding>
                             <ListItemButton component={RouterLink} to={item.path} onClick={onClose} sx={{ py: 0.5 }}>
                                 <ListItemText
-                                    primary={item.label}
+                                    primary={t(item.label)}
                                     primaryTypographyProps={{ fontSize: '0.875rem' }}
                                 />
                             </ListItemButton>

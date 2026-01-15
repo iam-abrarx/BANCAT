@@ -50,12 +50,12 @@ export const Hero = () => {
             sx={{
                 position: 'relative',
                 width: '100%',
-                minHeight: '115vh',
+                minHeight: '100vh',
                 display: 'flex',
-                alignItems: 'center',
+                alignItems: 'flex-start',
                 overflow: 'hidden',
-                pt: { xs: '180px', md: '250px' },
-                pb: { xs: 8, md: 12 }
+                pt: { xs: '100px', md: '60px' },
+                pb: { xs: 6, md: 8 }
             }}
         >
             {/* Background Image */}
@@ -81,7 +81,9 @@ export const Hero = () => {
                     left: 0,
                     right: 0,
                     bottom: 0,
-                    background: 'linear-gradient(to right, rgba(88, 45, 130, 0.95) 0%, rgba(88, 45, 130, 0.8) 50%, rgba(88, 45, 130, 0.4) 100%)', // Gradient overlay
+                    background: 'linear-gradient(to right, rgba(176, 31, 196, 0.55) 0%, rgba(121, 86, 156, 0.55) 50%, rgba(234, 220, 248, 0.55) 100%)',
+                    mixBlendMode: 'overlay',
+
                     zIndex: -1,
                 }}
             />
@@ -170,11 +172,11 @@ export const Hero = () => {
                                 flexDirection: 'column',
                                 alignItems: 'center',
                                 gap: 2.5,
-                                background: 'rgba(255, 255, 255, 0.1)',
-                                backdropFilter: 'blur(15px)',
+                                background: 'rgba(114, 42, 173, 0.21)',
+                                backdropFilter: 'blur(25px)',
                                 borderRadius: '30px',
                                 border: '1px solid rgba(255, 255, 255, 0.2)',
-                                boxShadow: '0 8px 32px 0 rgba(31, 38, 135, 0.37)'
+                                boxShadow: '0 8px 32px 0 rgba(47, 31, 135, 0.37)'
                             }}>
                                 <Box sx={{ width: '100%', textAlign: 'center', mb: 1 }}>
                                     <Typography variant="h5" sx={{ color: 'white', fontWeight: 700, fontFamily: 'Montserrat', mb: 0.5 }}>
@@ -339,10 +341,10 @@ export const Hero = () => {
                                         fontFamily: 'Montserrat',
                                         textTransform: 'none',
                                         fontSize: '1.1rem',
-                                        boxShadow: '0 4px 15px rgba(243, 156, 18, 0.4)',
+                                        boxShadow: '0 4px 15px rgba(243, 156, 18, 0.0)',
                                         '&:hover': {
                                             background: 'linear-gradient(45deg, #D68910 30%, #F1C40F 90%)',
-                                            boxShadow: '0 6px 20px rgba(214, 137, 16, 0.5)'
+                                            boxShadow: '0 5px 20px rgba(214, 137, 16, 0.15)'
                                         }
                                     }}
                                 >

@@ -24,11 +24,13 @@ export interface NavItem {
     };
 }
 
+
+
 export const menuConfig: NavItem[] = [
     // 1. Home
     {
         id: 'home',
-        label: 'Home',
+        label: 'nav.home',
         path: '/',
         type: 'link',
     },
@@ -36,23 +38,23 @@ export const menuConfig: NavItem[] = [
     // 2. About
     {
         id: 'about',
-        label: 'About',
-        type: 'mega', // Changed to mega to accommodate "Our Services" section
+        label: 'nav.menu_about',
+        type: 'mega',
         sections: [
             {
-                title: 'Who We Are',
+                title: 'nav.about_item.who_we_are.title',
                 items: [
-                    { label: 'About Us', path: '/about' },
-                    { label: 'Our Team', path: '/about/team' },
-                    { label: 'Privacy Policy', path: '/privacy-policy' },
+                    { label: 'nav.about_item.who_we_are.about_us', path: '/about' },
+                    { label: 'nav.about_item.who_we_are.team', path: '/about/team' },
+                    { label: 'nav.about_item.who_we_are.privacy', path: '/privacy-policy' },
                 ],
             },
             {
-                title: 'Our Services',
+                title: 'nav.about_item.services.title',
                 items: [
-                    { label: 'Supervision', path: '/about/supervision' },
-                    { label: 'Training', path: '/about/training' },
-                    { label: 'Counselling', path: '/about/counselling' },
+                    { label: 'nav.about_item.services.supervision', path: '/about/supervision' },
+                    { label: 'nav.about_item.services.training', path: '/about/training' },
+                    { label: 'nav.about_item.services.counselling', path: '/about/counselling' },
                 ],
             },
         ],
@@ -61,43 +63,53 @@ export const menuConfig: NavItem[] = [
     // 3. Support
     {
         id: 'support',
-        label: 'Support',
+        label: 'nav.menu_support',
         type: 'dropdown',
         items: [
-            { label: 'Cancer Information', path: '/cancer-info' },
-            { label: 'Caregiver Support', path: '/support/caregiver-support' },
-            { label: 'Live Chat', path: '/support/live-chat' },
+            { label: 'nav.support_item.cancer_info', path: '/cancer-info' },
+            { label: 'nav.support_item.caregiver', path: '/support/caregiver-support' },
+            { label: 'nav.support_item.live_chat', path: '/support/live-chat' },
         ],
     },
 
     // 4. Our Work
     {
         id: 'our-work',
-        label: 'Our Work',
+        label: 'nav.menu_our_work',
         type: 'mega',
 
         sections: [
             {
-                title: 'Ongoing Projects',
+                title: 'nav.our_work_item.projects.title',
                 items: [
-                    { label: 'Mosabbir Alok Nibash 1', path: '/alok-nibash' },
-                    { label: 'Mosabbir Alok Nibash 2', path: '/projects/mosabbir-alok-nibash-2' },
-                    { label: 'Alok Kantha', path: '/projects/alok-kantha' },
-                    { label: 'Alokon', path: '/projects/alokon' },
+                    { label: 'nav.our_work_item.projects.alok_nibash_1', path: '/alok-nibash' },
+                    { label: 'nav.our_work_item.projects.alok_nibash_2', path: '/projects/mosabbir-alok-nibash-2' },
+                    { label: 'nav.our_work_item.projects.alok_kantha', path: '/projects/alok-kantha' },
+                    { label: 'nav.our_work_item.projects.alokon', path: '/projects/alokon' },
                 ],
             },
             {
-                title: 'FlagShip Initiative',
+                title: 'nav.our_work_item.flagship.title',
                 items: [
-                    { label: "Bangladesh's first cancer care village", path: '/alok-nibash' },
+                    { label: 'nav.our_work_item.flagship.village', path: '/alok-nibash' },
                 ],
             },
             {
-                title: 'Initiatives',
+                title: 'nav.our_work_item.initiatives.title',
                 items: [
-                    { label: 'Holistic Support', path: '/programs/holistic-support' },
-                    { label: 'Mental Health Support', path: '/programs/mental-health-support' },
-                    { label: 'Rehabilitation', path: '/projects/rehabilitation' },
+                    { label: 'nav.our_work_item.initiatives.holistic', path: '/programs/holistic-support' },
+                    { label: 'nav.our_work_item.initiatives.mental_health', path: '/programs/mental-health-support' },
+                    { label: 'nav.our_work_item.initiatives.rehabilitation', path: '/projects/rehabilitation' },
+                ],
+            },
+            {
+                title: 'nav.our_work_item.campaigns.title',
+                items: [
+                    { label: 'nav.our_work_item.campaigns.ramadan', path: '/campaigns/ramadan' },
+                    { label: 'nav.our_work_item.campaigns.adopt', path: '/donate/adopt-patient' },
+                    { label: 'nav.our_work_item.campaigns.hope', path: '/campaigns/hope-for-children' },
+                    { label: 'nav.our_work_item.campaigns.hub', path: '/projects/community-health-hub' },
+                    { label: 'nav.our_work_item.campaigns.mother', path: '/campaigns/save-a-mother' },
                 ],
             },
         ],
@@ -106,22 +118,22 @@ export const menuConfig: NavItem[] = [
     // 5. Stories
     {
         id: 'stories',
-        label: 'Stories',
+        label: 'nav.menu_stories',
         type: 'mega',
 
         sections: [
             {
-                title: 'Categories',
+                title: 'nav.stories_item.categories.title',
                 items: [
-                    { label: 'Impact Stories', path: '/stories?category=impact' },
-                    { label: 'Testimonials', path: '/testimonials' },
+                    { label: 'nav.stories_item.categories.impact', path: '/stories?category=impact' },
+                    { label: 'nav.stories_item.categories.testimonials', path: '/testimonials' },
                 ],
             },
             {
-                title: 'Media',
+                title: 'nav.stories_item.media.title',
                 items: [
-                    { label: 'Gallery', path: '/gallery' },
-                    { label: 'Blogs', path: '/blogs' },
+                    { label: 'nav.stories_item.media.gallery', path: '/gallery' },
+                    { label: 'nav.stories_item.media.blogs', path: '/blogs' },
                 ],
             },
         ],
@@ -130,23 +142,24 @@ export const menuConfig: NavItem[] = [
     // 6. Get Involved
     {
         id: 'get-involved',
-        label: 'Get Involved',
+        label: 'nav.menu_get_involved',
         type: 'mega',
 
         sections: [
             {
-                title: 'Volunteering',
+                title: 'nav.get_involved_item.partnership.title',
                 items: [
-                    { label: 'Become a Volunteer', path: '/volunteer' },
-                    { label: 'See Stories', path: '/stories' },
+                    { label: 'nav.get_involved_item.partnership.brand', path: '/partnerships/brands' },
+                    { label: 'nav.get_involved_item.partnership.join_campaign', path: '/campaigns' },
+                    { label: 'nav.get_involved_item.partnership.adopt', path: '/donate/adopt-patient' },
+                    { label: 'nav.get_involved_item.partnership.become_donor', path: '/donate' },
                 ],
             },
             {
-                title: 'Partnership',
+                title: 'nav.get_involved_item.volunteering.title',
                 items: [
-                    { label: 'Brand Partnership', path: '/partnerships/brands' },
-                    { label: 'Join a Campaign', path: '/campaigns' },
-                    { label: 'Adopt a Patient', path: '/donate/adopt-patient' },
+                    { label: 'nav.get_involved_item.volunteering.become', path: '/volunteer' },
+                    { label: 'nav.get_involved_item.volunteering.stories', path: '/stories' },
                 ],
             },
         ],
@@ -155,11 +168,11 @@ export const menuConfig: NavItem[] = [
     // 7. Contact
     {
         id: 'contact',
-        label: 'Contact',
+        label: 'nav.menu_contact',
         type: 'dropdown',
         items: [
-            { label: 'Contact Us', path: '/contact' },
-            { label: 'FAQ', path: '/faq' },
+            { label: 'nav.contact_item.us', path: '/contact' },
+            { label: 'nav.contact_item.faq', path: '/faq' },
         ],
     },
 ];

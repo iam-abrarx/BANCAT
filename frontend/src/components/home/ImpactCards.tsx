@@ -1,4 +1,6 @@
 import { Box, Container, Grid, Typography, Card, CardContent } from '@mui/material';
+import { useEffect, useRef } from 'react';
+import { animate, useInView } from 'framer-motion';
 
 // Import logos (assuming order based on filenames, can be swapped)
 import logo1 from '../../assets/impact_cards/Asset 6@5x.png';
@@ -6,24 +8,49 @@ import logo2 from '../../assets/impact_cards/Asset 7@5x.png';
 import logo3 from '../../assets/impact_cards/Asset 8@5x.png';
 import logo4 from '../../assets/impact_cards/Asset 9@5x.png';
 
+const Counter = ({ from, to, suffix = '' }: { from: number; to: number; suffix?: string }) => {
+    const nodeRef = useRef<HTMLSpanElement>(null);
+    const inView = useInView(nodeRef, { once: true });
+
+    useEffect(() => {
+        const node = nodeRef.current;
+        if (!node || !inView) return;
+
+        const controls = animate(from, to, {
+            duration: 2.5,
+            onUpdate(value) {
+                node.textContent = Math.round(value).toLocaleString() + suffix;
+            }
+        });
+
+        return () => controls.stop();
+    }, [from, to, suffix, inView]);
+
+    return <span ref={nodeRef} />;
+};
+
 const stats = [
     {
-        value: '2000+',
+        number: 2000,
+        suffix: '+',
         label: 'Patients served Holistically',
         branding: { logo: logo1, height: 60 }
     },
     {
-        value: '90+',
+        number: 90,
+        suffix: '+',
         label: 'Bed Facility in care home',
         branding: { logo: logo2, height: 60 }
     },
     {
-        value: '300+',
+        number: 300,
+        suffix: '+',
         label: 'Monthly Free Counseling',
         branding: { logo: logo3, height: 85 }
     },
     {
-        value: '400+',
+        number: 400,
+        suffix: '+',
         label: 'Handmade items stitched by attendants',
         branding: { logo: logo4, height: 65 }
     }
@@ -76,7 +103,7 @@ export const ImpactCards = () => {
                                             mb: 1
                                         }}
                                     >
-                                        {stat.value}
+                                        <Counter from={0} to={stat.number} suffix={stat.suffix} />
                                     </Typography>
 
                                     <Typography

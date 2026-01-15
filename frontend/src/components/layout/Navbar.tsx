@@ -2,6 +2,7 @@ import { AppBar, Box, Button, Container, IconButton, Toolbar, useMediaQuery, use
 import { Menu as MenuIcon, KeyboardArrowDown, Search } from '@mui/icons-material';
 import { useState, useEffect } from 'react';
 import { Link as RouterLink, useLocation } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { useAuth } from '../../contexts/AuthContext';
 import { LanguageToggle } from '../common/LanguageToggle';
 import { MobileDrawer } from './MobileDrawer';
@@ -12,6 +13,7 @@ import { TopBar } from './TopBar';
 import logo from '../../assets/logo.png';
 
 export const Navbar = () => {
+    const { t } = useTranslation();
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down('lg'));
     const { user, logout } = useAuth();
@@ -96,7 +98,7 @@ export const Navbar = () => {
                                                     }
                                                 }}
                                             >
-                                                {item.label}
+                                                {t(item.label)}
                                             </Button>
                                         );
                                     }
@@ -126,7 +128,7 @@ export const Navbar = () => {
                                                     fontSize: 18
                                                 }} />}
                                             >
-                                                {item.label}
+                                                {t(item.label)}
                                             </Button>
 
                                             {item.type === 'dropdown' && item.items && menuAnchors[item.id] && (

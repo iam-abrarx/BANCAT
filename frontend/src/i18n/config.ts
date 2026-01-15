@@ -23,4 +23,17 @@ i18n
         },
     });
 
+i18n.on('languageChanged', (lng) => {
+    if (lng === 'bn') {
+        document.body.classList.add('font-bangla');
+    } else {
+        document.body.classList.remove('font-bangla');
+    }
+});
+
+// Initialize class based on current language
+if (i18n.language === 'bn') {
+    document.body.classList.add('font-bangla');
+}
+
 export default i18n;

@@ -51,7 +51,7 @@ Route::prefix('v1')->group(function () {
     Route::get('/team-members', [TeamMemberController::class, 'index']);
     Route::get('/team-members/{id}', [TeamMemberController::class, 'show']);
 
-    Route::get('/team-members/{id}', [TeamMemberController::class, 'show']);
+    // Route::get('/team-members/{id}', [TeamMemberController::class, 'show']); // Duplicate removed
     
     Route::get('/blogs', [\App\Http\Controllers\Api\BlogController::class, 'index']);
     Route::get('/blogs/{slug}', [\App\Http\Controllers\Api\BlogController::class, 'show']);

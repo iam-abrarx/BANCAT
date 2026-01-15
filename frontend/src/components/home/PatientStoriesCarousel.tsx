@@ -1,6 +1,6 @@
 import { Box, Container, Typography, Button, Card, CardContent } from '@mui/material';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Autoplay, Pagination, Scrollbar } from 'swiper/modules';
+import { Autoplay, Pagination } from 'swiper/modules';
 import { ArrowForward } from '@mui/icons-material';
 import { Link as RouterLink } from 'react-router-dom';
 
@@ -99,23 +99,32 @@ export const PatientStoriesCarousel = () => {
                         maxWidth: '100% !important',
                     },
                     '& .swiper-scrollbar': {
-                        height: '2px !important',
-                        bgcolor: '#582d82 !important',
-                        bottom: '30px !important',
-                        left: '50% !important',
-                        transform: 'translateX(-50%)',
-                        width: '40% !important',
-                        borderRadius: '0px !important',
-                    },
-                    '& .swiper-scrollbar-drag': {
-                        height: '8px !important',
-                        top: '-3px !important',
-                        bgcolor: '#582d82 !important',
-                        borderRadius: '10px !important',
-                        cursor: 'pointer',
+                        display: 'none',
                     },
                     '& .swiper-pagination': {
-                        display: 'none',
+                        position: 'absolute !important',
+                        bottom: '30px !important',
+                        left: '0 !important',
+                        width: '100% !important',
+                        display: 'flex !important',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        gap: '6px',
+                        zIndex: '20 !important',
+                        margin: '0 !important'
+                    },
+                    '& .swiper-pagination-bullet': {
+                        width: '12px',
+                        height: '6px',
+                        borderRadius: '6px',
+                        backgroundColor: '#D1D5DB', // Gray-300
+                        opacity: 1,
+                        transition: 'all 0.3s ease',
+                        margin: '0 !important',
+                    },
+                    '& .swiper-pagination-bullet-active': {
+                        width: '40px',
+                        backgroundColor: '#582d82', // Brand Purple
                     },
                     '& .swiper-button-next, & .swiper-button-prev': {
                         display: 'none',
@@ -126,7 +135,7 @@ export const PatientStoriesCarousel = () => {
                         top: 0,
                         right: 0,
                         width: '100px',
-                        height: 'calc(100% - 80px)', // Avoid blurring the scrollbar area
+                        height: '100%',
                         background: 'linear-gradient(to right, transparent, #f9f9f9)',
                         opacity: 0.8,
                         zIndex: 10,
@@ -134,7 +143,8 @@ export const PatientStoriesCarousel = () => {
                     }
                 }}>
                     <Swiper
-                        modules={[Autoplay, Pagination, Scrollbar]}
+                        modules={[Autoplay, Pagination]}
+                        pagination={{ clickable: true }}
                         spaceBetween={0}
                         slidesPerView={3.0}
                         breakpoints={{
@@ -151,11 +161,6 @@ export const PatientStoriesCarousel = () => {
                         autoplay={{
                             delay: 5000,
                             disableOnInteraction: false,
-                        }}
-                        scrollbar={{
-                            draggable: true,
-                            dragSize: 100,
-                            hide: false,
                         }}
                     >
                         {stories.map((story) => (

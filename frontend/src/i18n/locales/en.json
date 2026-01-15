@@ -5,13 +5,110 @@
     },
     "nav": {
         "home": "Home",
-        "about": "About Us",
-        "programs": "Our Work",
-        "stories": "Stories",
-        "donate": "Donate"
+        "menu_about": "About",
+        "menu_support": "Support",
+        "menu_our_work": "Our Work",
+        "menu_stories": "Stories",
+        "menu_get_involved": "Get Involved",
+        "menu_contact": "Contact",
+        "about_item": {
+            "who_we_are": {
+                "title": "Who We Are",
+                "about_us": "About Us",
+                "team": "Our Team",
+                "privacy": "Privacy Policy"
+            },
+            "services": {
+                "title": "Our Services",
+                "supervision": "Supervision",
+                "training": "Training",
+                "counselling": "Counselling"
+            }
+        },
+        "support_item": {
+            "cancer_info": "Cancer Information",
+            "caregiver": "Caregiver Support",
+            "live_chat": "Live Chat"
+        },
+        "our_work_item": {
+            "projects": {
+                "title": "Ongoing Projects",
+                "alok_nibash_1": "Mosabbir Alok Nibash 1",
+                "alok_nibash_2": "Mosabbir Alok Nibash 2",
+                "alok_kantha": "Alok Kantha",
+                "alokon": "Alokon"
+            },
+            "flagship": {
+                "title": "FlagShip Initiative",
+                "village": "Bangladesh's first cancer care village"
+            },
+            "initiatives": {
+                "title": "Initiatives",
+                "holistic": "Holistic Support",
+                "mental_health": "Mental Health Support",
+                "rehabilitation": "Rehabilitation"
+            },
+            "campaigns": {
+                "title": "Campaigns",
+                "ramadan": "Fight Cancer in this Ramadan",
+                "adopt": "Adopt a Patient",
+                "hope": "Hope for Children",
+                "hub": "Community Health Hub",
+                "mother": "Save a Mother"
+            }
+        },
+        "stories_item": {
+            "categories": {
+                "title": "Categories",
+                "impact": "Impact Stories",
+                "testimonials": "Testimonials"
+            },
+            "media": {
+                "title": "Media",
+                "gallery": "Gallery",
+                "blogs": "Blogs"
+            }
+        },
+        "get_involved_item": {
+            "volunteering": {
+                "title": "Volunteering",
+                "become": "Become a Volunteer",
+                "stories": "See Stories"
+            },
+            "partnership": {
+                "title": "Partnership",
+                "brand": "Brand Partnership",
+                "join_campaign": "Join a Campaign",
+                "adopt": "Adopt a Patient",
+                "become_donor": "Become a Donor"
+            }
+        },
+        "contact_item": {
+            "us": "Contact Us",
+            "faq": "FAQ"
+        },
+        "donate": "Donate",
+        "support_patient": "Support A Patient",
+        "search_placeholder": "Search..."
     },
     "common": {
         "loading": "Loading...",
         "error": "Something went wrong"
+    },
+    "volunteer": {
+        "title": "Become a Volunteer",
+        "intro": "Join BANCAT as a volunteer and contribute to the global fight against cancer. By signing up, you will participate in diverse initiatives designed to provide critical care to patients throughout every stage of their treatment. Your involvement will also play a vital role in raising public awareness and fostering collaboration among organizations dedicated to this cause. Seize this opportunity to make a lasting impact and improve the lives of millions of cancer patients in Bangladesh and beyond.",
+        "terms_title": "By registering as a volunteer with BANCAT, the applicant agrees to adhere to the following terms and conditions:",
+        "terms": {
+            "values_title": "Alignment with Organizational Values",
+            "values_desc": "The volunteer must strictly adhere to the core principles, mission, and ethical standards of BANCAT.",
+            "commitment_title": "Commitment to Service",
+            "commitment_desc": "The applicant affirms a genuine interest in service-oriented initiatives and a commitment to advancing the organization’s humanitarian goals.",
+            "probono_title": "Pro Bono Status",
+            "probono_desc": "All volunteer services are performed voluntarily. The applicant acknowledges that they shall receive no salary, wages, or financial remuneration of any kind in exchange for their services.",
+            "integrity_title": "Fiduciary Responsibility & Integrity",
+            "integrity_desc": "The volunteer is expected to maintain the highest standards of integrity and trustworthiness. This includes the responsible management of resources and the faithful execution of assigned duties during project implementation."
+        },
+        "form_prompt": "If you are interested in becoming a part of the BANCAT team, please fill out the form below."
     }
 }

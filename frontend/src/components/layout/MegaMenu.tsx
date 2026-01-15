@@ -2,6 +2,7 @@ import { Box, Paper, Typography, Grid, Fade, Popper, alpha } from '@mui/material
 import { Link as RouterLink } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { KeyboardArrowRight } from '@mui/icons-material';
+import { useTranslation } from 'react-i18next';
 import type { MenuSection } from './menuConfig';
 
 interface MegaMenuProps {
@@ -34,6 +35,7 @@ export const MegaMenu = ({
     onClose,
     featuredImage,
 }: MegaMenuProps) => {
+    const { t } = useTranslation();
     // Defense against top-left rendering glitch
     if (open && !anchorEl) return null;
 
@@ -41,7 +43,7 @@ export const MegaMenu = ({
         <Popper
             open={open}
             anchorEl={anchorEl}
-            placement="bottom-start"
+            placement="bottom"
             transition
             style={{ zIndex: 1300 }}
             modifiers={[{ name: 'offset', options: { offset: [0, 10] } }]}
@@ -68,7 +70,7 @@ export const MegaMenu = ({
                             <Grid item xs={12} md={featuredImage ? 8 : 12} sx={{ p: 4 }}>
                                 <Grid container spacing={4}>
                                     {sections.map((section, sectionIndex) => (
-                                        <Grid item xs={12} sm={sections.length === 2 ? 6 : 4} key={sectionIndex}>
+                                        <Grid item xs={12} sm={sections.length === 2 ? 6 : sections.length === 4 ? 3 : 4} key={sectionIndex}>
                                             <Typography
                                                 variant="overline"
                                                 sx={{
@@ -82,7 +84,7 @@ export const MegaMenu = ({
                                                     pb: 0.5
                                                 }}
                                             >
-                                                {section.title}
+                                                {t(section.title)}
                                             </Typography>
                                             <Box sx={{ display: 'flex', flexDirection: 'column', gap: 0.5 }}>
                                                 {section.items.map((item, itemIndex) => (
@@ -110,7 +112,7 @@ export const MegaMenu = ({
                                                     >
                                                         <Box>
                                                             <Typography variant="body2" sx={{ fontWeight: 600 }}>
-                                                                {item.label}
+                                                                {t(item.label)}
                                                             </Typography>
                                                             {item.description && (
                                                                 <Typography variant="caption" sx={{ color: 'text.secondary', display: 'block' }}>

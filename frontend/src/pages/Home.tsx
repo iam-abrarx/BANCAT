@@ -10,7 +10,6 @@ import { PatientStoriesCarousel } from '../components/home/PatientStoriesCarouse
 import { ImpactCards } from '../components/home/ImpactCards';
 import JoinUs from '../components/home/JoinUs';
 import { AboutUs } from '../components/home/AboutUs';
-import { Partners } from '../components/home/Partners';
 import { VideoSection } from '../components/home/VideoSection';
 import { Box } from '@mui/material';
 
@@ -27,7 +26,6 @@ export const Home = () => {
             <Box><ParallaxStory /></Box>
             <Box><ImpactCards /></Box>
             <Box><AboutUs /></Box>
-            <Box sx={{ scrollSnapAlign: 'none !important' }}><Partners /></Box>
             <Box><VideoSection /></Box>
             <Box><PatientStoriesCarousel /></Box>
             <Box><JoinUs /></Box>

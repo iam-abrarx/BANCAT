@@ -1,7 +1,6 @@
 import { Box, Container, Typography, Button } from '@mui/material';
 import { Link as RouterLink } from 'react-router-dom';
-import { useEffect, useRef } from 'react';
-import { animate, useInView } from 'framer-motion';
+
 
 const Counter = ({ from, to }: { from: number; to: number }) => {
     const nodeRef = useRef<HTMLSpanElement>(null);
@@ -69,7 +68,7 @@ export const StatsBanner = () => {
                             mb: 2
                         }}
                     >
-                        Over <Counter from={0} to={116000} />
+                        Over 116,000
                     </Typography>
 
                     {/* Subtitle */}
@@ -94,17 +93,17 @@ export const StatsBanner = () => {
                         to="/donate"
                         size="large"
                         sx={{
-                            bgcolor: '#FFC107',
-                            color: '#1a1a1a',
+                            background: 'linear-gradient(45deg, #F39C12 30%, #F7DC6F 90%)',
+                            color: '#333',
                             borderRadius: '50px',
                             px: 4,
                             py: 1.25,
                             fontSize: '1rem',
-                            fontWeight: 600,
+                            fontWeight: 700,
                             textTransform: 'none',
                             boxShadow: 'none',
                             '&:hover': {
-                                bgcolor: '#FFD54F',
+                                background: 'linear-gradient(45deg, #D68910 30%, #F1C40F 90%)',
                                 boxShadow: 'none'
                             }
                         }}
