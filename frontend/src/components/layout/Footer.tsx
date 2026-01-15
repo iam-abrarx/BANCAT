@@ -78,10 +78,10 @@ export const Footer = () => {
                         <Grid item xs={6} md={2}>
                             <Typography variant="subtitle1" sx={{ fontWeight: 400, mb: 3 }}>About BANCAT</Typography>
                             <Stack spacing={1.5}>
-                                <Link component={RouterLink} to="/about" underline="none" sx={{ color: '#f5aa21', fontSize: '0.9rem' }}>About Us</Link>
-                                <Link component={RouterLink} to="/approach" underline="none" sx={{ color: '#f5aa21', fontSize: '0.9rem' }}>Our Approach (AAA)</Link>
-                                <Link component={RouterLink} to="/services" underline="none" sx={{ color: '#f5aa21', fontSize: '0.9rem' }}>Our Services / Care Centres</Link>
-                                <Link component={RouterLink} to="/stories" underline="none" sx={{ color: '#f5aa21', fontSize: '0.9rem' }}>Stories of Hope</Link>
+                                <Link component={RouterLink} to="/about" underline="none" sx={{ color: '#f5aa21', fontSize: '0.9rem', '&:hover': { textDecoration: 'underline' } }}>About Us</Link>
+                                <Link component={RouterLink} to="/approach" underline="none" sx={{ color: '#f5aa21', fontSize: '0.9rem', '&:hover': { textDecoration: 'underline' } }}>Our Approach (AAA)</Link>
+                                <Link component={RouterLink} to="/services" underline="none" sx={{ color: '#f5aa21', fontSize: '0.9rem', '&:hover': { textDecoration: 'underline' } }}>Our Services / Care Centres</Link>
+                                <Link component={RouterLink} to="/stories" underline="none" sx={{ color: '#f5aa21', fontSize: '0.9rem', '&:hover': { textDecoration: 'underline' } }}>Stories of Hope</Link>
                             </Stack>
                         </Grid>
 
@@ -89,10 +89,10 @@ export const Footer = () => {
                         <Grid item xs={6} md={2}>
                             <Typography variant="subtitle1" sx={{ fontWeight: 400, mb: 3 }}>Get Involved</Typography>
                             <Stack spacing={1.5}>
-                                <Link component={RouterLink} to="/donate" underline="none" sx={{ color: '#f5aa21', fontSize: '0.9rem' }}>Donate Now</Link>
-                                <Link component={RouterLink} to="/zakat" underline="none" sx={{ color: '#f5aa21', fontSize: '0.9rem' }}>Zakat Calculator</Link>
-                                <Link component={RouterLink} to="/contact" underline="none" sx={{ color: '#f5aa21', fontSize: '0.9rem' }}>Contact Us</Link>
-                                <Link component={RouterLink} to="/privacy" underline="none" sx={{ color: '#f5aa21', fontSize: '0.9rem' }}>Privacy Policy</Link>
+                                <Link component={RouterLink} to="/donate" underline="none" sx={{ color: '#f5aa21', fontSize: '0.9rem', '&:hover': { textDecoration: 'underline' } }}>Donate Now</Link>
+                                <Link component={RouterLink} to="/zakat" underline="none" sx={{ color: '#f5aa21', fontSize: '0.9rem', '&:hover': { textDecoration: 'underline' } }}>Zakat Calculator</Link>
+                                <Link component={RouterLink} to="/contact" underline="none" sx={{ color: '#f5aa21', fontSize: '0.9rem', '&:hover': { textDecoration: 'underline' } }}>Contact Us</Link>
+                                <Link component={RouterLink} to="/privacy" underline="none" sx={{ color: '#f5aa21', fontSize: '0.9rem', '&:hover': { textDecoration: 'underline' } }}>Privacy Policy</Link>
                             </Stack>
                         </Grid>
 
@@ -100,10 +100,10 @@ export const Footer = () => {
                         <Grid item xs={6} md={2}>
                             <Typography variant="subtitle1" sx={{ fontWeight: 400, mb: 3 }}>Cancer & Support</Typography>
                             <Stack spacing={1.5}>
-                                <Link component={RouterLink} to="/cancer-info" underline="none" sx={{ color: '#f5aa21', fontSize: '0.9rem' }}>All About Cancer</Link>
-                                <Link component={RouterLink} to="/support" underline="none" sx={{ color: '#f5aa21', fontSize: '0.9rem' }}>Patient & Caregiver Support</Link>
-                                <Link component={RouterLink} to="/faq" underline="none" sx={{ color: '#f5aa21', fontSize: '0.9rem' }}>FAQ & Help</Link>
-                                <Link component={RouterLink} to="/helpline" underline="none" sx={{ color: '#f5aa21', fontSize: '0.9rem' }}>Helpline & Live Chat</Link>
+                                <Link component={RouterLink} to="/cancer-info" underline="none" sx={{ color: '#f5aa21', fontSize: '0.9rem', '&:hover': { textDecoration: 'underline' } }}>All About Cancer</Link>
+                                <Link component={RouterLink} to="/support" underline="none" sx={{ color: '#f5aa21', fontSize: '0.9rem', '&:hover': { textDecoration: 'underline' } }}>Patient & Caregiver Support</Link>
+                                <Link component={RouterLink} to="/faq" underline="none" sx={{ color: '#f5aa21', fontSize: '0.9rem', '&:hover': { textDecoration: 'underline' } }}>FAQ & Help</Link>
+                                <Link component={RouterLink} to="/helpline" underline="none" sx={{ color: '#f5aa21', fontSize: '0.9rem', '&:hover': { textDecoration: 'underline' } }}>Helpline & Live Chat</Link>
                             </Stack>
                         </Grid>
 
@@ -111,11 +111,9 @@ export const Footer = () => {
                         <Grid item xs={6} md={3} sx={{ textAlign: 'right' }}>
                             <Typography variant="subtitle1" sx={{ fontWeight: 400, mb: 3 }}>Donate & Legal</Typography>
                             <Stack spacing={1.5} alignItems="flex-end">
-                                <Link component={RouterLink} to="/donate-info" underline="none" sx={{ color: '#f5aa21', fontSize: '0.9rem' }}>All About Cancer</Link>
-                                <Link component={RouterLink} to="/caregiver" underline="none" sx={{ color: '#f5aa21', fontSize: '0.9rem' }}>Patient &</Link>
-                                <Link component={RouterLink} to="/caregiver" underline="none" sx={{ color: '#f5aa21', fontSize: '0.9rem' }}>Caregiver Support</Link>
-                                <Link component={RouterLink} to="/faq-legal" underline="none" sx={{ color: '#f5aa21', fontSize: '0.9rem' }}>FAQ & Help</Link>
-                                <Link component={RouterLink} to="/helpline-legal" underline="none" sx={{ color: '#f5aa21', fontSize: '0.9rem' }}>Helpline & Live Chat</Link>
+                                <Link component={RouterLink} to="/donate-info" underline="none" sx={{ color: '#f5aa21', fontSize: '0.9rem', '&:hover': { textDecoration: 'underline' } }}>All About Cancer</Link>
+                                <Link component={RouterLink} to="/faq-legal" underline="none" sx={{ color: '#f5aa21', fontSize: '0.9rem', '&:hover': { textDecoration: 'underline' } }}>FAQ & Help</Link>
+                                <Link component={RouterLink} to="/helpline-legal" underline="none" sx={{ color: '#f5aa21', fontSize: '0.9rem', '&:hover': { textDecoration: 'underline' } }}>Helpline & Live Chat</Link>
                             </Stack>
                         </Grid>
                     </Grid>
