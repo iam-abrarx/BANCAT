@@ -6,6 +6,7 @@ import {
     FormControlLabel, Radio, FormHelperText, alpha, Checkbox
 } from '@mui/material';
 import { useMutation } from '@tanstack/react-query';
+import { useTranslation } from 'react-i18next';
 import { volunteerService } from '../../services/volunteerService';
 import { LoadingSpinner } from '../common/LoadingSpinner';
 
@@ -25,6 +26,7 @@ import AssignmentIndOutlinedIcon from '@mui/icons-material/AssignmentIndOutlined
 import FactCheckOutlinedIcon from '@mui/icons-material/FactCheckOutlined';
 
 export const VolunteerForm = () => {
+    const { t } = useTranslation();
     const [successMsg, setSuccessMsg] = useState('');
     const [errorMsg, setErrorMsg] = useState('');
     const [photoFile, setPhotoFile] = useState<File | null>(null);
@@ -61,7 +63,7 @@ export const VolunteerForm = () => {
     const mutation = useMutation({
         mutationFn: volunteerService.apply,
         onSuccess: () => {
-            setSuccessMsg('Application submitted successfully! We will contact you soon.');
+            setSuccessMsg(t('volunteer.form.success_msg'));
             setErrorMsg('');
             reset();
             setPhotoFile(null);
@@ -69,7 +71,7 @@ export const VolunteerForm = () => {
         },
         onError: (err: any) => {
             console.error(err);
-            setErrorMsg(err.response?.data?.message || 'Failed to submit application. Please try again.');
+            setErrorMsg(err.response?.data?.message || t('volunteer.form.error_msg'));
             setSuccessMsg('');
             window.scrollTo(0, 0);
         }
@@ -77,12 +79,12 @@ export const VolunteerForm = () => {
 
     const onSubmit = (data: any) => {
         if (!photoFile) {
-            setErrorMsg("Please upload a recent photo.");
+            setErrorMsg(t('volunteer.form.photo_required'));
             window.scrollTo(0, 0);
             return;
         }
         if (!data.fb_link && !data.linkedin_link) {
-            setErrorMsg("Please provide either your Facebook or LinkedIn profile link.");
+            setErrorMsg(t('volunteer.form.social_required'));
             window.scrollTo(0, 0);
             return;
         }
@@ -158,42 +160,42 @@ export const VolunteerForm = () => {
 
                 {/* 1. PERSONAL DETAILS CARD */}
                 <Paper elevation={0} sx={{ p: 4, mb: 4, borderRadius: 4, border: '1px solid #edf2f7', boxShadow: '0 2px 20px rgba(0,0,0,0.02)' }}>
-                    <SectionTitle icon={<PersonOutlineIcon />} title="Personal Information" subtitle="Basic details about you" />
+                    <SectionTitle icon={<PersonOutlineIcon />} title={t('volunteer.form.personal_info')} subtitle={t('volunteer.form.personal_info_sub')} />
 
                     <Grid container spacing={3}>
                         <Grid item xs={12} md={6}>
-                            <Controller name="name" control={control} rules={{ required: 'Name is required' }}
+                            <Controller name="name" control={control} rules={{ required: t('volunteer.form.name_required') }}
                                 render={({ field }) => (
-                                    <TextField {...field} label="Full Name *" fullWidth sx={inputStyles}
-                                        error={!!errors.name} helperText={errors.name?.message}
+                                    <TextField {...field} label={t('volunteer.form.name') + " *"} fullWidth sx={inputStyles}
+                                        error={!!errors.name} helperText={errors.name?.message as string}
                                     />
                                 )}
                             />
                         </Grid>
                         <Grid item xs={12} md={6}>
-                            <Controller name="father_name" control={control} rules={{ required: "Father's Name is required" }}
+                            <Controller name="father_name" control={control} rules={{ required: t('volunteer.form.father_name_required') }}
                                 render={({ field }) => (
-                                    <TextField {...field} label="Father's Name *" fullWidth sx={inputStyles}
-                                        error={!!errors.father_name} helperText={errors.father_name?.message}
+                                    <TextField {...field} label={t('volunteer.form.father_name') + " *"} fullWidth sx={inputStyles}
+                                        error={!!errors.father_name} helperText={errors.father_name?.message as string}
                                     />
                                 )}
                             />
                         </Grid>
                         <Grid item xs={12} md={6}>
-                            <Controller name="mobile" control={control} rules={{ required: 'Mobile No is required' }}
+                            <Controller name="mobile" control={control} rules={{ required: t('volunteer.form.mobile_required') }}
                                 render={({ field }) => (
-                                    <TextField {...field} label="Mobile Number *" fullWidth sx={inputStyles}
-                                        error={!!errors.mobile} helperText={errors.mobile?.message}
+                                    <TextField {...field} label={t('volunteer.form.mobile') + " *"} fullWidth sx={inputStyles}
+                                        error={!!errors.mobile} helperText={errors.mobile?.message as string}
                                         InputProps={{ startAdornment: <InputAdornment position="start"><PhoneIphoneIcon fontSize="small" color="disabled" /></InputAdornment> }}
                                     />
                                 )}
                             />
                         </Grid>
                         <Grid item xs={12} md={6}>
-                            <Controller name="email" control={control} rules={{ required: 'Email is required', pattern: { value: /^\S+@\S+$/i, message: 'Invalid email' } }}
+                            <Controller name="email" control={control} rules={{ required: t('volunteer.form.email_required'), pattern: { value: /^\S+@\S+$/i, message: t('volunteer.form.email_invalid') } }}
                                 render={({ field }) => (
-                                    <TextField {...field} label="Email Address *" fullWidth sx={inputStyles}
-                                        error={!!errors.email} helperText={errors.email?.message}
+                                    <TextField {...field} label={t('volunteer.form.email') + " *"} fullWidth sx={inputStyles}
+                                        error={!!errors.email} helperText={errors.email?.message as string}
                                         InputProps={{ startAdornment: <InputAdornment position="start"><MailOutlineIcon fontSize="small" color="disabled" /></InputAdornment> }}
                                     />
                                 )}
@@ -202,8 +204,8 @@ export const VolunteerForm = () => {
                         <Grid item xs={12} md={6}>
                             <Controller name="alt_mobile" control={control}
                                 render={({ field }) => (
-                                    <TextField {...field} label="Alternative Mobile (Optional)" fullWidth sx={inputStyles}
-                                        error={!!errors.alt_mobile} helperText={errors.alt_mobile?.message}
+                                    <TextField {...field} label={t('volunteer.form.alt_mobile')} fullWidth sx={inputStyles}
+                                        error={!!errors.alt_mobile} helperText={errors.alt_mobile?.message as string}
                                         InputProps={{ startAdornment: <InputAdornment position="start"><PhoneIphoneIcon fontSize="small" color="disabled" /></InputAdornment> }}
                                     />
                                 )}
@@ -217,13 +219,13 @@ export const VolunteerForm = () => {
                     <Grid container spacing={6}>
                         {/* Section: Professional */}
                         <Grid item xs={12} lg={12}>
-                            <SectionTitle icon={<WorkOutlineIcon />} title="Professional Information" subtitle="What do you do? (Optional)" />
+                            <SectionTitle icon={<WorkOutlineIcon />} title={t('volunteer.form.professional_info')} subtitle={t('volunteer.form.professional_info_sub')} />
                             <Grid container spacing={3}>
                                 <Grid item xs={12} md={6}>
                                     <Controller name="occupation" control={control}
                                         render={({ field }) => (
-                                            <TextField {...field} label="Current Occupation (Optional)" fullWidth sx={inputStyles}
-                                                error={!!errors.occupation} helperText={errors.occupation?.message}
+                                            <TextField {...field} label={t('volunteer.form.occupation')} fullWidth sx={inputStyles}
+                                                error={!!errors.occupation} helperText={errors.occupation?.message as string}
                                             />
                                         )}
                                     />
@@ -231,8 +233,8 @@ export const VolunteerForm = () => {
                                 <Grid item xs={12} md={6}>
                                     <Controller name="institution" control={control}
                                         render={({ field }) => (
-                                            <TextField {...field} label="Workplace / Institution (Optional)" fullWidth sx={inputStyles}
-                                                error={!!errors.institution} helperText={errors.institution?.message}
+                                            <TextField {...field} label={t('volunteer.form.institution')} fullWidth sx={inputStyles}
+                                                error={!!errors.institution} helperText={errors.institution?.message as string}
                                                 InputProps={{ startAdornment: <InputAdornment position="start"><BusinessIcon fontSize="small" color="disabled" /></InputAdornment> }}
                                             />
                                         )}
@@ -243,38 +245,38 @@ export const VolunteerForm = () => {
 
                         {/* Section: Address */}
                         <Grid item xs={12} lg={12}>
-                            <SectionTitle icon={<HomeOutlinedIcon />} title="Address Details" subtitle="Where can we find you?" />
+                            <SectionTitle icon={<HomeOutlinedIcon />} title={t('volunteer.form.address_details')} subtitle={t('volunteer.form.address_details_sub')} />
 
                             <Box sx={{ mb: 3 }}>
-                                <Controller name="current_address" control={control} rules={{ required: 'Current Address is required' }}
+                                <Controller name="current_address" control={control} rules={{ required: t('volunteer.form.address_required') }}
                                     render={({ field }) => (
-                                        <TextField {...field} label="Current Address *" fullWidth multiline rows={2} sx={inputStyles}
-                                            error={!!errors.current_address} helperText={errors.current_address?.message}
+                                        <TextField {...field} label={t('volunteer.form.current_address') + " *"} fullWidth multiline rows={2} sx={inputStyles}
+                                            error={!!errors.current_address} helperText={errors.current_address?.message as string}
                                         />
                                     )}
                                 />
                             </Box>
 
-                            <Typography variant="subtitle2" sx={{ mb: 2, color: '#582d82', fontWeight: 600 }}>Permanent Address (Optional)</Typography>
+                            <Typography variant="subtitle2" sx={{ mb: 2, color: '#582d82', fontWeight: 600 }}>{t('volunteer.form.perm_address_label')}</Typography>
                             <Grid container spacing={2}>
                                 <Grid item xs={12} sm={6} md={3}>
                                     <Controller name="perm_division" control={control}
-                                        render={({ field }) => <TextField {...field} label="Division" fullWidth sx={inputStyles} error={!!errors.perm_division} />}
+                                        render={({ field }) => <TextField {...field} label={t('volunteer.form.division')} fullWidth sx={inputStyles} error={!!errors.perm_division} />}
                                     />
                                 </Grid>
                                 <Grid item xs={12} sm={6} md={3}>
                                     <Controller name="perm_district" control={control}
-                                        render={({ field }) => <TextField {...field} label="District" fullWidth sx={inputStyles} error={!!errors.perm_district} />}
+                                        render={({ field }) => <TextField {...field} label={t('volunteer.form.district')} fullWidth sx={inputStyles} error={!!errors.perm_district} />}
                                     />
                                 </Grid>
                                 <Grid item xs={12} sm={6} md={3}>
                                     <Controller name="perm_upazila" control={control}
-                                        render={({ field }) => <TextField {...field} label="Upazila" fullWidth sx={inputStyles} error={!!errors.perm_upazila} />}
+                                        render={({ field }) => <TextField {...field} label={t('volunteer.form.upazila')} fullWidth sx={inputStyles} error={!!errors.perm_upazila} />}
                                     />
                                 </Grid>
                                 <Grid item xs={12} sm={6} md={3}>
                                     <Controller name="perm_union" control={control}
-                                        render={({ field }) => <TextField {...field} label="Union" fullWidth sx={inputStyles} error={!!errors.perm_union} />}
+                                        render={({ field }) => <TextField {...field} label={t('volunteer.form.union')} fullWidth sx={inputStyles} error={!!errors.perm_union} />}
                                     />
                                 </Grid>
                             </Grid>
@@ -284,23 +286,23 @@ export const VolunteerForm = () => {
 
                 {/* 3. SOCIAL & EDUCATION CARD */}
                 <Paper elevation={0} sx={{ p: 4, mb: 4, borderRadius: 4, border: '1px solid #edf2f7', boxShadow: '0 2px 20px rgba(0,0,0,0.02)' }}>
-                    <SectionTitle icon={<SchoolOutlinedIcon />} title="Education & Social" subtitle="Your background and online presence" />
+                    <SectionTitle icon={<SchoolOutlinedIcon />} title={t('volunteer.form.education_social')} subtitle={t('volunteer.form.education_social_sub')} />
 
-                    <Typography variant="subtitle2" sx={{ mb: 2, color: '#582d82', fontWeight: 600 }}>Educational Qualification</Typography>
+                    <Typography variant="subtitle2" sx={{ mb: 2, color: '#582d82', fontWeight: 600 }}>{t('volunteer.form.edu_qual')}</Typography>
                     <Grid container spacing={3} sx={{ mb: 5 }}>
                         <Grid item xs={12} md={6}>
-                            <Controller name="edu_level" control={control} rules={{ required: 'Education Level is required' }}
+                            <Controller name="edu_level" control={control} rules={{ required: t('volunteer.form.edu_level_required') }}
                                 render={({ field }) => (
                                     <FormControl fullWidth error={!!errors.edu_level} sx={inputStyles}>
-                                        <InputLabel>Education Level *</InputLabel>
-                                        <Select {...field} label="Education Level *">
-                                            <MenuItem value="Secondary">Secondary (SSC/O-Level)</MenuItem>
-                                            <MenuItem value="Higher Secondary">Higher Secondary (HSC/A-Level)</MenuItem>
-                                            <MenuItem value="Undergraduate">Undergraduate (Bachelors)</MenuItem>
-                                            <MenuItem value="Postgraduate">Postgraduate (Masters/PhD)</MenuItem>
-                                            <MenuItem value="Other">Other</MenuItem>
+                                        <InputLabel>{t('volunteer.form.edu_level') + " *"}</InputLabel>
+                                        <Select {...field} label={t('volunteer.form.edu_level') + " *"}>
+                                            <MenuItem value="Secondary">{t('volunteer.form.edu_secondary')}</MenuItem>
+                                            <MenuItem value="Higher Secondary">{t('volunteer.form.edu_hs')}</MenuItem>
+                                            <MenuItem value="Undergraduate">{t('volunteer.form.edu_undergrad')}</MenuItem>
+                                            <MenuItem value="Postgraduate">{t('volunteer.form.edu_postgrad')}</MenuItem>
+                                            <MenuItem value="Other">{t('volunteer.form.edu_other')}</MenuItem>
                                         </Select>
-                                        {errors.edu_level && <FormHelperText>{errors.edu_level.message}</FormHelperText>}
+                                        {errors.edu_level && <FormHelperText>{errors.edu_level.message as string}</FormHelperText>}
                                     </FormControl>
                                 )}
                             />
@@ -309,33 +311,33 @@ export const VolunteerForm = () => {
                         <Grid item xs={12} md={6}>
                             <Controller name="degree" control={control}
                                 render={({ field }) => (
-                                    <TextField {...field} label="Degree / Department (Optional)" fullWidth sx={inputStyles} error={!!errors.degree} helperText={errors.degree?.message} />
+                                    <TextField {...field} label={t('volunteer.form.degree')} fullWidth sx={inputStyles} error={!!errors.degree} helperText={errors.degree?.message as string} />
                                 )}
                             />
                         </Grid>
                         <Grid item xs={12} md={8}>
                             <Controller name="edu_institution" control={control}
                                 render={({ field }) => (
-                                    <TextField {...field} label="Institution Name (Optional)" fullWidth sx={inputStyles} error={!!errors.edu_institution} helperText={errors.edu_institution?.message} />
+                                    <TextField {...field} label={t('volunteer.form.last_institution')} fullWidth sx={inputStyles} error={!!errors.edu_institution} helperText={errors.edu_institution?.message as string} />
                                 )}
                             />
                         </Grid>
                         <Grid item xs={12} md={4}>
                             <Controller name="passing_year" control={control}
                                 render={({ field }) => (
-                                    <TextField {...field} label="Passing Year (Optional)" fullWidth sx={inputStyles} error={!!errors.passing_year} helperText={errors.passing_year?.message} />
+                                    <TextField {...field} label={t('volunteer.form.passing_year')} fullWidth sx={inputStyles} error={!!errors.passing_year} helperText={errors.passing_year?.message as string} />
                                 )}
                             />
                         </Grid>
                     </Grid>
 
-                    <Typography variant="subtitle2" sx={{ mb: 2, color: '#582d82', fontWeight: 600 }}>Social Media (Provide at least one)</Typography>
+                    <Typography variant="subtitle2" sx={{ mb: 2, color: '#582d82', fontWeight: 600 }}>{t('volunteer.form.social_media_label')}</Typography>
                     <Grid container spacing={3}>
                         <Grid item xs={12} md={6}>
                             <Controller name="fb_link" control={control}
-                                rules={{ validate: (value, formValues) => !!value || !!formValues.linkedin_link || "Either Facebook or LinkedIn is required" }}
+                                rules={{ validate: (value, formValues) => !!value || !!formValues.linkedin_link || t('volunteer.form.social_required') }}
                                 render={({ field }) => (
-                                    <TextField {...field} label="Facebook Profile" fullWidth sx={inputStyles} error={!!errors.fb_link} helperText={errors.fb_link?.message}
+                                    <TextField {...field} label={t('volunteer.form.fb_label')} fullWidth sx={inputStyles} error={!!errors.fb_link} helperText={errors.fb_link?.message as string}
                                         InputProps={{ startAdornment: <InputAdornment position="start"><FacebookIcon color="primary" /></InputAdornment> }}
                                         onChange={(e) => { field.onChange(e); if (errors.linkedin_link) trigger('linkedin_link'); }}
                                     />
@@ -344,9 +346,9 @@ export const VolunteerForm = () => {
                         </Grid>
                         <Grid item xs={12} md={6}>
                             <Controller name="linkedin_link" control={control}
-                                rules={{ validate: (value, formValues) => !!value || !!formValues.fb_link || "Either Facebook or LinkedIn is required" }}
+                                rules={{ validate: (value, formValues) => !!value || !!formValues.fb_link || t('volunteer.form.social_required') }}
                                 render={({ field }) => (
-                                    <TextField {...field} label="LinkedIn Profile" fullWidth sx={inputStyles} error={!!errors.linkedin_link} helperText={errors.linkedin_link?.message}
+                                    <TextField {...field} label={t('volunteer.form.linkedin_label')} fullWidth sx={inputStyles} error={!!errors.linkedin_link} helperText={errors.linkedin_link?.message as string}
                                         InputProps={{ startAdornment: <InputAdornment position="start"><LinkedInIcon color="primary" /></InputAdornment> }}
                                         onChange={(e) => { field.onChange(e); if (errors.fb_link) trigger('fb_link'); }}
                                     />
@@ -356,7 +358,7 @@ export const VolunteerForm = () => {
                         <Grid item xs={12} md={6}>
                             <Controller name="whatsapp" control={control}
                                 render={({ field }) => (
-                                    <TextField {...field} label="WhatsApp Number (Optional)" fullWidth sx={inputStyles} error={!!errors.whatsapp} helperText={errors.whatsapp?.message}
+                                    <TextField {...field} label={t('volunteer.form.whatsapp_label')} fullWidth sx={inputStyles} error={!!errors.whatsapp} helperText={errors.whatsapp?.message as string}
                                         InputProps={{ startAdornment: <InputAdornment position="start"><WhatsAppIcon color="success" /></InputAdornment> }}
                                     />
                                 )}
@@ -367,29 +369,29 @@ export const VolunteerForm = () => {
 
                 {/* 4. FINAL DETAILS */}
                 <Paper elevation={0} sx={{ p: 4, mb: 4, borderRadius: 4, bgcolor: '#fdfbff', border: '1px dashed #d1c4e9' }}>
-                    <SectionTitle icon={<AssignmentIndOutlinedIcon />} title="Final Details" subtitle="Almost there!" />
+                    <SectionTitle icon={<AssignmentIndOutlinedIcon />} title={t('volunteer.form.final_details')} subtitle={t('volunteer.form.final_details_sub')} />
 
                     <Grid container spacing={4}>
                         <Grid item xs={12}>
                             <Controller name="prev_experience" control={control}
                                 render={({ field }) => <TextField {...field}
-                                    label="Previous Volunteer Experience (Optional)"
+                                    label={t('volunteer.form.prev_experience')}
                                     fullWidth multiline rows={3}
                                     sx={{ ...inputStyles, bgcolor: 'white' }}
-                                    placeholder="Briefly describe your experience (or leave blank)"
-                                    error={!!errors.prev_experience} helperText={errors.prev_experience?.message}
+                                    placeholder={t('volunteer.form.prev_experience_placeholder')}
+                                    error={!!errors.prev_experience} helperText={errors.prev_experience?.message as string}
                                 />}
                             />
                         </Grid>
 
                         <Grid item xs={12} md={6}>
                             <Box sx={{ p: 2, bgcolor: 'white', borderRadius: 2, border: '1px solid #eee' }}>
-                                <Typography variant="subtitle2" gutterBottom>Join a specific BANCAT team? *</Typography>
+                                <Typography variant="subtitle2" gutterBottom>{t('volunteer.form.join_team_question')} *</Typography>
                                 <Controller name="join_team" control={control} rules={{ required: true }}
                                     render={({ field }) => (
                                         <RadioGroup {...field} row>
-                                            <FormControlLabel value="Yes" control={<Radio color="secondary" />} label="Yes" />
-                                            <FormControlLabel value="No" control={<Radio color="secondary" />} label="No" />
+                                            <FormControlLabel value="Yes" control={<Radio color="secondary" />} label={t('volunteer.form.yes')} />
+                                            <FormControlLabel value="No" control={<Radio color="secondary" />} label={t('volunteer.form.no')} />
                                         </RadioGroup>
                                     )}
                                 />
@@ -397,9 +399,9 @@ export const VolunteerForm = () => {
                                     <Controller name="preferred_team" control={control}
                                         render={({ field }) => (
                                             <Select {...field} fullWidth size="small" displayEmpty sx={{ mt: 1, borderRadius: 2 }}>
-                                                <MenuItem value="" disabled>Select Team</MenuItem>
-                                                <MenuItem value="BANCAT Durbar">BANCAT Durbar</MenuItem>
-                                                <MenuItem value="Cancer Warriors">Cancer Warriors</MenuItem>
+                                                <MenuItem value="" disabled>{t('volunteer.form.select_team')}</MenuItem>
+                                                <MenuItem value="BANCAT Durbar">{t('volunteer.form.durbar')}</MenuItem>
+                                                <MenuItem value="Cancer Warriors">{t('volunteer.form.warriors')}</MenuItem>
                                             </Select>
                                         )}
                                     />
@@ -428,9 +430,9 @@ export const VolunteerForm = () => {
                                 />
                                 <CloudUploadOutlinedIcon sx={{ fontSize: 40, color: photoFile ? 'success.main' : 'text.disabled', mb: 1 }} />
                                 <Typography variant="subtitle1" fontWeight="600" color={photoFile ? 'success.main' : 'text.primary'}>
-                                    {photoFile ? photoFile.name : 'Upload Photo *'}
+                                    {photoFile ? photoFile.name : t('volunteer.form.upload_photo')}
                                 </Typography>
-                                {!photoFile && <Typography variant="caption" color="text.secondary">Max 3MB (JPEG, PNG, HEIC)</Typography>}
+                                {!photoFile && <Typography variant="caption" color="text.secondary">{t('volunteer.form.photo_hint')}</Typography>}
                             </Box>
                         </Grid>
                     </Grid>
@@ -438,7 +440,7 @@ export const VolunteerForm = () => {
                     <Box sx={{ mt: 4 }}>
                         <FormControlLabel
                             control={<Radio checked={true} color="primary" />}
-                            label={<Typography variant="body2" color="text.secondary">I hereby declare that all information provided above is known to be true, accurate, and has been completed by me personally.</Typography>}
+                            label={<Typography variant="body2" color="text.secondary">{t('volunteer.form.declaration')}</Typography>}
                         />
                     </Box>
 
@@ -465,7 +467,7 @@ export const VolunteerForm = () => {
                             }
                         }}
                     >
-                        Submit Application
+                        {t('volunteer.form.submit')}
                     </Button>
                 </Paper>
 

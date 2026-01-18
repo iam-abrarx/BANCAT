@@ -2,7 +2,6 @@
 
 use App\Http\Controllers\Api\PatientController;
 use App\Http\Controllers\Api\StoryController;
-use App\Http\Controllers\Api\ProgramController;
 use App\Http\Controllers\Api\CampaignController;
 use App\Http\Controllers\Api\DonationController;
 use App\Http\Controllers\Api\TeamMemberController;
@@ -39,8 +38,7 @@ Route::prefix('v1')->group(function () {
     Route::get('/stories', [StoryController::class, 'index']);
     Route::get('/stories/{slug}', [StoryController::class, 'show']);
 
-    Route::get('/programs', [ProgramController::class, 'index']);
-    Route::get('/programs/{slug}', [ProgramController::class, 'show']);
+    // Program routes removed
 
     Route::get('/campaigns', [CampaignController::class, 'index']);
     Route::get('/campaigns/{slug}', [CampaignController::class, 'show']);

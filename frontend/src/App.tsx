@@ -31,6 +31,9 @@ import { SearchResultsPage } from './pages/SearchResultsPage';
 import AboutPage from './pages/AboutPage';
 import ImpactPage from './pages/ImpactPage';
 import { AlokNibash } from './pages/AlokNibash';
+import { AlokKatha } from './pages/AlokKatha';
+import { Alokon } from './pages/Alokon';
+import { AlokBoshoti } from './pages/AlokBoshoti';
 import { Partners } from './pages/Partners';
 import { CancerInfo } from './pages/CancerInfo';
 import { MaaBachao } from './pages/MaaBachao';
@@ -121,7 +124,10 @@ function App() {
                         <Route path="/support/live-chat" element={<LiveChatPage />} />
 
                         {/* Projects Mapping */}
-                        <Route path="/projects/mosabbir-alok-nibash-2" element={<AlokNibash />} /> {/* Placeholder */}
+                        <Route path="/projects/mosabbir-alok-nibash-2" element={<AlokNibash />} />
+                        <Route path="/projects/alok-kantha" element={<AlokKatha />} />
+                        <Route path="/projects/alokon" element={<Alokon />} />
+                        <Route path="/projects/alok-boshoti" element={<AlokBoshoti />} />
                         <Route path="/projects/rehabilitation" element={<RehabilitationPage />} />
 
                         <Route path="/donate" element={<DonationPage />} />

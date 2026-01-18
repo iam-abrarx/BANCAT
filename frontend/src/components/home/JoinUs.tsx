@@ -1,4 +1,4 @@
-import { Box, Container, Typography, Grid, Paper } from '@mui/material';
+import { Box, Container, Typography, Grid, Paper, Button } from '@mui/material';
 import { VolunteerActivism, Handshake, Spa, Person, Star } from '@mui/icons-material';
 import joinBg from '../../assets/join_bg_17734.jpg';
 import { useTranslation } from 'react-i18next';
@@ -101,9 +101,31 @@ const JoinUs = () => {
                         <Typography variant="h3" sx={{ fontWeight: 700, fontFamily: "'Montserrat', sans-serif", mb: 2 }}>
                             {t('join_us.title')}
                         </Typography>
-                        <Typography sx={{ lineHeight: 1.6 }}>
+                        <Typography sx={{ lineHeight: 1.6, mb: 4 }}>
                             {t('join_us.description')}
                         </Typography>
+
+                        <Button
+                            variant="contained"
+                            color="secondary"
+                            size="large"
+                            sx={{
+                                borderRadius: '50px',
+                                px: 5,
+                                py: 1.5,
+                                fontSize: '1.1rem',
+                                fontWeight: 600,
+                                textTransform: 'none',
+                                boxShadow: '0 8px 20px rgba(0,0,0,0.3)',
+                                '&:hover': {
+                                    transform: 'translateY(-3px)',
+                                    boxShadow: '0 12px 25px rgba(0,0,0,0.4)',
+                                    bgcolor: '#f5aa21' // Hardcode secondary color or use theme
+                                }
+                            }}
+                        >
+                            {t('join_us.button')}
+                        </Button>
                     </Box>
 
                     {/* Feature Cards Row 1 */}

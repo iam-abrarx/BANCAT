@@ -3,10 +3,10 @@ if (import.meta.env.PROD && !import.meta.env.VITE_API_URL) {
     throw new Error("CRITICAL CONFIGURATION ERROR: VITE_API_URL is missing in Production environment variables. The app cannot function.");
 }
 
-export const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000/v1';
+export const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000/api/v1';
 
-// Remove /api/v1 AND any trailing slashes to get the pure base URL
-export const BASE_URL = API_BASE_URL.replace(/\/v1\/?$/, '').replace(/\/$/, '');
+// Remove /api/v1, /v1, or /api from the end to get the pure host URL
+export const BASE_URL = API_BASE_URL.replace(/\/api\/v1\/?$/, '').replace(/\/v1\/?$/, '').replace(/\/api\/?$/, '').replace(/\/$/, '');
 
 /**
  * Helper to get the full URL for an asset (image, etc.)

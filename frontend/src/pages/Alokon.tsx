@@ -1,25 +1,40 @@
-import { Box, Container, Typography, Grid, Paper, Button, Divider } from '@mui/material';
-import { Favorite, MedicalServices, Payment, Spa } from '@mui/icons-material';
+import { Box, Container, Typography, Grid, Paper, Button } from '@mui/material';
+import { Psychology, Groups, SelfImprovement, Diversity3, AutoStories, VolunteerActivism } from '@mui/icons-material';
 import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import { useDonationDrawer } from '../contexts/DonationDrawerContext';
-import heroImage from '../assets/projects/alok_nibash/exterior.jpg';
-import activityImage from '../assets/projects/alok_nibash/activity.jpg';
+import groupImage from '../assets/projects/alokon/group_session.jpg';
+import counselingImage from '../assets/projects/alokon/counseling.jpg';
 
-export const AlokNibash = () => {
+export const Alokon = () => {
     const { t } = useTranslation();
     const { openDrawer } = useDonationDrawer();
 
     const services = [
         {
-            icon: <Spa fontSize="large" color="primary" />,
-            title: t('alok_nibash_page.service_1_title'),
-            description: t('alok_nibash_page.service_1_desc')
+            icon: <Psychology color="primary" fontSize="large" />,
+            title: t('alokon_page.service_1_title'),
+            desc: t('alokon_page.service_1_desc')
         },
         {
-            icon: <MedicalServices fontSize="large" color="primary" />,
-            title: t('alok_nibash_page.service_2_title'),
-            description: t('alok_nibash_page.service_2_desc')
+            icon: <SelfImprovement color="primary" fontSize="large" />,
+            title: t('alokon_page.service_2_title'),
+            desc: t('alokon_page.service_2_desc')
+        },
+        {
+            icon: <Groups color="primary" fontSize="large" />,
+            title: t('alokon_page.service_3_title'),
+            desc: t('alokon_page.service_3_desc')
+        },
+        {
+            icon: <Diversity3 color="primary" fontSize="large" />,
+            title: t('alokon_page.service_4_title'),
+            desc: t('alokon_page.service_4_desc')
+        },
+        {
+            icon: <AutoStories color="primary" fontSize="large" />,
+            title: t('alokon_page.service_5_title'),
+            desc: t('alokon_page.service_5_desc')
         }
     ];
 
@@ -30,7 +45,7 @@ export const AlokNibash = () => {
                 sx={{
                     position: 'relative',
                     height: { xs: '300px', md: '500px' },
-                    backgroundImage: `url(${heroImage})`,
+                    backgroundImage: `url(${groupImage})`,
                     backgroundSize: 'cover',
                     backgroundPosition: 'center',
                     display: 'flex',
@@ -54,20 +69,20 @@ export const AlokNibash = () => {
                         transition={{ duration: 0.8 }}
                     >
                         <Typography variant="h2" component="h1" fontWeight={700} gutterBottom>
-                            {t('alok_nibash_page.hero_title')}
+                            {t('alokon_page.hero_title')}
                         </Typography>
                         <Typography variant="h5" sx={{ maxWidth: '800px', mx: 'auto', mb: 4 }}>
-                            {t('alok_nibash_page.hero_subtitle')}
+                            {t('alokon_page.hero_subtitle')}
                         </Typography>
                         <Button
                             variant="contained"
-                            color="primary"
+                            color="secondary"
                             size="large"
                             onClick={() => openDrawer()}
-                            startIcon={<Favorite />}
+                            startIcon={<VolunteerActivism />}
                             sx={{ borderRadius: 50, px: 4, py: 1.5, fontSize: '1.1rem' }}
                         >
-                            {t('alok_nibash_page.support_button')}
+                            {t('alokon_page.cta_button')}
                         </Button>
                     </motion.div>
                 </Container>
@@ -77,17 +92,17 @@ export const AlokNibash = () => {
             <Container sx={{ py: 8 }}>
                 <Grid container spacing={6} alignItems="center">
                     <Grid item xs={12} md={6}>
-                        <Typography variant="overline" color="primary" fontWeight={700}>
-                            {t('alok_nibash_page.about_feature')}
+                        <Typography variant="overline" color="secondary" fontWeight={700}>
+                            {t('alokon_page.about_feature')}
                         </Typography>
                         <Typography variant="h3" fontWeight={700} gutterBottom sx={{ mt: 1 }}>
-                            {t('alok_nibash_page.about_title')}
+                            {t('alokon_page.about_title')}
                         </Typography>
                         <Typography variant="body1" paragraph color="text.secondary" sx={{ fontSize: '1.1rem', lineHeight: 1.8 }}>
-                            {t('alok_nibash_page.about_p1')}
+                            {t('alokon_page.about_p1')}
                         </Typography>
                         <Typography variant="body1" paragraph color="text.secondary" sx={{ fontSize: '1.1rem', lineHeight: 1.8 }}>
-                            {t('alok_nibash_page.about_p2')}
+                            {t('alokon_page.about_p2')}
                         </Typography>
                     </Grid>
                     <Grid item xs={12} md={6}>
@@ -103,8 +118,8 @@ export const AlokNibash = () => {
                         >
                             <Box
                                 component="img"
-                                src={activityImage}
-                                alt="Patient Care and activity"
+                                src={counselingImage}
+                                alt="Counseling Session"
                                 sx={{ width: '100%', borderRadius: 3 }}
                             />
                         </Paper>
@@ -112,54 +127,36 @@ export const AlokNibash = () => {
                 </Grid>
             </Container>
 
-            {/* Mission / Dignity Section */}
-            <Box sx={{ bgcolor: 'secondary.main', color: 'white', py: 8 }}>
-                <Container maxWidth="md" sx={{ textAlign: 'center' }}>
-                    <Typography variant="h4" fontWeight={700} gutterBottom>
-                        {t('alok_nibash_page.mission_title')}
-                    </Typography>
-                    <Typography variant="h6" sx={{ fontStyle: 'italic', opacity: 0.9 }}>
-                        {t('alok_nibash_page.mission_desc')}
-                    </Typography>
-                    <Box sx={{ mt: 4, width: 80, height: 4, bgcolor: 'white', mx: 'auto', borderRadius: 2 }} />
-                </Container>
-            </Box>
-
             {/* Services Grid */}
             <Box sx={{ bgcolor: 'grey.50', py: 8 }}>
                 <Container>
                     <Box sx={{ textAlign: 'center', mb: 6 }}>
                         <Typography variant="h4" fontWeight={700} gutterBottom>
-                            {t('alok_nibash_page.services_title')}
+                            {t('alokon_page.services_title')}
                         </Typography>
-                        {/* <Typography variant="body1" color="text.secondary">
-                            {t('alok_nibash_page.services_subtitle')}
-                        </Typography> */}
                     </Box>
                     <Grid container spacing={4} justifyContent="center">
                         {services.map((service, index) => (
-                            <Grid item xs={12} md={6} key={index}>
+                            <Grid item xs={12} sm={6} md={4} key={index}>
                                 <Paper
                                     elevation={0}
                                     sx={{
-                                        p: 6,
+                                        p: 4,
                                         height: '100%',
                                         borderRadius: 4,
-                                        textAlign: 'center',
                                         transition: 'all 0.3s',
-                                        '&:hover': { transform: 'translateY(-8px)', boxShadow: 4 },
+                                        '&:hover': { transform: 'translateY(-5px)', boxShadow: 3 },
                                         display: 'flex',
                                         flexDirection: 'column',
-                                        alignItems: 'center',
-                                        justifyContent: 'center'
+                                        alignItems: 'flex-start'
                                     }}
                                 >
-                                    <Box sx={{ mb: 3 }}>{service.icon}</Box>
-                                    <Typography variant="h5" fontWeight={600} gutterBottom>
+                                    <Box sx={{ mb: 2, p: 1.5, bgcolor: 'primary.50', borderRadius: 2 }}>{service.icon}</Box>
+                                    <Typography variant="h6" fontWeight={700} gutterBottom>
                                         {service.title}
                                     </Typography>
-                                    <Typography variant="body1" color="text.secondary">
-                                        {service.description}
+                                    <Typography variant="body2" color="text.secondary" sx={{ lineHeight: 1.7 }}>
+                                        {service.desc}
                                     </Typography>
                                 </Paper>
                             </Grid>
@@ -168,53 +165,33 @@ export const AlokNibash = () => {
                 </Container>
             </Box>
 
-            {/* Sponsor / CTA Section */}
+            {/* Payment Model & CTA */}
             <Container sx={{ py: 8 }}>
                 <Paper
                     elevation={0}
                     sx={{
                         p: { xs: 4, md: 8 },
                         borderRadius: 4,
-                        background: 'linear-gradient(135deg, #1976d2 0%, #1565c0 100%)',
+                        bgcolor: 'secondary.main',
                         color: 'white',
                         textAlign: 'center'
                     }}
                 >
-                    <Typography variant="h6" sx={{ mb: 2, opacity: 0.9, fontWeight: 'normal' }}>
-                        {t('alok_nibash_page.closing_statement')}
+                    <Typography variant="h4" fontWeight={700} gutterBottom>
+                        {t('alokon_page.payment_title')}
                     </Typography>
-                    <Divider sx={{ bgcolor: 'rgba(255,255,255,0.3)', my: 4, width: '50%', mx: 'auto' }} />
-                    <Typography variant="h3" fontWeight={700} gutterBottom>
-                        {t('alok_nibash_page.sponsor_title')}
+                    <Typography variant="body1" sx={{ mb: 4, opacity: 0.9, maxWidth: '800px', mx: 'auto', fontSize: '1.1rem', lineHeight: 1.8 }}>
+                        {t('alokon_page.payment_desc')}
                     </Typography>
-                    <Typography variant="h6" sx={{ mb: 4, opacity: 0.9, maxWidth: '800px', mx: 'auto' }}>
-                        {t('alok_nibash_page.sponsor_desc')}
-                    </Typography>
-                    <Box sx={{ display: 'flex', gap: 2, justifyContent: 'center', flexWrap: 'wrap' }}>
-                        <Button
-                            variant="contained"
-                            color="secondary"
-                            size="large"
-                            startIcon={<Payment />}
-                            onClick={() => openDrawer()}
-                            sx={{
-                                bgcolor: 'white',
-                                color: 'primary.main',
-                                fontWeight: 700,
-                                '&:hover': { bgcolor: 'grey.100' }
-                            }}
-                        >
-                            {t('alok_nibash_page.sponsor_btn')}
-                        </Button>
-                        <Button
-                            variant="outlined"
-                            color="inherit"
-                            size="large"
-                            sx={{ fontWeight: 600, borderColor: 'white' }}
-                        >
-                            {t('alok_nibash_page.contact_btn')}
-                        </Button>
-                    </Box>
+                    <Button
+                        variant="contained"
+                        color="primary"
+                        size="large"
+                        onClick={() => openDrawer()}
+                        sx={{ bgcolor: 'white', color: 'secondary.main', '&:hover': { bgcolor: 'grey.100' }, fontWeight: 700 }}
+                    >
+                        {t('alokon_page.cta_button')}
+                    </Button>
                 </Paper>
             </Container>
         </Box>

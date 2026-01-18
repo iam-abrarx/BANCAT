@@ -12,49 +12,49 @@ import 'swiper/css/scrollbar';
 import 'swiper/css/effect-fade';
 
 // Mock Data - In real app, this would come from an API
-const stories = [
+const getStories = (t: any) => [
     {
         id: 1,
-        name: "Adopt a patient",
-        category: "Patient Sponsorship",
+        name: t('carousel_items.adopt.name'),
+        category: t('carousel_items.adopt.category'),
         image: "/story-placeholder.jpg",
-        quote: "You can directly fund different medical expenses for critical care through targeted donations starting from a small amount. Mid to long-term adoption options are also available.",
+        quote: t('carousel_items.adopt.quote'),
         raised: 150000,
         goal: 500000
     },
     {
         id: 2,
-        name: "Fight Cancer in this Ramadan",
-        category: "Zakat Fund",
+        name: t('carousel_items.ramadan.name'),
+        category: t('carousel_items.ramadan.category'),
         image: "/story-placeholder.jpg",
-        quote: "Fund life-saving treatments for underprivileged patients this Ramadan. Your Zakat and Sadaqa provide essential medical care and hope.",
+        quote: t('carousel_items.ramadan.quote'),
         raised: 850000,
         goal: 2000000
     },
     {
         id: 3,
-        name: "Save a Mother",
-        category: "Breast Cancer Awareness",
+        name: t('carousel_items.mother.name'),
+        category: t('carousel_items.mother.category'),
         image: "/story-placeholder.jpg",
-        quote: "Support “Maa Bachao, Bachao Desh” to help early detection programs for breast cancer. Your contribution provides life-saving screenings and essential medical support.",
+        quote: t('carousel_items.mother.quote'),
         raised: 320000,
         goal: 1000000
     },
     {
         id: 4,
-        name: "Hope for Children",
-        category: "Pediatric Care",
+        name: t('carousel_items.children.name'),
+        category: t('carousel_items.children.category'),
         image: "/story-placeholder.jpg",
-        quote: "Providing specialized pediatric oncology care and support for young warriors. Every child deserves a chance to grow up healthy and strong.",
+        quote: t('carousel_items.children.quote'),
         raised: 450000,
         goal: 1200000
     },
     {
         id: 5,
-        name: "Community Health Hub",
-        category: "Awareness Program",
+        name: t('carousel_items.hub.name'),
+        category: t('carousel_items.hub.category'),
         image: "/story-placeholder.jpg",
-        quote: "Expanding our reach to rural areas with mobile screening units and health education. Knowledge is the first step in the fight against cancer.",
+        quote: t('carousel_items.hub.quote'),
         raised: 280000,
         goal: 800000
     }
@@ -62,6 +62,7 @@ const stories = [
 
 export const PatientStoriesCarousel = () => {
     const { t } = useTranslation();
+    const stories = getStories(t);
 
     return (
         <Box sx={{ py: 10, bgcolor: '#f9f9f9' }}>

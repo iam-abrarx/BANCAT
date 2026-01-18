@@ -91,7 +91,7 @@ export const menuConfig: NavItem[] = [
             {
                 title: 'nav.our_work_item.flagship.title',
                 items: [
-                    { label: 'nav.our_work_item.flagship.village', path: '/alok-nibash' },
+                    { label: 'nav.our_work_item.flagship.village', path: '/projects/alok-boshoti' },
                 ],
             },
             {

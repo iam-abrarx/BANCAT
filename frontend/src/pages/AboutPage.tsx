@@ -5,16 +5,19 @@ import {
     MedicalServices,
     VolunteerActivism,
     VerifiedUser,
-    Public,
-    Groups,
     Spa,
     Medication,
     HealthAndSafety,
     AutoGraph,
     EmojiEvents
 } from '@mui/icons-material';
+import collaboration1 from '../assets/about/collaboration1.jpg';
+import collaboration2 from '../assets/about/collaboration2.jpg';
+
+import { useTranslation } from 'react-i18next';
 
 const AboutPage = () => {
+    const { t } = useTranslation();
     const containerVariants = {
         hidden: { opacity: 0 },
         visible: { opacity: 1, transition: { duration: 0.8 } }
@@ -79,7 +82,7 @@ const AboutPage = () => {
                         gutterBottom
                         sx={{ fontFamily: "'Montserrat', sans-serif" }}
                     >
-                        Our Story: The Journey of BANCAT
+                        {t('home.about.journey_title')}
                     </Typography>
                     <Typography
                         variant="body1"
@@ -93,9 +96,9 @@ const AboutPage = () => {
                             textShadow: '0 2px 4px rgba(0,0,0,0.2)'
                         }}
                     >
-                        The Bangladesh Cancer Aid Trust (BANCAT) began as a personal mission of resilience. In 2011, founder Najmus Ahmed Albab was diagnosed with cancer, an experience that transformed his personal battle into a vision to ensure no one fights cancer alone. This led to the 2015 establishment of the Bangladesh Cancer Aid Foundation (BANCAF), which provided critical rehabilitation and financial aid to hundreds of patients through community collaboration.
+                        {t('home.about.journey_text_1')}
                         <br /><br />
-                        In July 2019, the organization transitioned into BANCAT, marking a significant expansion in outreach and professional care. Despite the challenges of the COVID-19 pandemic, BANCAT intensified its efforts, distributing thousands of food aid packages to hospitals. A historic milestone was reached in 2022 with the founding of Alok Nibash, the country’s first holistic cancer care home. Today, BANCAT has evolved from a grassroots initiative into a nationwide force for advocacy, providing free medical treatment, accommodation, and emotional support to thousands of "cancer warriors."
+                        {t('home.about.journey_text_2')}
                     </Typography>
                 </Container>
             </Box>
@@ -209,31 +212,53 @@ const AboutPage = () => {
                     </Typography>
                     <Grid container spacing={4}>
                         <Grid item xs={12} md={6}>
-                            <Card sx={{ height: '100%', borderRadius: 4, boxShadow: '0 4px 20px rgba(0,0,0,0.05)' }}>
+                            <Card sx={{ height: '100%', borderRadius: 4, boxShadow: '0 4px 20px rgba(0,0,0,0.05)', overflow: 'hidden' }}>
+                                <Box sx={{ height: 250, overflow: 'hidden' }}>
+                                    <Box
+                                        component="img"
+                                        src={collaboration1}
+                                        alt="Global Alignment"
+                                        sx={{
+                                            width: '100%',
+                                            height: '100%',
+                                            objectFit: 'cover',
+                                            transition: 'transform 0.3s ease',
+                                            '&:hover': { transform: 'scale(1.05)' }
+                                        }}
+                                    />
+                                </Box>
                                 <CardContent sx={{ p: 5, display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
-                                    <Box sx={{ mb: 2, color: 'primary.main' }}>
-                                        <Public sx={{ fontSize: 48 }} />
-                                    </Box>
                                     <Typography variant="h5" fontWeight="bold" gutterBottom color="primary.main">
                                         Global Alignment
                                     </Typography>
                                     <Typography variant="body1" color="text.secondary" sx={{ mb: 2 }}>
                                         All initiatives are strategically aligned with the United Nations Sustainable Development Goals (SDGs), specifically:
                                     </Typography>
-                                    <Box component="ul" sx={{ mt: 0, pl: 0, listStyle: 'none', color: 'text.primary', '& li': { mb: 1, fontWeight: 500 } }}>
-                                        <li>❤️ Goal 3: Health & Well-being</li>
-                                        <li>🏙️ Goal 11: Sustainable Cities</li>
-                                        <li>♻️ Goal 12: Responsible Consumption</li>
+                                    <Box component="ul" sx={{ mt: 0, pl: 2, color: 'text.primary', '& li': { mb: 1, fontWeight: 500 } }}>
+                                        <li>Goal 3: Health & Well-being</li>
+                                        <li>Goal 11: Sustainable Cities</li>
+                                        <li>Goal 12: Responsible Consumption</li>
                                     </Box>
                                 </CardContent>
                             </Card>
                         </Grid>
                         <Grid item xs={12} md={6}>
-                            <Card sx={{ height: '100%', borderRadius: 4, boxShadow: '0 4px 20px rgba(0,0,0,0.05)' }}>
+                            <Card sx={{ height: '100%', borderRadius: 4, boxShadow: '0 4px 20px rgba(0,0,0,0.05)', overflow: 'hidden' }}>
+                                <Box sx={{ height: 250, overflow: 'hidden' }}>
+                                    <Box
+                                        component="img"
+                                        src={collaboration2}
+                                        alt="Corporate & NGO Network"
+                                        sx={{
+                                            width: '100%',
+                                            height: '100%',
+                                            objectFit: 'cover',
+                                            transition: 'transform 0.3s ease',
+                                            '&:hover': { transform: 'scale(1.05)' }
+                                        }}
+                                    />
+                                </Box>
                                 <CardContent sx={{ p: 5, display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
-                                    <Box sx={{ mb: 2, color: 'secondary.main' }}>
-                                        <Groups sx={{ fontSize: 48 }} />
-                                    </Box>
                                     <Typography variant="h5" fontWeight="bold" gutterBottom color="secondary.main">
                                         Corporate & NGO Network
                                     </Typography>

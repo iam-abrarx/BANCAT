@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 export const VideoSection = () => {
     const { t } = useTranslation();
     const [open, setOpen] = useState(false);
-    const videoId = 'jBhLyIYY3AY';
+    const videoId = 'H4zlWwV4NqI';
     const thumbnailUrl = `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
 
     const handleOpen = () => setOpen(true);
